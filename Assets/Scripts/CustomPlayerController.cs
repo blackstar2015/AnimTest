@@ -15,7 +15,6 @@ public class CustomPlayerController : MonoBehaviour
     [field: SerializeField] protected Animator Animator { get; set; }
 
     [field: SerializeField] protected int ActionList = 6;
-    private int _actionIndex = 1;
 
     // public Health Health { get; private set; }
     // public Targetable Targetable { get; private set; }
@@ -24,6 +23,8 @@ public class CustomPlayerController : MonoBehaviour
     public bool CanShoot { get; set; } = true;
     public bool CanMelee { get; set; } = true;
 
+    private float _lastDashTime = Mathf.NegativeInfinity;
+    private int _actionIndex = 1;
     // array of current weapons
     // InlineButton appears beside the property/field in the inspector
     [field: SerializeField, InlineButton(nameof(FindWeapons), "Find")] public Weapons[] Weapons { get; private set; }
@@ -60,8 +61,13 @@ public class CustomPlayerController : MonoBehaviour
 
     public virtual void OnDash(InputValue value)
     {
-        Movement?.Dash(Animator.GetCurrentAnimatorStateInfo(0).length);
-        Animator?.SetTrigger("Dash");
+        float nextDashTime = _lastDashTime + Movement.DashCooldown;
+        if (Time.time > nextDashTime)
+        {
+            Movement?.Dash(Animator.GetCurrentAnimatorStateInfo(0).length);
+            Animator?.SetTrigger("Dash");
+            _lastDashTime = Time.time;
+        }
     }
     public virtual void OnAttack(InputValue value)
     {

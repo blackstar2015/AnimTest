@@ -5,8 +5,9 @@ using UnityEngine;
 public class CustomCharacterMovement : CharacterMovement3D
 {
     private Vector3 _dashDirection;
-    public bool IsDashing;
-    [SerializeField] private float _dashSpeed = 100f;
+    public bool IsDashing = false;
+    public float DashCooldown = 2f;
+    [SerializeField] private float _dashSpeed = 1000f;
 
     public void Dash(float DashAnimLength)
     {
@@ -22,7 +23,7 @@ public class CustomCharacterMovement : CharacterMovement3D
         SetLookDirection(_dashDirection);
         Rigidbody.AddForce(_dashDirection * _dashSpeed );
         
-        yield return new WaitForSeconds(DashAnimLength + .25f);
+        yield return new WaitForSeconds(1);
         
         Debug.Log(DashAnimLength);
         IsDashing = false;

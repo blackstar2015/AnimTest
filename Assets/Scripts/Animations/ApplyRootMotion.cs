@@ -41,7 +41,7 @@ public class ApplyRootMotion : StateMachineBehaviour
         // reset Melee trigger at start of animation
         if(_meleeResetTime > 0f && stateInfo.normalizedTime < _meleeResetTime)
         {
-            animator.ResetTrigger("Melee");
+            animator.ResetTrigger("Unarmed");                  
         }
     }
 
@@ -60,8 +60,9 @@ public class ApplyRootMotion : StateMachineBehaviour
         animator.transform.rotation = rotation;
     }
 
-    // override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    // {
-    //     _controller.LookInCameraDirection = true;
-    // }
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        _controller.LookInCameraDirection = true;
+        animator.applyRootMotion = false;
+    }
 }
