@@ -8908,6 +8908,21 @@ MonoBehaviour:
   <DampTime>k__BackingField: 0.1
   <Animator>k__BackingField: {fileID: 9500000}
   <CharacterMovement>k__BackingField: {fileID: 341077868634195652}
+  OnFootR:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFootL:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLand:
+    m_PersistentCalls:
+      m_Calls: []
+  OnShoot:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3268888671163946455
 GameObject:
   m_ObjectHideFlags: 0

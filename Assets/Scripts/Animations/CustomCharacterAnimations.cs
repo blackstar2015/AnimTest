@@ -1,5 +1,6 @@
 using CharacterMovement;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CustomCharacterAnimations : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class CustomCharacterAnimations : MonoBehaviour
     [field: SerializeField] protected Animator Animator { get; set; }
     [field: SerializeField] protected CharacterMovementBase CharacterMovement { get; set; }
 
+    public UnityEvent OnFootR = new UnityEvent();
+    public UnityEvent OnFootL = new UnityEvent();
+    public UnityEvent OnLand = new UnityEvent();
+    public UnityEvent OnShoot = new UnityEvent();
+    public UnityEvent OnHit = new UnityEvent();
+    
+    
     protected virtual void OnValidate()
     {
         if (Animator == null) Animator = GetComponent<Animator>();
@@ -35,4 +43,10 @@ public class CustomCharacterAnimations : MonoBehaviour
         Animator.SetFloat("VelocityX", velocityX);
         Animator.SetFloat("VelocityZ", velocityZ);
     }
+    
+    public void FootR() => OnFootR.Invoke();
+    public void FootL() => OnFootL.Invoke();
+    public void Land() => OnLand.Invoke();
+    public void Hit() => OnHit.Invoke();
+    public void Shoot() => OnShoot.Invoke();
 }

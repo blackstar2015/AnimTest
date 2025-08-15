@@ -16,7 +16,7 @@ MonoBehaviour:
   <AttackRate>k__BackingField: 1.5
   <Duration>k__BackingField: 1
   <CritChance>k__BackingField: 5
-  <Range>k__BackingField: 5
+  <Range>k__BackingField: 5.01
   <EffectiveRange>k__BackingField: 4
   <WeaponIndex>k__BackingField: 0
   <DamageType>k__BackingField: 0
@@ -25,22 +25,22 @@ MonoBehaviour:
   <ComboData>k__BackingField:
   - <Damage>k__BackingField: 10
     <Angle>k__BackingField: 120
-    <Range>k__BackingField: 1.5
+    <Range>k__BackingField: 1.86
   - <Damage>k__BackingField: 10
     <Angle>k__BackingField: 120
-    <Range>k__BackingField: 1.5
+    <Range>k__BackingField: 5.37
   - <Damage>k__BackingField: 10
     <Angle>k__BackingField: 120
-    <Range>k__BackingField: 1.5
+    <Range>k__BackingField: 5
   - <Damage>k__BackingField: 10
     <Angle>k__BackingField: 120
-    <Range>k__BackingField: 1.5
+    <Range>k__BackingField: 5
   - <Damage>k__BackingField: 10
     <Angle>k__BackingField: 120
-    <Range>k__BackingField: 1.5
+    <Range>k__BackingField: 5
   - <Damage>k__BackingField: 10
     <Angle>k__BackingField: 120
-    <Range>k__BackingField: 1.5
+    <Range>k__BackingField: 5
   <HitMask>k__BackingField:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
