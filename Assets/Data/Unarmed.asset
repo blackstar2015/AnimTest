@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Unarmed
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 5
-  <AttackRate>k__BackingField: 3
+  <AttackRate>k__BackingField: 1.5
   <Duration>k__BackingField: 1
   <CritChance>k__BackingField: 5
   <Range>k__BackingField: 5

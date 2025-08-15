@@ -64,5 +64,6 @@ public class ApplyRootMotion : StateMachineBehaviour
     {
         _controller.LookInCameraDirection = true;
         animator.applyRootMotion = false;
+        _movement.CanMove = true;
     }
 }

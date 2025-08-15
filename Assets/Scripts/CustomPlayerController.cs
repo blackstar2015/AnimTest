@@ -10,21 +10,26 @@ public class CustomPlayerController : MonoBehaviour
     // make character look in Camera direction instead of MoveDirection
     [field: SerializeField] public bool LookInCameraDirection { get; set; }
 
-    [field: Header("Componenents")]
+    [field: Header("Components")]
     [field: SerializeField] protected CustomCharacterMovement Movement { get; set; }
     [field: SerializeField] protected Animator Animator { get; set; }
 
     [field: SerializeField] protected int ActionList = 6;
 
-    // public Health Health { get; private set; }
-    // public Targetable Targetable { get; private set; }
-    // public Vision Vision { get; private set; }
+    public Health Health { get; private set; }
+    public Targetable Targetable { get; private set; }
+    public Vision Vision { get; private set; }
 
     public bool CanShoot { get; set; } = true;
     public bool CanMelee { get; set; } = true;
 
     private float _lastDashTime = Mathf.NegativeInfinity;
+    private float _lastAttackTime = Mathf.NegativeInfinity;
     private int _actionIndex = 1;
+    private int WeaponIndex = 0;
+
+    private bool _isAttacking;
+
     // array of current weapons
     // InlineButton appears beside the property/field in the inspector
     [field: SerializeField, InlineButton(nameof(FindWeapons), "Find")] public Weapons[] Weapons { get; private set; }
@@ -40,9 +45,9 @@ public class CustomPlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorMode;
         Movement = GetComponent<CustomCharacterMovement>();
-        // Health = GetComponent<Health>();
-        // Targetable = GetComponent<Targetable>();
-        // Vision = GetComponent<Vision>();
+        Health = GetComponent<Health>();
+        Targetable = GetComponent<Targetable>();
+        Vision = GetComponent<Vision>();
     }
 
     private void FindWeapons()
@@ -71,21 +76,12 @@ public class CustomPlayerController : MonoBehaviour
     }
     public virtual void OnAttack(InputValue value)
     {
-        Debug.Log("asd");
-        Animator.SetTrigger("Trigger");
-        Animator.SetInteger("Action", _actionIndex);
-        _actionIndex++;
-        if (_actionIndex > ActionList)
-        {
-            _actionIndex = 1;
-        }
-        //Animator.ResetTrigger("Trigger");
+        _isAttacking = value.isPressed;
     }
 
     protected virtual void Update()
     {
         if (Movement == null) return;
-
         // find correct right/forward directions based on main camera rotation
         Vector3 up = Vector3.up;
         Vector3 right = Camera.main.transform.right;
@@ -97,5 +93,22 @@ public class CustomPlayerController : MonoBehaviour
         Movement.SetLookDirection(moveInput);
         LookInCameraDirection = !Movement.IsDashing;
         if (LookInCameraDirection) Movement.SetLookDirection(Camera.main.transform.forward);
+        if (_isAttacking) HandleAttack();
+    }
+
+    private void HandleAttack()
+    {
+        Weapons equippedWeapon = Weapons[WeaponIndex];
+        float nextAttackTime = _lastAttackTime + 1/equippedWeapon.Data.AttackRate;
+        
+        if (Time.time < nextAttackTime) return;
+        
+        //equippedWeapon.TryAttack();
+        Animator.SetTrigger(equippedWeapon.Data.AttackAnimName);
+        Animator.SetInteger("Action", _actionIndex);
+        _actionIndex++;
+        
+        if (_actionIndex > ActionList) _actionIndex = 1;
+        _lastAttackTime =  Time.time;
     }
 }
