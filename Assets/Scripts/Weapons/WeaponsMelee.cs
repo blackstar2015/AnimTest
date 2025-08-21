@@ -54,10 +54,10 @@ public class WeaponsMelee : Weapons
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        MeleeComboData comboData = MeleeData.ComboData[_attackIndex];
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_aimPosition, comboData.Range);
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     MeleeComboData comboData = MeleeData.ComboData[_attackIndex];
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireSphere(_aimPosition, comboData.Range);
+    // }
 }

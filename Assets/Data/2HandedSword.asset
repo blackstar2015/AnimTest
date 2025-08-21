@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40750af0edf09043819b533bba1d0ac, type: 3}
+  m_Name: 2HandedSword
+  m_EditorClassIdentifier: 
+  <Damage>k__BackingField: 10
+  <AttackRate>k__BackingField: 1.5
+  <Duration>k__BackingField: 1
+  <CritChance>k__BackingField: 5
+  <Range>k__BackingField: 5
+  <EffectiveRange>k__BackingField: 4
+  <WeaponIndex>k__BackingField: 1
+  <DamageType>k__BackingField: 0
+  <WeaponMesh>k__BackingField: {fileID: 0}
+  <AttackAnimName>k__BackingField: 2HandedSword
+  <ComboData>k__BackingField:
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 120
+    <Range>k__BackingField: 1.5
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 120
+    <Range>k__BackingField: 1.5
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 120
+    <Range>k__BackingField: 1.5
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 120
+    <Range>k__BackingField: 1.5
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 120
+    <Range>k__BackingField: 1.5
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 120
+    <Range>k__BackingField: 1.5
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 120
+    <Range>k__BackingField: 1.5
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 120
+    <Range>k__BackingField: 1.5
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 120
+    <Range>k__BackingField: 1.5
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 120
+    <Range>k__BackingField: 1.5
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 120
+    <Range>k__BackingField: 1.5
+  <HitMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 64

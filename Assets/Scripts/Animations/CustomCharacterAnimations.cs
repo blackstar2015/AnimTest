@@ -42,6 +42,7 @@ public class CustomCharacterAnimations : MonoBehaviour
         float velocityZ =  velocity.z *  Mathf.Abs(CharacterMovement.MoveInput.z);
         Animator.SetFloat("VelocityX", velocityX);
         Animator.SetFloat("VelocityZ", velocityZ);
+        
     }
     
     public void FootR() => OnFootR.Invoke();

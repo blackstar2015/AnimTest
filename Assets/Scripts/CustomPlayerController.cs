@@ -27,7 +27,7 @@ public class CustomPlayerController : MonoBehaviour
     private float _lastAttackTime = Mathf.NegativeInfinity;
     private int _actionIndex = 1;
     private int WeaponIndex = 0;
-
+    
     private bool _isAttacking;
 
     // array of current weapons
@@ -53,6 +53,14 @@ public class CustomPlayerController : MonoBehaviour
     private void FindWeapons()
     {
         Weapons = GetComponentsInChildren<Weapons>();
+    }
+
+    private void OnWeaponSwitch()
+    {
+        if (WeaponIndex >= Weapons.Length) WeaponIndex = 0;
+        else WeaponIndex++;
+        
+        Animator.SetInteger("WeaponIndex", WeaponIndex);
     }
     public virtual void OnMove(InputValue value)
     {
@@ -107,8 +115,8 @@ public class CustomPlayerController : MonoBehaviour
         Animator.SetTrigger(equippedWeapon.Data.AttackAnimName);
         Animator.SetInteger("Action", _actionIndex);
         _actionIndex++;
-        
-        if (_actionIndex > ActionList) _actionIndex = 1;
+        WeaponsMelee melee = equippedWeapon as WeaponsMelee;
+        if (_actionIndex > melee?.MeleeData.ComboData.Length) _actionIndex = 1;
         _lastAttackTime =  Time.time;
     }
 }
