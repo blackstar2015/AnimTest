@@ -57,7 +57,7 @@ public class CustomPlayerController : MonoBehaviour
 
     private void OnWeaponSwitch()
     {
-        if (WeaponIndex >= Weapons.Length) WeaponIndex = 0;
+        if (WeaponIndex >= Weapons.Length -1) WeaponIndex = 0;
         else WeaponIndex++;
         
         Animator.SetInteger("WeaponIndex", WeaponIndex);
@@ -116,6 +116,7 @@ public class CustomPlayerController : MonoBehaviour
         Animator.SetInteger("Action", _actionIndex);
         _actionIndex++;
         WeaponsMelee melee = equippedWeapon as WeaponsMelee;
+        if (melee == null)  return;
         if (_actionIndex > melee?.MeleeData.ComboData.Length) _actionIndex = 1;
         _lastAttackTime =  Time.time;
     }
