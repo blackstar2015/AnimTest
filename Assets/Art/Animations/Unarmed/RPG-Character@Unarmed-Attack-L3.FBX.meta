@@ -416,8 +416,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.4662
-        functionName: MeleeHitAnimEvent
+      - time: 0.41816506
+        functionName: EnableTrigger
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.6714697
+        functionName: DisableTrigger
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

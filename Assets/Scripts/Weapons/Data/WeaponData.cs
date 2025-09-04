@@ -16,5 +16,6 @@ public class WeaponData : ScriptableObject
 
     // add feedback
     [field: SerializeField] public string AttackAnimName { get; private set; } = "";
+    [field: SerializeField] public Collider[] WeaponColliders {get; private set;}
     //[field: SerializeField] public EventReference SFX { get; private set; }
 }

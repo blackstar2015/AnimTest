@@ -14,7 +14,7 @@ public class CustomPlayerController : MonoBehaviour
     [field: SerializeField] protected CustomCharacterMovement Movement { get; set; }
     [field: SerializeField] protected Animator Animator { get; set; }
 
-    [field: SerializeField] protected int ActionList = 6;
+    //[field: SerializeField] protected int ActionList = 6;
 
     public Health Health { get; private set; }
     public Targetable Targetable { get; private set; }
@@ -26,7 +26,7 @@ public class CustomPlayerController : MonoBehaviour
     private float _lastDashTime = Mathf.NegativeInfinity;
     private float _lastAttackTime = Mathf.NegativeInfinity;
     private int _actionIndex = 1;
-    private int WeaponIndex = 0;
+    private int _weaponIndex = 0;
     
     private bool _isAttacking;
 
@@ -57,21 +57,24 @@ public class CustomPlayerController : MonoBehaviour
 
     public void OnWeaponSwitch()
     {
-        int oldIndex = WeaponIndex;
-        if (Weapons[oldIndex].Data.WeaponMesh != null) 
-        { 
-            Weapons[oldIndex].Data.WeaponMesh.SetActive(false); 
-        }
-        if (WeaponIndex >= Weapons.Length - 1)
+        // int oldIndex = _weaponIndex;
+        // if (Weapons[oldIndex].Data.WeaponMesh != null) 
+        // { 
+        //     Weapons[oldIndex].Data.WeaponMesh?.SetActive(false); 
+        // }
+        if (_weaponIndex >= Weapons.Length - 1)
         {
-            WeaponIndex = 0;
+            _weaponIndex = 0;
         }
         else
         {
-            WeaponIndex++;
+            _weaponIndex++;
         }
-        Animator.SetInteger("WeaponIndex", WeaponIndex);
-        Weapons[WeaponIndex].Data.WeaponMesh.SetActive(true);
+        Animator.SetInteger("WeaponIndex", _weaponIndex);
+        // if (Weapons[_weaponIndex].Data.WeaponMesh != null)
+        // {
+        //     Weapons[_weaponIndex].Data.WeaponMesh.SetActive(true);
+        // }
     }
     public virtual void OnMove(InputValue value)
     {
@@ -114,16 +117,9 @@ public class CustomPlayerController : MonoBehaviour
         if (LookInCameraDirection) Movement.SetLookDirection(Camera.main.transform.forward);
         if (_isAttacking) HandleAttack();
     }
-
-
-    public void MeleeHitAnimEvent(int attackIndex)
-    {
-        WeaponsMelee weaponsMelee = Weapons[WeaponIndex] as WeaponsMelee;
-        if(weaponsMelee != null)  weaponsMelee.MeleeHitAnimEvent(attackIndex, transform.position);
-    }
     private void HandleAttack()
     {
-        Weapons equippedWeapon = Weapons[WeaponIndex];
+        Weapons equippedWeapon = Weapons[_weaponIndex];
         float nextAttackTime = _lastAttackTime + 1/equippedWeapon.Data.AttackRate;
         
         if (Time.time < nextAttackTime) return;
@@ -137,4 +133,38 @@ public class CustomPlayerController : MonoBehaviour
         if (_actionIndex > melee?.MeleeData.ComboData.Length) _actionIndex = 1;
         _lastAttackTime =  Time.time;
     }
+    
+    #region AnimationEvents
+    public void Sheath(int index)
+    {
+        Debug.Log("ASD");
+        GameObject weaponMesh = Weapons[index].Data.WeaponMesh;
+        weaponMesh.SetActive(false);
+    }
+    public void UnSheath(int index)
+    {
+        Debug.Log("ASDA");
+        GameObject weaponMesh = Weapons[index].Data.WeaponMesh;
+        weaponMesh.SetActive(true);
+    }
+    public void MeleeHitAnimEvent(int attackIndex)
+    {
+        WeaponsMelee weaponsMelee = Weapons[_weaponIndex] as WeaponsMelee;
+        if(weaponsMelee != null)  weaponsMelee.MeleeHitAnimEvent(attackIndex, transform.position);
+    }
+    public void DisableTrigger(int index)
+    {
+        foreach (Collider collider in Weapons[index].Data.WeaponColliders)
+        {
+            collider.enabled = false;
+        }
+    }
+    public void EnableTrigger(int index)
+    {
+        foreach (Collider collider in Weapons[index].Data.WeaponColliders)
+        {
+            collider.enabled = true;
+        }
+    }
+    #endregion
 }

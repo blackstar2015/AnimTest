@@ -8860,7 +8860,6 @@ MonoBehaviour:
   <LookInCameraDirection>k__BackingField: 1
   <Movement>k__BackingField: {fileID: 341077868634195652}
   <Animator>k__BackingField: {fileID: 9500000}
-  ActionList: 6
   <Weapons>k__BackingField:
   - {fileID: 5804232795530680594}
 --- !u!114 &1549061530283916620

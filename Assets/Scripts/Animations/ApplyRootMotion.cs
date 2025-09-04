@@ -41,7 +41,7 @@ public class ApplyRootMotion : StateMachineBehaviour
         // reset Melee trigger at start of animation
         if(_meleeResetTime > 0f && stateInfo.normalizedTime < _meleeResetTime)
         {
-            animator.ResetTrigger("Unarmed");                  
+            animator.ResetTrigger("Unarmed");
         }
     }
 

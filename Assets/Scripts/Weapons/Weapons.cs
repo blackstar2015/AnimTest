@@ -5,6 +5,7 @@ public abstract class Weapons : MonoBehaviour
 {
     [field: SerializeField, Required, InlineEditor] public WeaponData Data { get; private set; }
 
+    
     private float _lastAttackTime = -100000f;
     private Animator _animator;
 

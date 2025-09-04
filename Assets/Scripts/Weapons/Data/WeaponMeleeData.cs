@@ -6,6 +6,7 @@ public class WeaponMeleeData : WeaponData
     [field: Header("Weapon Melee")]
     [field: SerializeField] public MeleeComboData[] ComboData { get; private set; }
     [field: SerializeField] public LayerMask HitMask { get; private set; }
+    
 }
 
 [System.Serializable]
