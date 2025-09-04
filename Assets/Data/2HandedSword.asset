@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: 2HandedSword
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 10
-  <AttackRate>k__BackingField: 1.5
+  <AttackRate>k__BackingField: 0.8
   <Duration>k__BackingField: 1
   <CritChance>k__BackingField: 5
   <Range>k__BackingField: 5
   <EffectiveRange>k__BackingField: 4
   <WeaponIndex>k__BackingField: 1
   <DamageType>k__BackingField: 0
-  <WeaponMesh>k__BackingField: {fileID: 100050, guid: 8a7b78e82902d1b4eba2923c6a4cf1c7, type: 3}
+  <WeaponMesh>k__BackingField: {fileID: 0}
   <AttackAnimName>k__BackingField: 2HandedSword
   <ComboData>k__BackingField:
   - <Damage>k__BackingField: 40

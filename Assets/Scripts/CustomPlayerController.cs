@@ -55,12 +55,23 @@ public class CustomPlayerController : MonoBehaviour
         Weapons = GetComponentsInChildren<Weapons>();
     }
 
-    private void OnWeaponSwitch()
+    public void OnWeaponSwitch()
     {
-        if (WeaponIndex >= Weapons.Length -1) WeaponIndex = 0;
-        else WeaponIndex++;
-        
+        int oldIndex = WeaponIndex;
+        if (Weapons[oldIndex].Data.WeaponMesh != null) 
+        { 
+            Weapons[oldIndex].Data.WeaponMesh.SetActive(false); 
+        }
+        if (WeaponIndex >= Weapons.Length - 1)
+        {
+            WeaponIndex = 0;
+        }
+        else
+        {
+            WeaponIndex++;
+        }
         Animator.SetInteger("WeaponIndex", WeaponIndex);
+        Weapons[WeaponIndex].Data.WeaponMesh.SetActive(true);
     }
     public virtual void OnMove(InputValue value)
     {
@@ -104,6 +115,12 @@ public class CustomPlayerController : MonoBehaviour
         if (_isAttacking) HandleAttack();
     }
 
+
+    public void MeleeHitAnimEvent(int attackIndex)
+    {
+        WeaponsMelee weaponsMelee = Weapons[WeaponIndex] as WeaponsMelee;
+        if(weaponsMelee != null)  weaponsMelee.MeleeHitAnimEvent(attackIndex, transform.position);
+    }
     private void HandleAttack()
     {
         Weapons equippedWeapon = Weapons[WeaponIndex];

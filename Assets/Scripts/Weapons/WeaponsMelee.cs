@@ -4,6 +4,7 @@ using UnityEngine;
 public class WeaponsMelee : Weapons
 {
     private Vector3 _aimPosition;
+    private Vector3 _attackOrigin;
     private GameObject _instigator;
     private int _team;
     private int _attackIndex;
@@ -20,13 +21,13 @@ public class WeaponsMelee : Weapons
         _team = team;
     }
 
-    public void MeleeHitAnimEvent(int attackIndex)
+    public void MeleeHitAnimEvent(int attackIndex, Vector3 origin)
     {
         // get specific combo attack data
         MeleeComboData comboData = MeleeData.ComboData[attackIndex];
         _attackIndex = attackIndex;
+        _attackOrigin = origin;
         // calculate aim direction
-        Vector3 origin = this.transform.position;
         Vector3 aimDirection = (_aimPosition - origin).normalized;
 
         // find all possible targets in range
@@ -42,22 +43,23 @@ public class WeaponsMelee : Weapons
             if (hit.gameObject == _instigator) continue; // don't punch self in face
 
             // filter hits by angle
-            Vector3 targetDir = (hit.transform.position - origin).normalized;
+            Vector3 targetDir = (hit.transform.position - origin).normalized + new Vector3(0, .9f, 0);
             float angleToHit = Vector3.Angle(targetDir, aimDirection);
-            if (angleToHit > comboData.Angle / 2f) continue;
+            if (angleToHit < comboData.Angle / 2f) continue;
 
             // damage the target
             if (hit.TryGetComponent(out IDamageable targetHealth))
             {
                 targetHealth.Damage(new DamageInfo(comboData.Damage, DamageType.Physical, false, hit.gameObject, gameObject, _instigator));
+                Debug.DrawLine(_attackOrigin + new Vector3(0, .9f, 0), hit.gameObject.transform.position + new Vector3(0, .9f, 0), Color.red,Mathf.Infinity);
             }
         }
     }
 
-    // private void OnDrawGizmos()
-    // {
-    //     MeleeComboData comboData = MeleeData.ComboData[_attackIndex];
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawWireSphere(_aimPosition, comboData.Range);
-    // }
+    //private void OnDrawGizmos()
+    //{
+    //    MeleeComboData comboData = MeleeData.ComboData[_attackIndex];
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(_attackOrigin, comboData.Range);
+    //}
 }
