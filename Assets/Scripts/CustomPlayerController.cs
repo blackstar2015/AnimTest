@@ -22,12 +22,13 @@ public class CustomPlayerController : MonoBehaviour
 
     public bool CanShoot { get; set; } = true;
     public bool CanMelee { get; set; } = true;
+    public int CurrentActionIndex => _actionIndex;
+    public int CurrentWeaponIndex => _weaponIndex;
 
     private float _lastDashTime = Mathf.NegativeInfinity;
     private float _lastAttackTime = Mathf.NegativeInfinity;
     private int _actionIndex = 1;
     private int _weaponIndex = 0;
-    
     private bool _isAttacking;
 
     // array of current weapons
@@ -147,11 +148,11 @@ public class CustomPlayerController : MonoBehaviour
         GameObject weaponMesh = Weapons[index].Data.WeaponMesh;
         weaponMesh.SetActive(true);
     }
-    public void MeleeHitAnimEvent(int attackIndex)
-    {
-        WeaponsMelee weaponsMelee = Weapons[_weaponIndex] as WeaponsMelee;
-        if(weaponsMelee != null)  weaponsMelee.MeleeHitAnimEvent(attackIndex, transform.position);
-    }
+    // public void MeleeHitAnimEvent(int attackIndex)
+    // {
+    //     WeaponsMelee weaponsMelee = Weapons[_weaponIndex] as WeaponsMelee;
+    //     if(weaponsMelee != null)  weaponsMelee.MeleeHitAnimEvent(attackIndex, transform.position);
+    // }
     public void DisableTrigger(int index)
     {
         foreach (Collider collider in Weapons[index].Data.WeaponColliders)

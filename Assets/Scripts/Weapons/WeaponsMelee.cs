@@ -21,40 +21,40 @@ public class WeaponsMelee : Weapons
         _team = team;
     }
 
-    public void MeleeHitAnimEvent(int attackIndex, Vector3 origin)
-    {
-        // get specific combo attack data
-        MeleeComboData comboData = MeleeData.ComboData[attackIndex];
-        _attackIndex = attackIndex;
-        _attackOrigin = origin;
-        // calculate aim direction
-        Vector3 aimDirection = (_aimPosition - origin).normalized;
-
-        // find all possible targets in range
-        
-        Collider[] hits = Physics.OverlapSphere(origin, comboData.Range, MeleeData.HitMask);
-
-        // iterate through all hits
-        foreach (Collider hit in hits)
-        {
-            // optional check for friendly fire
-
-            // check for self
-            if (hit.gameObject == _instigator) continue; // don't punch self in face
-
-            // filter hits by angle
-            Vector3 targetDir = (hit.transform.position - origin).normalized + new Vector3(0, .9f, 0);
-            float angleToHit = Vector3.Angle(targetDir, aimDirection);
-            if (angleToHit < comboData.Angle / 2f) continue;
-
-            // damage the target
-            if (hit.TryGetComponent(out IDamageable targetHealth))
-            {
-                targetHealth.Damage(new DamageInfo(comboData.Damage, DamageType.Physical, false, hit.gameObject, gameObject, _instigator));
-                Debug.DrawLine(_attackOrigin + new Vector3(0, .9f, 0), hit.gameObject.transform.position + new Vector3(0, .9f, 0), Color.red,Mathf.Infinity);
-            }
-        }
-    }
+    // public void MeleeHitAnimEvent(int attackIndex, Vector3 origin)
+    // {
+    //     // get specific combo attack data
+    //     MeleeComboData comboData = MeleeData.ComboData[attackIndex];
+    //     _attackIndex = attackIndex;
+    //     _attackOrigin = origin;
+    //     // calculate aim direction
+    //     Vector3 aimDirection = (_aimPosition - origin).normalized;
+    //
+    //     // find all possible targets in range
+    //     
+    //     Collider[] hits = Physics.OverlapSphere(origin, comboData.Range, MeleeData.HitMask);
+    //
+    //     // iterate through all hits
+    //     foreach (Collider hit in hits)
+    //     {
+    //         // optional check for friendly fire
+    //
+    //         // check for self
+    //         if (hit.gameObject == _instigator) continue; // don't punch self in face
+    //
+    //         // filter hits by angle
+    //         Vector3 targetDir = (hit.transform.position - origin).normalized + new Vector3(0, .9f, 0);
+    //         float angleToHit = Vector3.Angle(targetDir, aimDirection);
+    //         if (angleToHit < comboData.Angle / 2f) continue;
+    //
+    //         // damage the target
+    //         if (hit.TryGetComponent(out IDamageable targetHealth))
+    //         {
+    //             targetHealth.Damage(new DamageInfo(comboData.Damage, DamageType.Physical, false, hit.gameObject, gameObject, _instigator));
+    //             Debug.DrawLine(_attackOrigin + new Vector3(0, .9f, 0), hit.gameObject.transform.position + new Vector3(0, .9f, 0), Color.red,Mathf.Infinity);
+    //         }
+    //     }
+    // }
 
     //private void OnDrawGizmos()
     //{

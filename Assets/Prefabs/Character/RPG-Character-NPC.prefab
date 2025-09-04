@@ -32,8 +32,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.53, y: 0.53, z: 0.53}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5017534650379737865}
   m_Father: {fileID: 0}
@@ -84,10 +84,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
-  m_Height: 1.8
+  m_Radius: 0.5
+  m_Height: 2.6
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 1.3, z: 0}
 --- !u!195 &3668655356348723783
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -97,7 +97,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 100004}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.3
+  m_Radius: 0.5
   m_Speed: 1
   m_Acceleration: 200
   avoidancePriority: 50
@@ -106,7 +106,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.8
+  m_Height: 2.6
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
@@ -122,15 +122,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2bb40f32588b174382d593435f42740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _current: 100
-  _max: 100
+  _current: 100000
+  _max: 100000
   _deathLayer: Corpse
   OnDamage:
     m_PersistentCalls:
       m_Calls: []
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 100004}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4939754131160177396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,8 +183,8 @@ MonoBehaviour:
   <JumpHeight>k__BackingField: 2.25
   <AirControl>k__BackingField: 0.1
   <AirTurning>k__BackingField: 1
-  <Height>k__BackingField: 1.8
-  <Radius>k__BackingField: 0.3
+  <Height>k__BackingField: 2.6
+  <Radius>k__BackingField: 0.5
   <GroundCheckOffset>k__BackingField: 0.1
   <GroundCheckDistance>k__BackingField: 0.4
   <MaxSlopeAngle>k__BackingField: 40
