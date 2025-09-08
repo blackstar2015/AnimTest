@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.qhenshaw.charactermovement": "https://github.com/qhenshaw/CharacterMovement.git",
+    "com.qhenshaw.gameevents": "https://github.com/qhenshaw/GameEvents.git",
     "com.qhenshaw.sharedsampleassets": "https://github.com/qhenshaw/SharedSampleAssets.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.8",

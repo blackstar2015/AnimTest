@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CustomPlayerController : MonoBehaviour
+public class CustomPlayerController : CustomController
 {
     // initial cursor state
     [field: SerializeField] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
@@ -11,14 +11,11 @@ public class CustomPlayerController : MonoBehaviour
     [field: SerializeField] public bool LookInCameraDirection { get; set; }
 
     [field: Header("Components")]
-    [field: SerializeField] protected CustomCharacterMovement Movement { get; set; }
-    [field: SerializeField] protected Animator Animator { get; set; }
+    
 
     //[field: SerializeField] protected int ActionList = 6;
 
-    public Health Health { get; private set; }
-    public Targetable Targetable { get; private set; }
-    public Vision Vision { get; private set; }
+   
 
     public bool CanShoot { get; set; } = true;
     public bool CanMelee { get; set; } = true;
@@ -36,21 +33,17 @@ public class CustomPlayerController : MonoBehaviour
     [field: SerializeField, InlineButton(nameof(FindWeapons), "Find")] public Weapons[] Weapons { get; private set; }
     protected Vector2 MoveInput { get; set; }
 
-    protected virtual void OnValidate()
+    protected override void OnValidate()
     {
-        if(Movement == null) Movement = GetComponent<CustomCharacterMovement>();
-        if(Animator == null) Animator = GetComponent<Animator>();
+        base.OnValidate();
     }
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         Cursor.lockState = CursorMode;
-        Movement = GetComponent<CustomCharacterMovement>();
-        Health = GetComponent<Health>();
-        Targetable = GetComponent<Targetable>();
-        Vision = GetComponent<Vision>();
     }
-
+    
     private void FindWeapons()
     {
         Weapons = GetComponentsInChildren<Weapons>();

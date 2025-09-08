@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using GameEvents;
 using UnityEngine;
 
 public class WeaponData : ScriptableObject
@@ -12,10 +14,11 @@ public class WeaponData : ScriptableObject
     [field: SerializeField] public int WeaponIndex { get; private set; } = 0;
     [field: SerializeField] public DamageType DamageType { get; private set; } = DamageType.Physical;
     
-    [field: SerializeField] public GameObject WeaponMesh  { get; private set; }
+    [field: SerializeField] public GameObject WeaponMesh  { get; set; }
 
     // add feedback
     [field: SerializeField] public string AttackAnimName { get; private set; } = "";
-    [field: SerializeField] public Collider[] WeaponColliders {get; private set;}
+    //[field: SerializeField] public Collider[] WeaponColliders {get; private set;}
+    [field: SerializeField] public List<Collider> WeaponColliders {get; private set;}
     //[field: SerializeField] public EventReference SFX { get; private set; }
 }

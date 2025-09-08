@@ -8856,10 +8856,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08023c7659fa61e43b7aa2ff52141c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <CursorMode>k__BackingField: 1
-  <LookInCameraDirection>k__BackingField: 1
   <Movement>k__BackingField: {fileID: 341077868634195652}
   <Animator>k__BackingField: {fileID: 9500000}
+  <CursorMode>k__BackingField: 1
+  <LookInCameraDirection>k__BackingField: 1
   <Weapons>k__BackingField:
   - {fileID: 5804232795530680594}
 --- !u!114 &1549061530283916620

@@ -12,6 +12,13 @@
       },
       "hash": "8b3450c749534bf3694d42f940ca730f7047a59e"
     },
+    "com.qhenshaw.gameevents": {
+      "version": "https://github.com/qhenshaw/GameEvents.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "2f7294438781ecbc3487670fa84483c7331c307c"
+    },
     "com.qhenshaw.sharedsampleassets": {
       "version": "https://github.com/qhenshaw/SharedSampleAssets.git",
       "depth": 0,

@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 
 public abstract class Weapons : MonoBehaviour
@@ -37,5 +38,19 @@ public abstract class Weapons : MonoBehaviour
 
         // play animation
         if (!string.IsNullOrEmpty(Data.AttackAnimName)) _animator.SetTrigger(Data.AttackAnimName);
+    }
+    
+    public void AssignWeaponData(GameObject weaponObject)
+    {
+        Collider weaponCollider = weaponObject.GetComponent<Collider>();
+        if(!Data.WeaponColliders.Contains(weaponCollider)) Data.WeaponColliders.Add(weaponCollider);
+    }
+
+    public void AssignWeaponMesh(GameObject weaponObject)
+    {
+        if (Data.WeaponMesh != null)
+        {
+            Data.WeaponMesh = weaponObject;
+        }
     }
 }
