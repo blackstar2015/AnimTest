@@ -1,3 +1,4 @@
+using System;
 using GameEvents;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
@@ -10,6 +11,11 @@ public abstract class Weapons : MonoBehaviour
     
     private float _lastAttackTime = -100000f;
     private Animator _animator;
+
+    private void Awake()
+    {
+        AssignWeaponMesh();
+    }
 
     private void Start()
     {
@@ -53,7 +59,6 @@ public abstract class Weapons : MonoBehaviour
         if (Data.WeaponMesh == null && _weaponMeshEventAsset != null)
         {
             Weapons weapon = GetComponent<Weapons>();
-            GameObject weaponGO = weapon.gameObject;
             weapon.Data.WeaponMesh = _weaponMeshEventAsset.CurrentValue;
         }
     }

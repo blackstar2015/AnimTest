@@ -19,7 +19,6 @@ public class HealthBar : MonoBehaviour
     private void Damage(DamageInfo damageInfo)
     {
         _fillBar.fillAmount = _health.CurrentPercentage;
-        Tween.ShakeLocalPosition = _health.CurrentPercentage;
     }
 
     private void Death(DamageInfo damageInfo)

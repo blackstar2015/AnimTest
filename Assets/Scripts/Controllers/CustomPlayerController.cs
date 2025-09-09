@@ -20,7 +20,7 @@ public class CustomPlayerController : CustomController
     private int _actionIndex = 1;
     private int _weaponIndex = 0;
     private bool _isAttacking;
-
+    private bool _isBlocking = false;
     // array of current weapons
     [field: SerializeField, InlineButton(nameof(FindWeapons), "Find")] public Weapons[] Weapons { get; private set; }
     protected Vector2 MoveInput { get; set; }
@@ -37,18 +37,18 @@ public class CustomPlayerController : CustomController
     }
     private void Start()
     {
-        ActivateCurrentWeapon();        
+        //ActivateCurrentWeapon();        
     }
     private void ActivateCurrentWeapon()
     {
         foreach (Weapons weapon in Weapons)
         {
             weapon.AssignWeaponMesh();
-            if (weapon.Data.WeaponIndex != _weaponIndex)
-            {
-                weapon.Data.WeaponMesh.gameObject.SetActive(false);
-            }
-            else weapon.Data.WeaponMesh.gameObject.SetActive(true);
+            // if (weapon.Data.WeaponIndex != _weaponIndex)
+            // {
+            //     weapon.Data.WeaponMesh.gameObject.SetActive(false);
+            // }
+            // else weapon.Data.WeaponMesh.gameObject.SetActive(true);
 
         }
     }
@@ -95,8 +95,13 @@ public class CustomPlayerController : CustomController
         _isAttacking = value.isPressed;
     }
 
+    public virtual void OnBlock(InputValue value)
+    {
+        _isBlocking = value.isPressed;
+    }
     protected virtual void Update()
     {
+         Animator.SetBool("IsBlocking", _isBlocking);
         if (Movement == null) return;
         // find correct right/forward directions based on main camera rotation
         Vector3 up = Vector3.up;

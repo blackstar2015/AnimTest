@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.kyrylokuzyk.primetween": "file:../Assets/Plugins/PrimeTween/internal/com.kyrylokuzyk.primetween.tgz",
     "com.qhenshaw.charactermovement": "https://github.com/qhenshaw/CharacterMovement.git",
     "com.qhenshaw.gameevents": "https://github.com/qhenshaw/GameEvents.git",
     "com.qhenshaw.sharedsampleassets": "https://github.com/qhenshaw/SharedSampleAssets.git",
