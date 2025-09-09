@@ -1,18 +1,17 @@
+using Sirenix.OdinInspector;
 using System.Collections;
-using CharacterMovement;
 using UnityEngine;
 
-public class CustomCharacterMovement : CharacterMovement3D
+public class CustomCharacterMovement : CustomCharacterMovementBase
 {
+    [SerializeField, TabGroup("Dashing")] private float _dashSpeed = 1000f;
+    [ShowInInspector, TabGroup("Dashing")]public bool IsDashing { get; private set; } = false;
+    [ShowInInspector, TabGroup("Dashing")]public float DashCooldown { get; private set; } = 2f;
     private Vector3 _dashDirection;
-    public bool IsDashing = false;
-    public float DashCooldown = 2f;
-    [SerializeField] private float _dashSpeed = 1000f;
 
     public void Dash(float DashAnimLength)
     {
-        StartCoroutine(DashCoroutine(DashAnimLength));
-        
+        StartCoroutine(DashCoroutine(DashAnimLength));        
     }
 
     private IEnumerator DashCoroutine(float DashAnimLength)

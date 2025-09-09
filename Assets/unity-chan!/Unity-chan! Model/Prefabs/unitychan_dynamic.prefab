@@ -8824,8 +8824,8 @@ MonoBehaviour:
   <StepHeight>k__BackingField: 0.3
   <StepHeightAllowance>k__BackingField: 0.1
   <StepHeightForwardOffset>k__BackingField: 0.05
-  <EnableAvoidance>k__BackingField: 0
   <SpeedVariation>k__BackingField: 0.5
+  <EnableAvoidance>k__BackingField: 0
   <NeighborDistance>k__BackingField: 3
   <CornerNeighborDistance>k__BackingField: 1
   <NeighborMask>k__BackingField:
@@ -8841,8 +8841,6 @@ MonoBehaviour:
   <Rigidbody>k__BackingField: {fileID: 4232728749745926633}
   <NavMeshAgent>k__BackingField: {fileID: 1532479158359380478}
   <CapsuleCollider>k__BackingField: {fileID: 3256644554216865773}
-  IsDashing: 0
-  DashCooldown: 2
   _dashSpeed: 1000
 --- !u!114 &463778865678524921
 MonoBehaviour:
@@ -8966,4 +8964,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3abd20ccd679d45890fc3965fc2d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponMeshEventAsset: {fileID: 0}
   <Data>k__BackingField: {fileID: 11400000, guid: c6e5a705e0a59f747b427a99eb1fd5e4, type: 2}

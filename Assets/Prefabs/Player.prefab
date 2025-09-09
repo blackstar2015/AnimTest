@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2983086488090264493}
   - component: {fileID: 7163161455311376962}
-  - component: {fileID: 1087791108374437815}
   m_Layer: 6
   m_Name: 2HandedSword
   m_TagString: Untagged
@@ -45,49 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3abd20ccd679d45890fc3965fc2d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponMeshEventAsset: {fileID: 11400000, guid: a4b40dfec64e40942aa0d730ca5f15df, type: 2}
   <Data>k__BackingField: {fileID: 11400000, guid: c2b550b4aab1ed645a7a0bcb8eff3ae7, type: 2}
---- !u!114 &1087791108374437815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 594046120443335313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbcc5463afaf3224aba97183c7e6a941, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameEventAsset: {fileID: 11400000, guid: a4b40dfec64e40942aa0d730ca5f15df, type: 2}
-  _useFilter: 0
-  _filterValues: []
-  OnGameEventInvoked:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7163161455311376962}
-        m_TargetAssemblyTypeName: Weapons, Assembly-CSharp
-        m_MethodName: AssignWeaponData
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7163161455311376962}
-        m_TargetAssemblyTypeName: Weapons, Assembly-CSharp
-        m_MethodName: AssignWeaponMesh
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &2239857030008488377
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3abd20ccd679d45890fc3965fc2d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponMeshEventAsset: {fileID: 0}
   <Data>k__BackingField: {fileID: 11400000, guid: c6e5a705e0a59f747b427a99eb1fd5e4, type: 2}
 --- !u!114 &3861086764739598876
 MonoBehaviour:
@@ -1311,6 +1270,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100064, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2306629140940901893}
+    - targetCorrespondingSourceObject: {fileID: 100064, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4018750243128252414}
   m_SourcePrefab: {fileID: 100100000, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
 --- !u!4 &2245886071898472610 stripped
 Transform:
@@ -1393,8 +1355,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2bb40f32588b174382d593435f42740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _current: 100
-  _max: 100
+  <Current>k__BackingField: 100
+  <Max>k__BackingField: 100
   _deathLayer: Corpse
   OnDamage:
     m_PersistentCalls:
@@ -1480,6 +1442,21 @@ MonoBehaviour:
   _raiseEvent: 2
   _value: {fileID: 2245886071898774922}
   _gameEventAsset: {fileID: 11400000, guid: aa41d1e15455c8e4b862e4cf58b79909, type: 2}
+--- !u!114 &4018750243128252414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2245886071898774922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a73bf57fd5f84444882099ddf4b6d3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _raiseEvent: 2
+  _value: {fileID: 8552094867986949429}
+  _gameEventAsset: {fileID: 11400000, guid: a4b40dfec64e40942aa0d730ca5f15df, type: 2}
 --- !u!1001 &4384375683026905577
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1494,7 +1471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5365839450475613404, guid: 1502455fab7ca46499b67a05e2dc975a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5365839450476105916, guid: 1502455fab7ca46499b67a05e2dc975a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1547,9 +1524,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5365839450475613404, guid: 1502455fab7ca46499b67a05e2dc975a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2676627965865742666}
-    - targetCorrespondingSourceObject: {fileID: 5365839450475613404, guid: 1502455fab7ca46499b67a05e2dc975a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 16530183770222919}
   m_SourcePrefab: {fileID: 100100000, guid: 1502455fab7ca46499b67a05e2dc975a, type: 3}
 --- !u!4 &8552094867986725205 stripped
 Transform:
@@ -1574,18 +1548,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponIndex: 1
---- !u!114 &16530183770222919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8552094867986949429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a73bf57fd5f84444882099ddf4b6d3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _raiseEvent: 4
-  _value: {fileID: 8552094867986949429}
-  _gameEventAsset: {fileID: 11400000, guid: a4b40dfec64e40942aa0d730ca5f15df, type: 2}

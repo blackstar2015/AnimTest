@@ -1,11 +1,12 @@
+using GameEvents;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
 
 public abstract class Weapons : MonoBehaviour
 {
+    [field: SerializeField] private GameObjectEventAsset _weaponMeshEventAsset;
     [field: SerializeField, Required, InlineEditor] public WeaponData Data { get; private set; }
-
     
     private float _lastAttackTime = -100000f;
     private Animator _animator;
@@ -44,13 +45,16 @@ public abstract class Weapons : MonoBehaviour
     {
         Collider weaponCollider = weaponObject.GetComponent<Collider>();
         if(!Data.WeaponColliders.Contains(weaponCollider)) Data.WeaponColliders.Add(weaponCollider);
+       
     }
 
-    public void AssignWeaponMesh(GameObject weaponObject)
+    public void AssignWeaponMesh()
     {
-        if (Data.WeaponMesh != null)
+        if (Data.WeaponMesh == null && _weaponMeshEventAsset != null)
         {
-            Data.WeaponMesh = weaponObject;
+            Weapons weapon = GetComponent<Weapons>();
+            GameObject weaponGO = weapon.gameObject;
+            weapon.Data.WeaponMesh = _weaponMeshEventAsset.CurrentValue;
         }
     }
 }

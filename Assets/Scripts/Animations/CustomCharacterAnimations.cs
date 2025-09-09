@@ -1,4 +1,5 @@
 using CharacterMovement;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,21 +8,20 @@ public class CustomCharacterAnimations : MonoBehaviour
     // damping time smooths rapidly changing values sent to animator
     [field: SerializeField] protected float DampTime { get; set; } = 0.1f;
 
-    [field: Header("Components")]
-    [field: SerializeField] protected Animator Animator { get; set; }
-    [field: SerializeField] protected CharacterMovementBase CharacterMovement { get; set; }
+    [field: SerializeField, TabGroup("Components")] protected Animator Animator { get; set; }
+    [field: SerializeField, TabGroup("Components")] protected CustomCharacterMovementBase CharacterMovement { get; set; }
 
-    public UnityEvent OnFootR = new UnityEvent();
-    public UnityEvent OnFootL = new UnityEvent();
-    public UnityEvent OnLand = new UnityEvent();
-    public UnityEvent OnShoot = new UnityEvent();
-    public UnityEvent OnHit = new UnityEvent();
+    [TabGroup("Events")]public UnityEvent OnFootR = new UnityEvent();
+    [TabGroup("Events")]public UnityEvent OnFootL = new UnityEvent();
+    [TabGroup("Events")]public UnityEvent OnLand = new UnityEvent();
+    [TabGroup("Events")]public UnityEvent OnShoot = new UnityEvent();
+    [TabGroup("Events")]public UnityEvent OnHit = new UnityEvent();
     
     
     protected virtual void OnValidate()
     {
         if (Animator == null) Animator = GetComponent<Animator>();
-        if (CharacterMovement == null) CharacterMovement = GetComponent<CharacterMovementBase>();
+        if (CharacterMovement == null) CharacterMovement = GetComponent<CustomCharacterMovementBase>();
     }
 
     protected virtual void Update()

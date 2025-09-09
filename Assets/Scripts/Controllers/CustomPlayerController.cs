@@ -10,13 +10,6 @@ public class CustomPlayerController : CustomController
     // make character look in Camera direction instead of MoveDirection
     [field: SerializeField] public bool LookInCameraDirection { get; set; }
 
-    [field: Header("Components")]
-    
-
-    //[field: SerializeField] protected int ActionList = 6;
-
-   
-
     public bool CanShoot { get; set; } = true;
     public bool CanMelee { get; set; } = true;
     public int CurrentActionIndex => _actionIndex;
@@ -29,7 +22,6 @@ public class CustomPlayerController : CustomController
     private bool _isAttacking;
 
     // array of current weapons
-    // InlineButton appears beside the property/field in the inspector
     [field: SerializeField, InlineButton(nameof(FindWeapons), "Find")] public Weapons[] Weapons { get; private set; }
     protected Vector2 MoveInput { get; set; }
 
@@ -43,7 +35,24 @@ public class CustomPlayerController : CustomController
         base.Awake();
         Cursor.lockState = CursorMode;
     }
-    
+    private void Start()
+    {
+        ActivateCurrentWeapon();        
+    }
+    private void ActivateCurrentWeapon()
+    {
+        foreach (Weapons weapon in Weapons)
+        {
+            weapon.AssignWeaponMesh();
+            if (weapon.Data.WeaponIndex != _weaponIndex)
+            {
+                weapon.Data.WeaponMesh.gameObject.SetActive(false);
+            }
+            else weapon.Data.WeaponMesh.gameObject.SetActive(true);
+
+        }
+    }
+
     private void FindWeapons()
     {
         Weapons = GetComponentsInChildren<Weapons>();
@@ -51,11 +60,6 @@ public class CustomPlayerController : CustomController
 
     public void OnWeaponSwitch()
     {
-        // int oldIndex = _weaponIndex;
-        // if (Weapons[oldIndex].Data.WeaponMesh != null) 
-        // { 
-        //     Weapons[oldIndex].Data.WeaponMesh?.SetActive(false); 
-        // }
         if (_weaponIndex >= Weapons.Length - 1)
         {
             _weaponIndex = 0;
@@ -65,10 +69,6 @@ public class CustomPlayerController : CustomController
             _weaponIndex++;
         }
         Animator.SetInteger("WeaponIndex", _weaponIndex);
-        // if (Weapons[_weaponIndex].Data.WeaponMesh != null)
-        // {
-        //     Weapons[_weaponIndex].Data.WeaponMesh.SetActive(true);
-        // }
     }
     public virtual void OnMove(InputValue value)
     {
@@ -135,17 +135,14 @@ public class CustomPlayerController : CustomController
         GameObject weaponMesh = Weapons[index].Data.WeaponMesh;
         weaponMesh.SetActive(false);
     }
+
     public void UnSheath(int index)
     {
         Debug.Log("ASDA");
         GameObject weaponMesh = Weapons[index].Data.WeaponMesh;
         weaponMesh.SetActive(true);
     }
-    // public void MeleeHitAnimEvent(int attackIndex)
-    // {
-    //     WeaponsMelee weaponsMelee = Weapons[_weaponIndex] as WeaponsMelee;
-    //     if(weaponsMelee != null)  weaponsMelee.MeleeHitAnimEvent(attackIndex, transform.position);
-    // }
+
     public void DisableTrigger(int index)
     {
         foreach (Collider collider in Weapons[index].Data.WeaponColliders)
@@ -153,6 +150,7 @@ public class CustomPlayerController : CustomController
             collider.enabled = false;
         }
     }
+
     public void EnableTrigger(int index)
     {
         foreach (Collider collider in Weapons[index].Data.WeaponColliders)

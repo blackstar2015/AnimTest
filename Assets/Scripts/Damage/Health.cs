@@ -6,20 +6,20 @@ using System;
 public class Health : MonoBehaviour, IDamageable
 {
     // fields
-    [BoxGroup("Stats"), SerializeField] private float _current = 100f;
-    [BoxGroup("Stats"), SerializeField] private float _max = 100f;
+    [field: SerializeField, TabGroup("Stats")] public float Current { get; private set; } = 100f;
+    [field: SerializeField, TabGroup("Stats")] public float Max { get; private set; } = 100f;
 
     // death
-    [BoxGroup("Death"), SerializeField] private string _deathLayer = "Corpse";
+    [TabGroup("Death"), SerializeField] private string _deathLayer = "Corpse";
 
     // properties
-    [BoxGroup("Debug"), ShowInInspector] public float CurrentHealth => _current;
-    [BoxGroup("Debug"), ShowInInspector] public float CurrentPercentage => _current / _max;
-    [BoxGroup("Debug"), ShowInInspector] public float MissingHealth => _max - _current;
-    [BoxGroup("Debug"), ShowInInspector] public bool IsAlive => _current >= 1f;
+    [TabGroup("Debug"), ShowInInspector] public float CurrentHealth => Current;
+    [TabGroup("Debug"), ShowInInspector] public float CurrentPercentage => Current / Max;
+    [TabGroup("Debug"), ShowInInspector] public float MissingHealth => Max - Current;
+    [TabGroup("Debug"), ShowInInspector] public bool IsAlive => Current >= 1f;
 
-    public UnityEvent<DamageInfo> OnDamage;
-    public UnityEvent<DamageInfo> OnDeath;
+    [TabGroup("Events")]public UnityEvent<DamageInfo> OnDamage;
+    [TabGroup("Events")] public UnityEvent<DamageInfo> OnDeath;
     
     public void Damage(DamageInfo damageInfo)
     {
@@ -27,8 +27,8 @@ public class Health : MonoBehaviour, IDamageable
         if (damageInfo.Amount < 1f) return;         
         
         // reduce health current value
-        _current -= damageInfo.Amount;
-        _current = Mathf.Clamp(_current, 0f, _max);
+        Current -= damageInfo.Amount;
+        Current = Mathf.Clamp(Current, 0f, Max);
 
         // invoke the damage event
         OnDamage.Invoke(damageInfo);   
@@ -44,7 +44,7 @@ public class Health : MonoBehaviour, IDamageable
     [Button("Damage Test 10%")]
     public void DamageTest()
     {
-        float amount = _max * 0.1f;
+        float amount = Max * 0.1f;
         DamageInfo damageInfo = new DamageInfo(amount, DamageType.Physical, false, gameObject, gameObject, gameObject);
         Damage(damageInfo);
     }
