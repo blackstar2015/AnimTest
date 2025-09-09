@@ -18,11 +18,9 @@ public class CustomPlayerController : CustomController
     private float _lastDashTime = Mathf.NegativeInfinity;
     private float _lastAttackTime = Mathf.NegativeInfinity;
     private int _actionIndex = 1;
-    private int _weaponIndex = 0;
     private bool _isAttacking;
     private bool _isBlocking = false;
     // array of current weapons
-    [field: SerializeField, InlineButton(nameof(FindWeapons), "Find")] public Weapons[] Weapons { get; private set; }
     protected Vector2 MoveInput { get; set; }
 
     protected override void OnValidate()
@@ -35,28 +33,24 @@ public class CustomPlayerController : CustomController
         base.Awake();
         Cursor.lockState = CursorMode;
     }
-    private void Start()
-    {
-        //ActivateCurrentWeapon();        
-    }
-    private void ActivateCurrentWeapon()
-    {
-        foreach (Weapons weapon in Weapons)
-        {
-            weapon.AssignWeaponMesh();
-            // if (weapon.Data.WeaponIndex != _weaponIndex)
-            // {
-            //     weapon.Data.WeaponMesh.gameObject.SetActive(false);
-            // }
-            // else weapon.Data.WeaponMesh.gameObject.SetActive(true);
-
-        }
-    }
-
-    private void FindWeapons()
-    {
-        Weapons = GetComponentsInChildren<Weapons>();
-    }
+    // private void Start()
+    // {
+    //     ActivateCurrentWeapon();        
+    // }
+    
+    // private void ActivateCurrentWeapon()
+    // {
+    //     foreach (Weapons weapon in Weapons)
+    //     {
+    //         weapon.AssignWeaponMesh();
+    //         // if (weapon.Data.WeaponIndex != _weaponIndex)
+    //         // {
+    //         //     weapon.Data.WeaponMesh.gameObject.SetActive(false);
+    //         // }
+    //         // else weapon.Data.WeaponMesh.gameObject.SetActive(true);
+    //
+    //     }
+    // }
 
     public void OnWeaponSwitch()
     {
@@ -133,35 +127,5 @@ public class CustomPlayerController : CustomController
         _lastAttackTime =  Time.time;
     }
     
-    #region AnimationEvents
-    public void Sheath(int index)
-    {
-        Debug.Log("ASD");
-        GameObject weaponMesh = Weapons[index].Data.WeaponMesh;
-        weaponMesh.SetActive(false);
-    }
-
-    public void UnSheath(int index)
-    {
-        Debug.Log("ASDA");
-        GameObject weaponMesh = Weapons[index].Data.WeaponMesh;
-        weaponMesh.SetActive(true);
-    }
-
-    public void DisableTrigger(int index)
-    {
-        foreach (Collider collider in Weapons[index].Data.WeaponColliders)
-        {
-            collider.enabled = false;
-        }
-    }
-
-    public void EnableTrigger(int index)
-    {
-        foreach (Collider collider in Weapons[index].Data.WeaponColliders)
-        {
-            collider.enabled = true;
-        }
-    }
-    #endregion
+    
 }

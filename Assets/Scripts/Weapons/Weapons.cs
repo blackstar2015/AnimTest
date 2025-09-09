@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GameEvents;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
@@ -6,16 +7,17 @@ using UnityEngine;
 
 public abstract class Weapons : MonoBehaviour
 {
-    [field: SerializeField] private GameObjectEventAsset _weaponMeshEventAsset;
+    //[field: SerializeField] private GameObjectEventAsset _weaponMeshEventAsset;
     [field: SerializeField, Required, InlineEditor] public WeaponData Data { get; private set; }
-    
+    [field: SerializeField] public GameObject WeaponMesh  { get; set; }
+    [field: SerializeField] public List<Collider> WeaponColliders {get; private set;}
     private float _lastAttackTime = -100000f;
     private Animator _animator;
 
-    private void Awake()
-    {
-        AssignWeaponMesh();
-    }
+    // private void Awake()
+    // {
+    //     AssignWeaponMesh();
+    // }
 
     private void Start()
     {
@@ -47,19 +49,19 @@ public abstract class Weapons : MonoBehaviour
         if (!string.IsNullOrEmpty(Data.AttackAnimName)) _animator.SetTrigger(Data.AttackAnimName);
     }
     
-    public void AssignWeaponData(GameObject weaponObject)
-    {
-        Collider weaponCollider = weaponObject.GetComponent<Collider>();
-        if(!Data.WeaponColliders.Contains(weaponCollider)) Data.WeaponColliders.Add(weaponCollider);
-       
-    }
+    // public void AssignWeaponData(GameObject weaponObject)
+    // {
+    //     Collider weaponCollider = weaponObject.GetComponent<Collider>();
+    //     if(!Data.WeaponColliders.Contains(weaponCollider)) Data.WeaponColliders.Add(weaponCollider);
+    //    
+    // }
 
-    public void AssignWeaponMesh()
-    {
-        if (Data.WeaponMesh == null && _weaponMeshEventAsset != null)
-        {
-            Weapons weapon = GetComponent<Weapons>();
-            weapon.Data.WeaponMesh = _weaponMeshEventAsset.CurrentValue;
-        }
-    }
+    // public void AssignWeaponMesh()
+    // {
+    //     if (Data.WeaponMesh == null && _weaponMeshEventAsset != null)
+    //     {
+    //         Weapons weapon = GetComponent<Weapons>();
+    //         weapon.Data.WeaponMesh = _weaponMeshEventAsset.CurrentValue;
+    //     }
+    // }
 }

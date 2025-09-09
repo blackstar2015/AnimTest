@@ -20,30 +20,26 @@ MonoBehaviour:
   <EffectiveRange>k__BackingField: 1
   <WeaponIndex>k__BackingField: 0
   <DamageType>k__BackingField: 0
-  <WeaponMesh>k__BackingField: {fileID: 0}
   <AttackAnimName>k__BackingField: Unarmed
-  <WeaponColliders>k__BackingField:
-  - {fileID: 0}
-  - {fileID: 0}
   <ComboData>k__BackingField:
   - <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
-    <Range>k__BackingField: 1
+    <Range>k__BackingField: 1.5
   - <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
-    <Range>k__BackingField: 1
+    <Range>k__BackingField: 1.5
   - <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
-    <Range>k__BackingField: 1
+    <Range>k__BackingField: 1.5
   - <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
-    <Range>k__BackingField: 1
+    <Range>k__BackingField: 1.5
   - <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
-    <Range>k__BackingField: 1
+    <Range>k__BackingField: 1.5
   - <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
-    <Range>k__BackingField: 1
+    <Range>k__BackingField: 1.5
   <HitMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
