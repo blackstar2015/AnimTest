@@ -213,6 +213,7 @@ MonoBehaviour:
   <Animator>k__BackingField: {fileID: 2014271128733828441}
   <Weapons>k__BackingField:
   - {fileID: 5187209594223791945}
+  <LookInCameraDirection>k__BackingField: 0
 --- !u!114 &6849809075481193866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,7 +253,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2981525915324084267}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
   m_Controller: {fileID: 9100000, guid: ab9f27af0e384f841adfcfb11f08cec7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0

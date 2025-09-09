@@ -11,14 +11,14 @@ public class ApplyRootMotion : StateMachineBehaviour
     [SerializeField] private int _visibleWeaponIndex = 0;
 
     private CustomCharacterMovement _movement;
-    private CustomPlayerController _controller;
+    private CustomController _controller;
     // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
     // similar to start
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // we can get components on character GameObject like normal
         _movement = animator.GetComponent<CustomCharacterMovement>();
-        _controller = animator.GetComponent<CustomPlayerController>();
+        _controller = animator.GetComponent<CustomController>();
 
         // set movement states
         _movement.CanMove = _canMove;

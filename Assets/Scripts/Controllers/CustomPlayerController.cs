@@ -8,16 +8,11 @@ public class CustomPlayerController : CustomController
     // initial cursor state
     [field: SerializeField] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
     // make character look in Camera direction instead of MoveDirection
-    [field: SerializeField] public bool LookInCameraDirection { get; set; }
 
-    public bool CanShoot { get; set; } = true;
-    public bool CanMelee { get; set; } = true;
-    public int CurrentActionIndex => _actionIndex;
-    public int CurrentWeaponIndex => _weaponIndex;
+   
 
     private float _lastDashTime = Mathf.NegativeInfinity;
     private float _lastAttackTime = Mathf.NegativeInfinity;
-    private int _actionIndex = 1;
     private bool _isAttacking;
     private bool _isBlocking = false;
     // array of current weapons

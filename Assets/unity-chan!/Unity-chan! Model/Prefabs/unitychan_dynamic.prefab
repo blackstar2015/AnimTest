@@ -8986,8 +8986,8 @@ MonoBehaviour:
   <Weapons>k__BackingField:
   - {fileID: 3777459622835300163}
   - {fileID: 824655716487919010}
-  <CursorMode>k__BackingField: 1
   <LookInCameraDirection>k__BackingField: 1
+  <CursorMode>k__BackingField: 1
 --- !u!114 &1549061530283916620
 MonoBehaviour:
   m_ObjectHideFlags: 0

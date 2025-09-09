@@ -7,11 +7,11 @@ public class DamageTrigger : MonoBehaviour
     private float _damage;
     private DamageType _damageType;
     private GameObject _instigator;
-    private CustomPlayerController _player;
+    private CustomController _player;
     private WeaponMeleeData _weaponData;
     private void Awake()
     {
-        _player = GetComponentInParent<CustomPlayerController>();
+        _player = GetComponentInParent<CustomController>();
         _weaponData = _player.Weapons[_weaponIndex].Data as WeaponMeleeData;
     }
 

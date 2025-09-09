@@ -9,7 +9,13 @@ public class CustomController : MonoBehaviour
     public Targetable Targetable { get; private set; }
     public Vision Vision { get; private set; }
     [field: SerializeField, InlineButton(nameof(FindWeapons), "Find")] public Weapons[] Weapons { get; private set; }
+    public int CurrentWeaponIndex => _weaponIndex;
+    public int CurrentActionIndex => _actionIndex;
+    protected int _actionIndex = 1;
     protected int _weaponIndex = 0;
+    public bool CanShoot { get; set; } = true;
+    public bool CanMelee { get; set; } = true;
+    [field: SerializeField] public bool LookInCameraDirection { get; set; }
     
     protected virtual void OnValidate()
     {
