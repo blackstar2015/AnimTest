@@ -5,17 +5,11 @@ using UnityEngine.InputSystem;
 
 public class CustomPlayerController : CustomController
 {
-    // initial cursor state
     [field: SerializeField] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
-    // make character look in Camera direction instead of MoveDirection
-
-   
-
     private float _lastDashTime = Mathf.NegativeInfinity;
     private float _lastAttackTime = Mathf.NegativeInfinity;
     private bool _isAttacking;
-    private bool _isBlocking = false;
-    // array of current weapons
+
     protected Vector2 MoveInput { get; set; }
 
     protected override void OnValidate()
@@ -28,24 +22,6 @@ public class CustomPlayerController : CustomController
         base.Awake();
         Cursor.lockState = CursorMode;
     }
-    // private void Start()
-    // {
-    //     ActivateCurrentWeapon();        
-    // }
-    
-    // private void ActivateCurrentWeapon()
-    // {
-    //     foreach (Weapons weapon in Weapons)
-    //     {
-    //         weapon.AssignWeaponMesh();
-    //         // if (weapon.Data.WeaponIndex != _weaponIndex)
-    //         // {
-    //         //     weapon.Data.WeaponMesh.gameObject.SetActive(false);
-    //         // }
-    //         // else weapon.Data.WeaponMesh.gameObject.SetActive(true);
-    //
-    //     }
-    // }
 
     public void OnWeaponSwitch()
     {
@@ -86,11 +62,13 @@ public class CustomPlayerController : CustomController
 
     public virtual void OnBlock(InputValue value)
     {
-        _isBlocking = value.isPressed;
+        IsBlocking = _canBlock ? value.isPressed : false;
     }
     protected virtual void Update()
     {
-         Animator.SetBool("IsBlocking", _isBlocking);
+        base.Update();
+         Animator.SetBool("IsBlocking", IsBlocking);
+         Animator.SetBool("CanBlock", _canBlock);
         if (Movement == null) return;
         // find correct right/forward directions based on main camera rotation
         Vector3 up = Vector3.up;
@@ -121,6 +99,4 @@ public class CustomPlayerController : CustomController
         if (_actionIndex > melee?.MeleeData.ComboData.Length) _actionIndex = 1;
         _lastAttackTime =  Time.time;
     }
-    
-    
 }

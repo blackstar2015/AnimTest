@@ -4,7 +4,7 @@ using UnityEngine;
 public class ToggleLight : MonoBehaviour, IDamageable, IInteractable
 {
     // ? : shorthand reads if [condition] then first option, else second option
-    public float CurrentPercentage => _light.enabled ? 1f : 0f;
+    public float CurrentHealthPercentage => _light.enabled ? 1f : 0f;
     public bool IsAlive => _light.enabled;
 
     public float InteractRange { get; }

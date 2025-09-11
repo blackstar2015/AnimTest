@@ -5,7 +5,7 @@ public class CustomController : MonoBehaviour
 {
     [field: SerializeField] protected CustomCharacterMovement Movement { get; set; }
     [field: SerializeField] protected Animator Animator { get; set; }
-    public Health Health { get; private set; }
+    public Health _health { get; private set; }
     public Targetable Targetable { get; private set; }
     public Vision Vision { get; private set; }
     [field: SerializeField, InlineButton(nameof(FindWeapons), "Find")] public Weapons[] Weapons { get; private set; }
@@ -16,7 +16,10 @@ public class CustomController : MonoBehaviour
     public bool CanShoot { get; set; } = true;
     public bool CanMelee { get; set; } = true;
     [field: SerializeField] public bool LookInCameraDirection { get; set; }
-    
+    public bool IsBlocking { get; internal set; }
+    [SerializeField, ShowInInspector] public bool _canBlock => _health.CanBlock;
+    public bool CanBlock => _canBlock;
+
     protected virtual void OnValidate()
     {
         if(Movement == null) Movement = GetComponent<CustomCharacterMovement>();
@@ -27,7 +30,7 @@ public class CustomController : MonoBehaviour
     {
         //Cursor.lockState = CursorMode;
         Movement = GetComponent<CustomCharacterMovement>();
-        Health = GetComponent<Health>();
+        _health = GetComponent<Health>();
         Targetable = GetComponent<Targetable>();
         Vision = GetComponent<Vision>();
     }
@@ -37,7 +40,11 @@ public class CustomController : MonoBehaviour
     {
         Weapons = GetComponentsInChildren<Weapons>();
     }
-    
+
+    protected virtual void Update()
+    {
+        _health.IsBLocking = IsBlocking;
+    }
     #region AnimationEvents
     public void Sheath(int index)
     {

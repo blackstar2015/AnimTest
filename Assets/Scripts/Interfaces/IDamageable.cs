@@ -10,7 +10,7 @@ public interface IDamageable
     // float SomeFloat;
 
     // but properties are allowed
-    float CurrentPercentage { get; }
+    float CurrentHealthPercentage { get; }
     bool IsAlive { get; }
 
     // we can also add methods (functions)

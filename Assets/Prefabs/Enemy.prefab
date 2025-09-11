@@ -126,13 +126,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2bb40f32588b174382d593435f42740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Current>k__BackingField: 100
-  <Max>k__BackingField: 100
+  <_currentHealth>k__BackingField: 100
+  <_currentStamina>k__BackingField: 100
+  <_maxHealth>k__BackingField: 100
+  <_maxStamina>k__BackingField: 100
+  <_staminaRegenDuration>k__BackingField: 5
   _deathLayer: Corpse
+  IsBLocking: 0
   OnDamage:
     m_PersistentCalls:
       m_Calls: []
   OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBlock:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUpdateStamina:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5724002578159896901
