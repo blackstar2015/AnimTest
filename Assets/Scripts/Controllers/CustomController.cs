@@ -1,4 +1,6 @@
 using Sirenix.OdinInspector;
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class CustomController : MonoBehaviour
@@ -33,9 +35,21 @@ public class CustomController : MonoBehaviour
         _health = GetComponent<Health>();
         Targetable = GetComponent<Targetable>();
         Vision = GetComponent<Vision>();
+        _health.OnBlockedAttack.AddListener(BlockedAttack);
     }
-    
-    
+
+    private void BlockedAttack()
+    {
+        StartCoroutine(BlockedAttackRoutine());
+    }
+
+    private IEnumerator BlockedAttackRoutine()
+    {
+        Animator.SetBool("BlockedAttack", true);
+        yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length/2);
+        Animator.SetBool("BlockedAttack", false);
+    }
+
     private void FindWeapons()
     {
         Weapons = GetComponentsInChildren<Weapons>();

@@ -31,6 +31,7 @@ public class Health : MonoBehaviour, IDamageable
     [TabGroup("Events")] public UnityEvent<DamageInfo> OnDeath;
     [TabGroup("Events")] public UnityEvent<DamageInfo> OnBlock;
     [TabGroup("Events")] public UnityEvent OnUpdateStamina;
+    [TabGroup("Events")] public UnityEvent OnBlockedAttack;
 
     public void Damage(DamageInfo damageInfo)
     {
@@ -65,9 +66,14 @@ public class Health : MonoBehaviour, IDamageable
         _currentStamina -= damageInfo.Amount;
         _currentStamina = Mathf.Clamp(_currentStamina, 0f, _maxStamina);
 
-        if(_currentStamina <= 0) damageInfo.Amount = damageInfo.Amount / 2f;
-
+        if(_currentStamina <= 0)
+        {
+            damageInfo.Amount = damageInfo.Amount / 2f;
+            OnBlock.Invoke(damageInfo);
+            return ;
+        }
         OnBlock.Invoke(damageInfo);
+        damageInfo.Instigator.GetComponent<Health>().OnBlockedAttack.Invoke();
     }
 
     private void BreakBlock(DamageInfo damageInfo)

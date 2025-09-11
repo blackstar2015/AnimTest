@@ -9079,6 +9079,9 @@ MonoBehaviour:
   OnUpdateStamina:
     m_PersistentCalls:
       m_Calls: []
+  OnBlockedAttack:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6490803663116844267
 MonoBehaviour:
   m_ObjectHideFlags: 0
