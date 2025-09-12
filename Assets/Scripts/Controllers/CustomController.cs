@@ -59,35 +59,5 @@ public class CustomController : MonoBehaviour
     {
         _health.IsBLocking = IsBlocking;
     }
-    #region AnimationEvents
-    public void Sheath(int index)
-    {
-        Debug.Log("ASD");
-        GameObject weaponMesh = Weapons[index].WeaponMesh;
-        weaponMesh.SetActive(false);
-    }
-
-    public void UnSheath(int index)
-    {
-        Debug.Log("ASDA");
-        GameObject weaponMesh = Weapons[index].WeaponMesh;
-        weaponMesh.SetActive(true);
-    }
-
-    public void DisableTrigger(int index)
-    {
-        foreach (Collider collider in Weapons[index].WeaponColliders)
-        {
-            collider.enabled = false;
-        }
-    }
-
-    public void EnableTrigger(int index)
-    {
-        foreach (Collider collider in Weapons[index].WeaponColliders)
-        {
-            collider.enabled = true;
-        }
-    }
-    #endregion
+    
 }

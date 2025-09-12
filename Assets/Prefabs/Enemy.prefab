@@ -241,6 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DampTime>k__BackingField: 0.1
   <Animator>k__BackingField: {fileID: 2014271128733828441}
+  <_controller>k__BackingField: {fileID: 8089329468702881073}
   <CharacterMovement>k__BackingField: {fileID: 5724002578159896901}
   OnFootR:
     m_PersistentCalls:
@@ -267,7 +268,7 @@ Animator:
   m_GameObject: {fileID: 2981525915324084267}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
-  m_Controller: {fileID: 9100000, guid: ab9f27af0e384f841adfcfb11f08cec7, type: 2}
+  m_Controller: {fileID: 22100000, guid: d32cec7d758ba814c8e3d6b7a6506431, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

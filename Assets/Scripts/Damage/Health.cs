@@ -2,7 +2,9 @@ using UnityEngine;
 using Sirenix.OdinInspector;    // namespace for all Odin stuff
 using UnityEngine.Events;
 using System;
+using System.Collections;
 using System.Net.Sockets;
+using Unity.VisualScripting;
 
 public class Health : MonoBehaviour, IDamageable
 {
@@ -33,6 +35,25 @@ public class Health : MonoBehaviour, IDamageable
     [TabGroup("Events")] public UnityEvent OnUpdateStamina;
     [TabGroup("Events")] public UnityEvent OnBlockedAttack;
 
+
+    private void Awake()
+    {
+        OnDamage.AddListener(HitReact);
+    }
+
+    private void HitReact(DamageInfo damageInfo)
+    {
+        StartCoroutine(HitReactRoutine(damageInfo));
+    }
+
+    private IEnumerator HitReactRoutine(DamageInfo damageInfo)
+    {
+        Animator animator = damageInfo.Victim.gameObject.GetComponent<Animator>();
+        animator.SetBool("HitReact", true);
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        animator.SetBool("HitReact", false);
+        
+    }
     public void Damage(DamageInfo damageInfo)
     {
         if (!IsAlive) return;                       
@@ -48,7 +69,7 @@ public class Health : MonoBehaviour, IDamageable
         _currentHealth = Mathf.Clamp(_currentHealth, 0f, _maxHealth);
 
         // invoke the damage event
-        OnDamage.Invoke(damageInfo);   
+        OnDamage.Invoke(damageInfo);
                                                    
         // handle death
         if (!IsAlive)

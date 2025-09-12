@@ -9,6 +9,7 @@ public class CustomCharacterAnimations : MonoBehaviour
     [field: SerializeField] protected float DampTime { get; set; } = 0.1f;
 
     [field: SerializeField, TabGroup("Components")] protected Animator Animator { get; set; }
+    [field: SerializeField, TabGroup("Components")] protected CustomController _controller { get; set; }
     [field: SerializeField, TabGroup("Components")] protected CustomCharacterMovementBase CharacterMovement { get; set; }
 
     [TabGroup("Events")]public UnityEvent OnFootR = new UnityEvent();
@@ -22,6 +23,7 @@ public class CustomCharacterAnimations : MonoBehaviour
     {
         if (Animator == null) Animator = GetComponent<Animator>();
         if (CharacterMovement == null) CharacterMovement = GetComponent<CustomCharacterMovementBase>();
+        if(_controller == null) _controller = GetComponent<CustomController>();
     }
 
     protected virtual void Update()
@@ -44,7 +46,37 @@ public class CustomCharacterAnimations : MonoBehaviour
         Animator.SetFloat("VelocityZ", velocityZ);
         
     }
-    
+    #region AnimationEvents
+    public void Sheath(int index)
+    {
+        Debug.Log("ASD");
+        GameObject weaponMesh = _controller.Weapons[index].WeaponMesh;
+        weaponMesh.SetActive(false);
+    }
+
+    public void UnSheath(int index)
+    {
+        Debug.Log("ASDA");
+        GameObject weaponMesh = _controller.Weapons[index].WeaponMesh;
+        weaponMesh.SetActive(true);
+    }
+
+    public void DisableTrigger(int index)
+    {
+        foreach (Collider collider in _controller.Weapons[index].WeaponColliders)
+        {
+            collider.enabled = false;
+        }
+    }
+
+    public void EnableTrigger(int index)
+    {
+        foreach (Collider collider in _controller.Weapons[index].WeaponColliders)
+        {
+            collider.enabled = true;
+        }
+    }
+    #endregion
     public void FootR() => OnFootR.Invoke();
     public void FootL() => OnFootL.Invoke();
     public void Land() => OnLand.Invoke();

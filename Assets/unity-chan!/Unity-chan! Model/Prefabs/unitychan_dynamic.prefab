@@ -9032,6 +9032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DampTime>k__BackingField: 0.1
   <Animator>k__BackingField: {fileID: 9500000}
+  <_controller>k__BackingField: {fileID: 463778865678524921}
   <CharacterMovement>k__BackingField: {fileID: 341077868634195652}
   OnFootR:
     m_PersistentCalls:
