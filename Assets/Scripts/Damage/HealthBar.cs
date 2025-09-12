@@ -33,7 +33,7 @@ public class HealthBar : MonoBehaviour
 
     private void Death(DamageInfo damageInfo)
     {
-        _health.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     private void Update()
