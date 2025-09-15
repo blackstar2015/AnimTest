@@ -11,20 +11,21 @@ public class CustomCharacterMovement : CustomCharacterMovementBase
 
     public void Dash(float DashAnimLength)
     {
+        if (!CanMove) return;
         StartCoroutine(DashCoroutine(DashAnimLength));
     }
 
     private IEnumerator DashCoroutine(float DashAnimLength)
     {
+        if (!CanMove) yield break;
         IsDashing = true;
         if(LocalMoveInput == Vector3.zero) _dashDirection = -1 * transform.forward;
         else _dashDirection = LocalMoveInput.normalized;
         SetLookDirection(_dashDirection);
         Rigidbody.AddForce(_dashDirection * _dashSpeed );
         
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(DashAnimLength);
         
-        Debug.Log(DashAnimLength);
         IsDashing = false;
         yield return null;
     }

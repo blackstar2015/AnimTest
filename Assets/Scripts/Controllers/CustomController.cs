@@ -47,7 +47,9 @@ public class CustomController : MonoBehaviour
 
     private void Death(DamageInfo arg0)
     {
-        this.enabled = false;
+        this.enabled = false; 
+        Movement.Stop();
+        Movement.CanMove = false;
     }
 
     private void BlockedAttack()
@@ -69,11 +71,6 @@ public class CustomController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(!_health.IsAlive)
-        {
-            Movement.Stop();
-            return;
-        }
         _health.IsBlocking = IsBlocking;
     }
     

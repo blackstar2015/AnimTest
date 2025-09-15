@@ -48,6 +48,7 @@ public class CustomPlayerController : CustomController
 
     public virtual void OnDash(InputValue value)
     {
+        if(!Movement.CanMove) return;
         float nextDashTime = _lastDashTime + Movement.DashCooldown;
         if (Time.time > nextDashTime)
         {
