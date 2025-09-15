@@ -42,6 +42,12 @@ public class CustomController : MonoBehaviour
             DamageInfo damageInfo = new DamageInfo(0, DamageType.Physical, false, gameObject, gameObject, gameObject);
             _health.OnDeath.AddListener(weapon.DisableWeaponColliders);
         }
+        _health.OnDeath.AddListener(Death);
+    }
+
+    private void Death(DamageInfo arg0)
+    {
+        this.enabled = false;
     }
 
     private void BlockedAttack()

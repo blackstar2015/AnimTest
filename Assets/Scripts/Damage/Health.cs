@@ -106,6 +106,7 @@ public class Health : MonoBehaviour, IDamageable
         {
             child.gameObject.layer = LayerMask.NameToLayer(_deathLayer);
         }
+        
     }
     private void BreakBlock(DamageInfo damageInfo)
     {

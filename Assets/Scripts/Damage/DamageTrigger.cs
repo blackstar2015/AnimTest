@@ -9,7 +9,7 @@ public class DamageTrigger : MonoBehaviour
     private GameObject _instigator;
     private CustomController _player;
     private WeaponMeleeData _weaponData;
-    private void Awake()
+    private void Start()
     {
         _player = GetComponentInParent<CustomController>();
         _weaponData = _player.Weapons[_weaponIndex].Data as WeaponMeleeData;
@@ -25,6 +25,7 @@ public class DamageTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(_weaponIndex != _player.CurrentWeaponIndex) return;
         if(other.TryGetComponent(out IDamageable targetHealth))
         {
             if (!targetHealth.IsAlive) return;
