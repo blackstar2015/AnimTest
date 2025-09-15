@@ -44,19 +44,17 @@ public class CustomCharacterAnimations : MonoBehaviour
         float velocityZ =  velocity.z *  Mathf.Abs(CharacterMovement.MoveInput.z);
         Animator.SetFloat("VelocityX", velocityX);
         Animator.SetFloat("VelocityZ", velocityZ);
-        
+        Animator.SetBool("IsAlive", _controller.IsAlive);
     }
     #region AnimationEvents
     public void Sheath(int index)
     {
-        Debug.Log("ASD");
         GameObject weaponMesh = _controller.Weapons[index].WeaponMesh;
         weaponMesh.SetActive(false);
     }
 
     public void UnSheath(int index)
     {
-        Debug.Log("ASDA");
         GameObject weaponMesh = _controller.Weapons[index].WeaponMesh;
         weaponMesh.SetActive(true);
     }
@@ -73,6 +71,7 @@ public class CustomCharacterAnimations : MonoBehaviour
     {
         foreach (Collider collider in _controller.Weapons[index].WeaponColliders)
         {
+            Debug.Log(collider.gameObject, collider.gameObject);
             collider.enabled = true;
         }
     }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6096522356296506950}
   - component: {fileID: 5055257171470055058}
   - component: {fileID: 2069275516484506400}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Third Person Aim Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6445756630817145206}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -312,6 +312,10 @@ PrefabInstance:
     - target: {fileID: 400328, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4184142280857105467, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7088797807341960202, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: <_staminaRegenDuration>k__BackingField

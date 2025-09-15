@@ -27,9 +27,9 @@ public class DamageTrigger : MonoBehaviour
     {
         if(other.TryGetComponent(out IDamageable targetHealth))
         {
+            if (!targetHealth.IsAlive) return;
             DamageInfo damageInfo = new DamageInfo(_damage, _damageType, false, other.gameObject, gameObject, _instigator);
             targetHealth.Damage(damageInfo);
-            Debug.Log(_player.CurrentActionIndex);
         }
     }
 }

@@ -11,7 +11,7 @@ public class CustomCharacterMovement : CustomCharacterMovementBase
 
     public void Dash(float DashAnimLength)
     {
-        StartCoroutine(DashCoroutine(DashAnimLength));        
+        StartCoroutine(DashCoroutine(DashAnimLength));
     }
 
     private IEnumerator DashCoroutine(float DashAnimLength)

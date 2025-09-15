@@ -132,35 +132,23 @@ MonoBehaviour:
   <_maxStamina>k__BackingField: 100
   <_staminaRegenDuration>k__BackingField: 5
   _deathLayer: Corpse
-  IsBLocking: 0
+  IsBlocking: 0
   OnDamage:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2014271128733828441}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: HitReact
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnDeath:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2014271128733828441}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
+      - m_Target: {fileID: 5050577568094463462}
+        m_TargetAssemblyTypeName: Health, Assembly-CSharp
+        m_MethodName: Death
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Death
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   OnBlock:
@@ -316,6 +304,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Unarmed
       objectReference: {fileID: 0}
+    - target: {fileID: 6290343235093446983, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
+      propertyPath: <Data>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 2fc9ccc3755e5be4c9686075b09f29c0, type: 2}
     - target: {fileID: 6290343235093446983, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
       propertyPath: <WeaponMesh>k__BackingField
       value: 
@@ -924,7 +916,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
@@ -976,7 +968,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3

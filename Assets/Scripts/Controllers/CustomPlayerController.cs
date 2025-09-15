@@ -15,6 +15,7 @@ public class CustomPlayerController : CustomController
     protected override void OnValidate()
     {
         base.OnValidate();
+        
     }
 
     protected override void Awake()

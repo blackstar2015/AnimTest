@@ -27,7 +27,7 @@ public class Health : MonoBehaviour, IDamageable
     [TabGroup("Properties"), ShowInInspector] public float MissingStamina => _maxStamina - _currentStamina;
     [TabGroup("Properties"), ShowInInspector] public float CurrentStaminaPercentage => _currentStamina / _maxStamina;
     [TabGroup("Properties"), ShowInInspector] public bool CanBlock => _currentStamina >= 1f;
-    [TabGroup("Properties"), ShowInInspector] public bool IsBLocking;
+    [TabGroup("Properties"), ShowInInspector] public bool IsBlocking;
 
     [TabGroup("Events")]public UnityEvent<DamageInfo> OnDamage;
     [TabGroup("Events")] public UnityEvent<DamageInfo> OnDeath;
@@ -39,20 +39,22 @@ public class Health : MonoBehaviour, IDamageable
     private void Awake()
     {
         OnDamage.AddListener(HitReact);
+        OnDeath.AddListener(Death);
     }
 
     private void HitReact(DamageInfo damageInfo)
-    {
+    {        
         StartCoroutine(HitReactRoutine(damageInfo));
     }
 
     private IEnumerator HitReactRoutine(DamageInfo damageInfo)
     {
+        if (!IsAlive) yield break;
         Animator animator = damageInfo.Victim.gameObject.GetComponent<Animator>();
         animator.SetBool("HitReact", true);
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         animator.SetBool("HitReact", false);
-        
+        yield return null;        
     }
     public void Damage(DamageInfo damageInfo)
     {
@@ -75,7 +77,6 @@ public class Health : MonoBehaviour, IDamageable
         if (!IsAlive)
         {
             OnDeath.Invoke(damageInfo);
-            gameObject.layer = LayerMask.NameToLayer(_deathLayer);
         }
     }
 
@@ -96,13 +97,22 @@ public class Health : MonoBehaviour, IDamageable
         OnBlock.Invoke(damageInfo);
         damageInfo.Instigator.GetComponent<Health>().OnBlockedAttack.Invoke();
     }
-
+    public void Death(DamageInfo damageInfo)
+    {
+        //gameObject.layer = LayerMask.NameToLayer(_deathLayer);
+        OnDamage.RemoveListener(HitReact);
+        Transform[] children = gameObject.GetComponentsInChildren<Transform>();
+        foreach (Transform child in children)
+        {
+            child.gameObject.layer = LayerMask.NameToLayer(_deathLayer);
+        }
+    }
     private void BreakBlock(DamageInfo damageInfo)
     {
         
     }
 
-    [Button("Damage Test 10%")]
+    [TabGroup("Stats") , Button("Damage Test 10%")]
     public void DamageTest()
     {
         float amount = _maxHealth * 0.1f;
@@ -117,7 +127,7 @@ public class Health : MonoBehaviour, IDamageable
 
     private void RegenStamina()
     {
-        if(IsBLocking) return;
+        if(IsBlocking) return;
         _currentStamina += 1/_staminaRegenDuration * Time.deltaTime;
         _currentStamina = Mathf.Clamp(_currentStamina,0, _maxStamina);
         OnUpdateStamina.Invoke();

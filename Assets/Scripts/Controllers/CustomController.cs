@@ -19,7 +19,8 @@ public class CustomController : MonoBehaviour
     public bool CanMelee { get; set; } = true;
     [field: SerializeField] public bool LookInCameraDirection { get; set; }
     public bool IsBlocking { get; internal set; }
-    [SerializeField, ShowInInspector] public bool _canBlock => _health.CanBlock;
+    public bool IsAlive => _health.IsAlive;
+    public bool _canBlock => _health.CanBlock;
     public bool CanBlock => _canBlock;
 
     protected virtual void OnValidate()
@@ -36,6 +37,11 @@ public class CustomController : MonoBehaviour
         Targetable = GetComponent<Targetable>();
         Vision = GetComponent<Vision>();
         _health.OnBlockedAttack.AddListener(BlockedAttack);
+        foreach(Weapons weapon in Weapons)
+        {
+            DamageInfo damageInfo = new DamageInfo(0, DamageType.Physical, false, gameObject, gameObject, gameObject);
+            _health.OnDeath.AddListener(weapon.DisableWeaponColliders);
+        }
     }
 
     private void BlockedAttack()
@@ -57,7 +63,12 @@ public class CustomController : MonoBehaviour
 
     protected virtual void Update()
     {
-        _health.IsBLocking = IsBlocking;
+        if(!_health.IsAlive)
+        {
+            Movement.Stop();
+            return;
+        }
+        _health.IsBlocking = IsBlocking;
     }
     
 }
