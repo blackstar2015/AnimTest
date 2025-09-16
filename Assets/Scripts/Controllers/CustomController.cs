@@ -2,26 +2,32 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CustomController : MonoBehaviour
 {
-    [field: SerializeField] protected CustomCharacterMovement Movement { get; set; }
-    [field: SerializeField] protected Animator Animator { get; set; }
-    public Health _health { get; private set; }
-    public Targetable Targetable { get; private set; }
-    public Vision Vision { get; private set; }
-    [field: SerializeField, InlineButton(nameof(FindWeapons), "Find")] public Weapons[] Weapons { get; private set; }
-    public int CurrentWeaponIndex => _weaponIndex;
-    public int CurrentActionIndex => _actionIndex;
-    protected int _actionIndex = 1;
-    protected int _weaponIndex = 0;
-    public bool CanShoot { get; set; } = true;
-    public bool CanMelee { get; set; } = true;
-    [field: SerializeField] public bool LookInCameraDirection { get; set; }
-    public bool IsBlocking { get; internal set; }
-    public bool IsAlive => _health.IsAlive;
-    public bool _canBlock => _health.CanBlock;
-    public bool CanBlock => _canBlock;
+    [field: SerializeField, TabGroup("Components")] protected CustomCharacterMovement Movement { get; set; }
+    [field: SerializeField, TabGroup("Components")] protected Animator Animator { get; set; }
+    [field: SerializeField, TabGroup("Components")]public Health Health { get; set; }
+    [field: SerializeField, TabGroup("Components")]public Targetable Targetable { get; set; }
+    [field: SerializeField, TabGroup("Components")]public Vision Vision { get; set; }
+    [field: SerializeField, InlineButton(nameof(FindWeapons), "Find"), TabGroup("Weapons")] public Weapons[] Weapons { get; private set; }
+    [field: SerializeField, TabGroup("Properties")] public bool LookInCameraDirection { get; set; }
+    [field: SerializeField, TabGroup("Properties")] protected int actionIndex = 1;
+    [field: SerializeField, TabGroup("Properties")] protected int weaponIndex = 0;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode]public bool CanShoot { get; set; } = true;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode]public bool CanMelee { get; set; } = true;
+    [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool IsBlocking => isBlocking;
+    [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool IsAlive => isAlive;
+    [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool CanBlock => canBlock;
+    [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool IsHitReacting => isHitReacting;
+    protected bool isBlocking { get; set; }
+    protected bool canBlock  { get; set; }
+    protected bool isHitReacting { get; set; }
+    protected bool isAlive { get; set; }
+    
+    public int CurrentWeaponIndex => weaponIndex;
+    public int CurrentActionIndex => actionIndex;
 
     protected virtual void OnValidate()
     {
@@ -33,23 +39,27 @@ public class CustomController : MonoBehaviour
     {
         //Cursor.lockState = CursorMode;
         Movement = GetComponent<CustomCharacterMovement>();
-        _health = GetComponent<Health>();
+        Health = GetComponent<Health>();
         Targetable = GetComponent<Targetable>();
         Vision = GetComponent<Vision>();
-        _health.OnBlockedAttack.AddListener(BlockedAttack);
+        isAlive = Health.IsAlive;
+        canBlock  = Health.CanBlock;
+        isHitReacting = Health.IsHitReacting;
+        Health.OnBlockedAttack.AddListener(BlockedAttack);
         foreach(Weapons weapon in Weapons)
         {
             DamageInfo damageInfo = new DamageInfo(0, DamageType.Physical, false, gameObject, gameObject, gameObject);
-            _health.OnDeath.AddListener(weapon.DisableWeaponColliders);
+            Health.OnDeath.AddListener(weapon.DisableWeaponColliders);
         }
-        _health.OnDeath.AddListener(Death);
+        Health.OnDeath.AddListener(Death);
     }
 
     private void Death(DamageInfo arg0)
     {
-        this.enabled = false; 
+        isAlive = false;
         Movement.Stop();
         Movement.CanMove = false;
+        this.enabled = false; 
     }
 
     private void BlockedAttack()
@@ -71,7 +81,8 @@ public class CustomController : MonoBehaviour
 
     protected virtual void Update()
     {
-        _health.IsBlocking = IsBlocking;
+        isAlive = Health.IsAlive;
+        canBlock  = Health.CanBlock;
+        isHitReacting = Health.IsHitReacting;
     }
-    
 }

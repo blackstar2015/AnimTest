@@ -33,18 +33,21 @@ public class CustomCharacterAnimations : MonoBehaviour
         Vector3 flattenedVelocity = new Vector3(velocity.x, 0f, velocity.z);
         float speed = Mathf.Min(CharacterMovement.MoveInput.magnitude, flattenedVelocity.magnitude / CharacterMovement.Speed);
         Animator.SetFloat("Speed", speed, DampTime, Time.deltaTime);
+        bool isMoving = speed > 0 ? true : false;
+        Animator.SetBool("Moving",isMoving);
         // send grounded state
         Animator.SetBool("IsGrounded", CharacterMovement.IsGrounded);
         // send isolated y-velocity
         Animator.SetFloat("VerticalVelocity", velocity.y);
-        bool isMoving = speed > 0 ? true : false;
-        Animator.SetBool("Moving",isMoving);
         velocity = transform.InverseTransformDirection(velocity);
         float velocityX =  velocity.x * Mathf.Abs(CharacterMovement.MoveInput.x);
         float velocityZ =  velocity.z *  Mathf.Abs(CharacterMovement.MoveInput.z);
         Animator.SetFloat("VelocityX", velocityX);
         Animator.SetFloat("VelocityZ", velocityZ);
         Animator.SetBool("IsAlive", _controller.IsAlive);
+        Animator.SetBool("HitReacting", _controller.IsHitReacting);
+        Animator.SetBool("IsBlocking", _controller.IsBlocking);
+        Animator.SetBool("CanBlock", _controller.CanBlock);
     }
     #region AnimationEvents
     public void Sheath(int index)

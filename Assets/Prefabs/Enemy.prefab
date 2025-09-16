@@ -133,6 +133,7 @@ MonoBehaviour:
   <_staminaRegenDuration>k__BackingField: 5
   _deathLayer: Corpse
   IsBlocking: 0
+  IsHitReacting: 0
   OnDamage:
     m_PersistentCalls:
       m_Calls: []
@@ -248,9 +249,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Movement>k__BackingField: {fileID: 5724002578159896901}
   <Animator>k__BackingField: {fileID: 2014271128733828441}
+  <Health>k__BackingField: {fileID: 0}
+  <Targetable>k__BackingField: {fileID: 0}
+  <Vision>k__BackingField: {fileID: 0}
   <Weapons>k__BackingField:
   - {fileID: 5187209594223791945}
   <LookInCameraDirection>k__BackingField: 0
+  actionIndex: 1
+  weaponIndex: 0
+  <CanShoot>k__BackingField: 1
+  <CanMelee>k__BackingField: 1
 --- !u!114 &6849809075481193866
 MonoBehaviour:
   m_ObjectHideFlags: 0

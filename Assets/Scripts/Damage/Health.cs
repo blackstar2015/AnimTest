@@ -26,8 +26,9 @@ public class Health : MonoBehaviour, IDamageable
     [TabGroup("Properties"), ShowInInspector] public float CurrentStamina => _currentStamina;
     [TabGroup("Properties"), ShowInInspector] public float MissingStamina => _maxStamina - _currentStamina;
     [TabGroup("Properties"), ShowInInspector] public float CurrentStaminaPercentage => _currentStamina / _maxStamina;
-    [TabGroup("Properties"), ShowInInspector] public bool CanBlock => _currentStamina >= 1f;
+    [TabGroup("Properties"), ShowInInspector ] public bool CanBlock => _currentStamina >= 1f;
     [TabGroup("Properties"), ShowInInspector] public bool IsBlocking;
+    [TabGroup("Properties"), ShowInInspector] public bool IsHitReacting;
 
     [TabGroup("Events")]public UnityEvent<DamageInfo> OnDamage;
     [TabGroup("Events")] public UnityEvent<DamageInfo> OnDeath;
@@ -51,9 +52,9 @@ public class Health : MonoBehaviour, IDamageable
     {
         if (!IsAlive) yield break;
         Animator animator = damageInfo.Victim.gameObject.GetComponent<Animator>();
-        animator.SetBool("HitReact", true);
+        IsHitReacting = true;
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-        animator.SetBool("HitReact", false);
+        IsHitReacting = false;
         yield return null;        
     }
     public void Damage(DamageInfo damageInfo)

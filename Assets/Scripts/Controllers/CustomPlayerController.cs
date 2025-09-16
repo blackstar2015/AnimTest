@@ -5,19 +5,12 @@ using UnityEngine.InputSystem;
 
 public class CustomPlayerController : CustomController
 {
-    [field: SerializeField] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
+    [field: SerializeField, TabGroup("Properties")] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
     private float _lastDashTime = Mathf.NegativeInfinity;
     private float _lastAttackTime = Mathf.NegativeInfinity;
     private bool _isAttacking;
-
     protected Vector2 MoveInput { get; set; }
-
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-        
-    }
-
+    
     protected override void Awake()
     {
         base.Awake();
@@ -26,15 +19,15 @@ public class CustomPlayerController : CustomController
 
     public void OnWeaponSwitch()
     {
-        if (_weaponIndex >= Weapons.Length - 1)
+        if (weaponIndex >= Weapons.Length - 1)
         {
-            _weaponIndex = 0;
+            weaponIndex = 0;
         }
         else
         {
-            _weaponIndex++;
+            weaponIndex++;
         }
-        Animator.SetInteger("WeaponIndex", _weaponIndex);
+        Animator.SetInteger("WeaponIndex", weaponIndex);
     }
     public virtual void OnMove(InputValue value)
     {
@@ -64,13 +57,11 @@ public class CustomPlayerController : CustomController
 
     public virtual void OnBlock(InputValue value)
     {
-        IsBlocking = _canBlock ? value.isPressed : false;
+        isBlocking = CanBlock && value.isPressed;
     }
     protected virtual void Update()
     {
         base.Update();
-         Animator.SetBool("IsBlocking", IsBlocking);
-         Animator.SetBool("CanBlock", _canBlock);
         if (Movement == null) return;
         // find correct right/forward directions based on main camera rotation
         Vector3 up = Vector3.up;
@@ -87,18 +78,18 @@ public class CustomPlayerController : CustomController
     }
     private void HandleAttack()
     {
-        Weapons equippedWeapon = Weapons[_weaponIndex];
+        Weapons equippedWeapon = Weapons[weaponIndex];
         float nextAttackTime = _lastAttackTime + 1/equippedWeapon.Data.AttackRate;
         
         if (Time.time < nextAttackTime) return;
         
         //equippedWeapon.TryAttack();
         Animator.SetTrigger(equippedWeapon.Data.AttackAnimName);
-        Animator.SetInteger("Action", _actionIndex);
-        _actionIndex++;
+        Animator.SetInteger("Action", actionIndex);
+        actionIndex++;
         WeaponsMelee melee = equippedWeapon as WeaponsMelee;
         if (melee == null)  return;
-        if (_actionIndex > melee?.MeleeData.ComboData.Length) _actionIndex = 1;
+        if (actionIndex > melee?.MeleeData.ComboData.Length) actionIndex = 1;
         _lastAttackTime =  Time.time;
     }
 }
