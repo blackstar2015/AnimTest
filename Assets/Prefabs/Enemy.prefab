@@ -126,9 +126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2bb40f32588b174382d593435f42740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <_currentHealth>k__BackingField: 100
+  <_currentHealth>k__BackingField: 10000
   <_currentStamina>k__BackingField: 100
-  <_maxHealth>k__BackingField: 100
+  <_maxHealth>k__BackingField: 10000
   <_maxStamina>k__BackingField: 100
   <_staminaRegenDuration>k__BackingField: 5
   _deathLayer: Corpse

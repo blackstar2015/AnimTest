@@ -22,7 +22,8 @@ public class DamageTrigger : MonoBehaviour
         _damageType = _weaponData.DamageType;
         _instigator = _player.gameObject;
         _damage = _weaponData.ComboData[_player.CurrentActionIndex-1].Damage; 
-        _knockbackForce = _weaponData.ComboData[_player.CurrentActionIndex-1].KnockbackForce; 
+        _knockbackForce = _weaponData.KnockbackForce;
+        //_knockbackForce = _weaponData.ComboData[_player.CurrentActionIndex-1].KnockbackForce;
     }
 
     private void OnTriggerEnter(Collider other)

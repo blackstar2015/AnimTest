@@ -6,11 +6,11 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Image _fillHealthBar;
     [SerializeField] private Image _fillStaminaBar;
-    private Health _health;
+    [SerializeField] private Health _health;
 
     private void Start()
     {
-        _health = GetComponentInParent<Health>();
+        if(_health == null) _health = GetComponentInParent<Health>();
         _health.OnDamage.AddListener(Damage);
         _health.OnDeath.AddListener(Death);
         _health.OnBlock.AddListener(Damage);

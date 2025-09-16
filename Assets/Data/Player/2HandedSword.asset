@@ -25,47 +25,37 @@ MonoBehaviour:
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
-    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
-    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
-    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
-    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
-    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
-    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
-    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
-    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
-    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
-    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
-    <KnockbackForce>k__BackingField: 100
   <HitMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
+  <KnockbackForce>k__BackingField: 1000

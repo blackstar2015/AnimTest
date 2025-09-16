@@ -91,9 +91,9 @@ public abstract class CustomCharacterMovementBase : MonoBehaviour
     [field: SerializeField, TabGroup("Spline Constraint")] public SplineContainer SplineContainer { get; set; }
     [field: SerializeField, TabGroup("Spline Constraint")] public float SplineGravitation { get; set; } = 20f;
 
-    [field: SerializeField, TabGroup("Components")] protected Rigidbody Rigidbody { get; set; }
-    [field: SerializeField, TabGroup("Components")] protected NavMeshAgent NavMeshAgent { get; set; }
-    [field: SerializeField, TabGroup("Components")] protected CapsuleCollider CapsuleCollider { get; set; }
+    [field: SerializeField, TabGroup("Components")] public Rigidbody Rigidbody { get; set; }
+    [field: SerializeField, TabGroup("Components")] public NavMeshAgent NavMeshAgent { get; set; }
+    [field: SerializeField, TabGroup("Components")] public CapsuleCollider CapsuleCollider { get; set; }
 
     public virtual void FootstepAnimEvent(AnimationEvent animationEvent)
     {

@@ -53,7 +53,6 @@ public class Health : MonoBehaviour, IDamageable
         if (!IsAlive) yield break;
         Animator animator = damageInfo.Victim.gameObject.GetComponent<Animator>();
         IsHitReacting = true;
-        
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         IsHitReacting = false;
         yield return null;        

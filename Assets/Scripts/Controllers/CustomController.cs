@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using RPGCharacterAnims.Actions;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 public class CustomController : MonoBehaviour
@@ -57,9 +58,25 @@ public class CustomController : MonoBehaviour
 
     private void Knockback(DamageInfo damageInfo)
     {
-        damageInfo.Victim.GetComponent<Rigidbody>().AddForce(damageInfo.KnockBackForce * -1  * damageInfo.Victim.transform.forward, ForceMode.Impulse);
+        StartCoroutine(KnockbackRoutine(damageInfo));
     }
 
+    private IEnumerator KnockbackRoutine(DamageInfo damageInfo)
+    {
+        CustomCharacterMovement movement = damageInfo.Victim.GetComponent<CustomCharacterMovement>();
+        Rigidbody rb = movement.Rigidbody;
+        NavMeshAgent agent = movement.NavMeshAgent;
+        Animator.applyRootMotion = false;
+        agent.enabled = false;
+        rb.linearVelocity = Vector3.zero;
+        yield return new WaitForSeconds(1);
+        rb.AddForce(damageInfo.KnockBackForce * -1  * damageInfo.Victim.transform.forward, ForceMode.Impulse);
+        yield return new WaitForEndOfFrame();
+        Animator.applyRootMotion = true;
+        agent.enabled = true;
+        agent.ResetPath();
+        yield return null;
+    }
     private void Death(DamageInfo arg0)
     {
         isAlive = false;
