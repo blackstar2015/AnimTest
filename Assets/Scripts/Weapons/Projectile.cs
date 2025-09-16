@@ -51,7 +51,7 @@ public class Projectile : PooledObject
         // otherwise attempt to damage collider
         if(other.TryGetComponent(out IDamageable targetHealth))
         {
-            DamageInfo damageInfo = new DamageInfo(_damage, _damageType, false, other.gameObject, gameObject, _instigator);
+            DamageInfo damageInfo = new DamageInfo(_damage, _damageType, false, other.gameObject, gameObject, _instigator, 0);
             targetHealth.Damage(damageInfo);
         }
 

@@ -53,6 +53,7 @@ public class Health : MonoBehaviour, IDamageable
         if (!IsAlive) yield break;
         Animator animator = damageInfo.Victim.gameObject.GetComponent<Animator>();
         IsHitReacting = true;
+        
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         IsHitReacting = false;
         yield return null;        
@@ -61,7 +62,8 @@ public class Health : MonoBehaviour, IDamageable
     {
         if (!IsAlive) return;                       
         if (damageInfo.Amount < 1f) return;
-        if(damageInfo.Victim.GetComponent<CustomController>().IsBlocking)
+        GameObject victomGO = damageInfo.Victim.gameObject;
+        if(victomGO.GetComponent<CustomController>().IsBlocking)
         {
             HandleBlock(damageInfo);
             return;
@@ -118,7 +120,7 @@ public class Health : MonoBehaviour, IDamageable
     public void DamageTest()
     {
         float amount = _maxHealth * 0.1f;
-        DamageInfo damageInfo = new DamageInfo(amount, DamageType.Physical, false, gameObject, gameObject, gameObject);
+        DamageInfo damageInfo = new DamageInfo(amount, DamageType.Physical, false, gameObject, gameObject, gameObject, 0);
         Damage(damageInfo);
     }
 

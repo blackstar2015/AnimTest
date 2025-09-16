@@ -20,44 +20,52 @@ MonoBehaviour:
   <EffectiveRange>k__BackingField: 4
   <WeaponIndex>k__BackingField: 1
   <DamageType>k__BackingField: 0
-  <WeaponMesh>k__BackingField: {fileID: 0}
   <AttackAnimName>k__BackingField: 2HandedSword
-  <WeaponColliders>k__BackingField:
-  - {fileID: 0}
   <ComboData>k__BackingField:
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
+    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
+    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
+    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
+    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
+    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
+    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
+    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
+    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
+    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
+    <KnockbackForce>k__BackingField: 100
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
+    <KnockbackForce>k__BackingField: 100
   <HitMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 64

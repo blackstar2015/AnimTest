@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
+using RPGCharacterAnims.Actions;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -48,10 +49,15 @@ public class CustomController : MonoBehaviour
         Health.OnBlockedAttack.AddListener(BlockedAttack);
         foreach(Weapons weapon in Weapons)
         {
-            DamageInfo damageInfo = new DamageInfo(0, DamageType.Physical, false, gameObject, gameObject, gameObject);
             Health.OnDeath.AddListener(weapon.DisableWeaponColliders);
         }
         Health.OnDeath.AddListener(Death);
+        Health.OnDamage.AddListener(Knockback);
+    }
+
+    private void Knockback(DamageInfo damageInfo)
+    {
+        damageInfo.Victim.GetComponent<Rigidbody>().AddForce(damageInfo.KnockBackForce * -1  * damageInfo.Victim.transform.forward, ForceMode.Impulse);
     }
 
     private void Death(DamageInfo arg0)
