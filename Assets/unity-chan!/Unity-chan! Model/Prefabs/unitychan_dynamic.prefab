@@ -9074,6 +9074,7 @@ MonoBehaviour:
   <_maxStamina>k__BackingField: 100
   <_staminaRegenDuration>k__BackingField: 5
   _deathLayer: Corpse
+  _isInvincible: 0
   IsBlocking: 0
   IsHitReacting: 0
   OnDamage:
