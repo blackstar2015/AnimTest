@@ -33,8 +33,8 @@ public class Health : MonoBehaviour, IDamageable
     [TabGroup("Events")]public UnityEvent<DamageInfo> OnDamage;
     [TabGroup("Events")] public UnityEvent<DamageInfo> OnDeath;
     [TabGroup("Events")] public UnityEvent<DamageInfo> OnBlock;
+    [TabGroup("Events")] public UnityEvent<DamageInfo> OnBlockedAttack;
     [TabGroup("Events")] public UnityEvent OnUpdateStamina;
-    [TabGroup("Events")] public UnityEvent OnBlockedAttack;
 
 
     private void Awake()
@@ -104,7 +104,7 @@ public class Health : MonoBehaviour, IDamageable
             return ;
         }
         OnBlock.Invoke(damageInfo);
-        damageInfo.Instigator.GetComponent<Health>().OnBlockedAttack.Invoke();
+        damageInfo.Instigator.GetComponent<Health>().OnBlockedAttack.Invoke(damageInfo);
     }
     public void Death(DamageInfo damageInfo)
     {

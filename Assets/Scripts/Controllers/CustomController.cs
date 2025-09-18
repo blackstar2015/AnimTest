@@ -20,10 +20,12 @@ public class CustomController : MonoBehaviour
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool IsAlive => isAlive;
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool CanBlock => canBlock;
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool IsHitReacting => isHitReacting;
+    [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool IsBlockedAttack => isBlockedAttack;
     protected bool isBlocking { get; set; }
     protected bool canBlock  { get; set; }
     protected bool isHitReacting { get; set; }
     protected bool isAlive { get; set; }
+    protected bool isBlockedAttack { get; set; }
     
     public int CurrentWeaponIndex => weaponIndex;
     public int CurrentActionIndex => actionIndex;
@@ -90,16 +92,32 @@ public class CustomController : MonoBehaviour
         this.enabled = false; 
     }
 
-    private void BlockedAttack()
+    private void BlockedAttack(DamageInfo damageInfo)
     {
-        StartCoroutine(BlockedAttackRoutine());
+        StartCoroutine(BlockedAttackRoutine(damageInfo));
     }
 
-    private IEnumerator BlockedAttackRoutine()
+    private IEnumerator BlockedAttackRoutine(DamageInfo damageInfo)
     {
-        Animator.SetBool("BlockedAttack", true);
-        yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length/2);
-        Animator.SetBool("BlockedAttack", false);
+        CustomCharacterMovement victimMovement = damageInfo.Victim.GetComponent<CustomCharacterMovement>();
+        Rigidbody victimRb = victimMovement.Rigidbody;
+        NavMeshAgent victimAgent = victimMovement.NavMeshAgent;
+        Animator.applyRootMotion = false;
+        victimAgent.enabled = false;
+        victimRb.linearVelocity = Vector3.zero;
+        isBlockedAttack  = true;
+        
+        yield return new WaitForEndOfFrame();
+        victimRb.AddForce(damageInfo.KnockBackForce * 4 * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
+        yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length);
+        
+        isBlockedAttack =  false;
+        victimAgent.enabled = true;
+        yield return new WaitForEndOfFrame();
+        victimAgent.ResetPath();
+        yield return null;
+        
+        
     }
 
     private void FindWeapons()

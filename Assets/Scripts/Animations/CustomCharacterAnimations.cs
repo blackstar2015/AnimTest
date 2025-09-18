@@ -28,26 +28,26 @@ public class CustomCharacterAnimations : MonoBehaviour
 
     protected virtual void Update()
     {
-        // send velocity to animator, ignoring y-velocity
         Vector3 velocity = CharacterMovement.Velocity;
         Vector3 flattenedVelocity = new Vector3(velocity.x, 0f, velocity.z);
         float speed = Mathf.Min(CharacterMovement.MoveInput.magnitude, flattenedVelocity.magnitude / CharacterMovement.Speed);
-        Animator.SetFloat("Speed", speed, DampTime, Time.deltaTime);
         bool isMoving = speed > 0 ? true : false;
-        Animator.SetBool("Moving",isMoving);
-        // send grounded state
-        Animator.SetBool("IsGrounded", CharacterMovement.IsGrounded);
-        // send isolated y-velocity
-        Animator.SetFloat("VerticalVelocity", velocity.y);
         velocity = transform.InverseTransformDirection(velocity);
         float velocityX =  velocity.x * Mathf.Abs(CharacterMovement.MoveInput.x);
         float velocityZ =  velocity.z *  Mathf.Abs(CharacterMovement.MoveInput.z);
+        
+        Animator.SetFloat("Speed", speed, DampTime, Time.deltaTime);
+        Animator.SetBool("Moving",isMoving);
+        Animator.SetBool("IsGrounded", CharacterMovement.IsGrounded);
+        Animator.SetFloat("VerticalVelocity", velocity.y);
         Animator.SetFloat("VelocityX", velocityX);
         Animator.SetFloat("VelocityZ", velocityZ);
         Animator.SetBool("IsAlive", _controller.IsAlive);
         Animator.SetBool("HitReact", _controller.IsHitReacting);
         Animator.SetBool("IsBlocking", _controller.IsBlocking);
         Animator.SetBool("CanBlock", _controller.CanBlock);
+        Animator.SetBool("BlockedAttack", _controller.IsBlockedAttack);
+        
     }
     #region AnimationEvents
     public void Sheath(int index)

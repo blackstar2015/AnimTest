@@ -13,11 +13,11 @@ public class DamageInfo
         KnockBackForce = knockBackForce;
     }
 
-    public float Amount { get; set; }
-    public DamageType DamageType { get; set; }
-    public bool IsCrit {  get; set; }
-    public GameObject Victim { get; set; }          
-    public GameObject Source { get; set; }          
-    public GameObject Instigator { get; set; }  
-    public float KnockBackForce { get; set; }
+    public float Amount { get; set; } = 0;
+    public DamageType DamageType { get; set; } = DamageType.None;
+    public bool IsCrit { get; set; } = false;
+    public GameObject Victim { get; set; } = null;
+    public GameObject Source { get; set; } = null;
+    public GameObject Instigator { get; set; } = null;
+    public float KnockBackForce { get; set; } = 0;
 }

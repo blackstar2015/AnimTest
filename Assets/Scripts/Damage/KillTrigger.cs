@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class KillZ : MonoBehaviour
+public class KillTrigger : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
