@@ -21,25 +21,38 @@ MonoBehaviour:
   <WeaponIndex>k__BackingField: 0
   <DamageType>k__BackingField: 0
   <AttackAnimName>k__BackingField: Unarmed
+  <HitMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 64
+  <KnockbackForce>k__BackingField: 10
   <ComboData>k__BackingField:
   - <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
     <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
   - <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
     <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
   - <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
     <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
   - <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
     <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
   - <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
     <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
   - <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
     <Range>k__BackingField: 1.5
-  <HitMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 64
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}

@@ -1,10 +1,7 @@
 using Sirenix.OdinInspector;
-using System;
 using System.Collections;
-using RPGCharacterAnims.Actions;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 public class CustomController : MonoBehaviour
 {
@@ -69,11 +66,19 @@ public class CustomController : MonoBehaviour
         Animator.applyRootMotion = false;
         agent.enabled = false;
         rb.linearVelocity = Vector3.zero;
-        yield return new WaitForSeconds(1);
-        rb.AddForce(damageInfo.KnockBackForce * -1  * damageInfo.Victim.transform.forward, ForceMode.Impulse);
         yield return new WaitForEndOfFrame();
-        Animator.applyRootMotion = true;
+        
+        WeaponMeleeData data = damageInfo.Victim.GetComponent<CustomController>().Weapons[CurrentWeaponIndex].Data as WeaponMeleeData;
+        if (data != null)
+        {
+            rb.AddForce(damageInfo.KnockBackForce * data.ComboData[CurrentActionIndex-1].KnockbackDirection, ForceMode.Impulse);
+            Debug.DrawRay(rb.position +new Vector3(0,1,0), data.ComboData[CurrentActionIndex-1].KnockbackDirection * 1000, Color.red, Mathf.Infinity, false);
+        }
+        else rb.AddForce(damageInfo.KnockBackForce * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
+        yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length);
+        //Animator.applyRootMotion = true;
         agent.enabled = true;
+        yield return new WaitForEndOfFrame();
         agent.ResetPath();
         yield return null;
     }

@@ -16,6 +16,5 @@ public class MeleeComboData
     [field: SerializeField] public float Angle { get; private set; } = 120f;
     [field: SerializeField] public float Range { get; private set; } = 1.5f;
     [field: SerializeField] public float KnockbackMultiplier { get; private set; } = 1f;
-    
-    
+    [field: SerializeField] public Vector3 KnockbackDirection { get; private set; } = new Vector3(0f, 0f, -1f);
 }
