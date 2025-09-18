@@ -45,7 +45,7 @@ public class CustomCharacterAnimations : MonoBehaviour
         Animator.SetFloat("VelocityX", velocityX);
         Animator.SetFloat("VelocityZ", velocityZ);
         Animator.SetBool("IsAlive", _controller.IsAlive);
-        Animator.SetBool("HitReacting", _controller.IsHitReacting);
+        Animator.SetBool("HitReact", _controller.IsHitReacting);
         Animator.SetBool("IsBlocking", _controller.IsBlocking);
         Animator.SetBool("CanBlock", _controller.CanBlock);
     }

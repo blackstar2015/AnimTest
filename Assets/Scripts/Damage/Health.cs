@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Net.Sockets;
 using Unity.VisualScripting;
+using UnityEngine.AI;
 
 public class Health : MonoBehaviour, IDamageable
 {
@@ -52,9 +53,16 @@ public class Health : MonoBehaviour, IDamageable
     {
         if (!IsAlive) yield break;
         Animator animator = damageInfo.Victim.gameObject.GetComponent<Animator>();
+        NavMeshAgent agent =  damageInfo.Victim.gameObject.GetComponent<NavMeshAgent>();
         IsHitReacting = true;
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        agent.enabled = false;
+        animator.applyRootMotion = false;
+        //yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForEndOfFrame();
         IsHitReacting = false;
+        animator.applyRootMotion = true;
+        agent.enabled = true;
+        agent.ResetPath();
         yield return null;        
     }
     public void Damage(DamageInfo damageInfo)

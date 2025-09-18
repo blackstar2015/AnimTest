@@ -441,14 +441,14 @@ ModelImporter:
           postInfinity: 3
           rotationOrder: 4
       events:
-      - time: 0.32262352
+      - time: 0.3829072
         functionName: EnableTrigger
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.5072046
+      - time: 0.4540131
         functionName: DisableTrigger
         data: 
         objectReferenceParameter: {instanceID: 0}
