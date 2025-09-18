@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;    // namespace for all Odin stuff
 using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.AI;
+using System;
 
 public class Health : MonoBehaviour, IDamageable
 {
@@ -15,6 +16,7 @@ public class Health : MonoBehaviour, IDamageable
 
     // death
     [TabGroup("Death"), SerializeField] private string _deathLayer = "Corpse";
+    [TabGroup("Death"), SerializeField] private bool _isInvincible;
 
     // properties
     [TabGroup("Properties"), ShowInInspector] public float CurrentHealth => _currentHealth;
@@ -64,7 +66,7 @@ public class Health : MonoBehaviour, IDamageable
     }
     public void Damage(DamageInfo damageInfo)
     {
-        if (!IsAlive) return;                       
+        if (!IsAlive || _isInvincible) return;                       
         if (damageInfo.Amount < 1f) return;
         GameObject victomGO = damageInfo.Victim.gameObject;
         if(victomGO.GetComponent<CustomController>().IsBlocking)
@@ -139,5 +141,10 @@ public class Health : MonoBehaviour, IDamageable
         _currentStamina += 1/_staminaRegenDuration * Time.deltaTime;
         _currentStamina = Mathf.Clamp(_currentStamina,0, _maxStamina);
         OnUpdateStamina.Invoke();
+    }
+
+    public void Invincibility()
+    {
+        _isInvincible = !_isInvincible;
     }
 }
