@@ -34,6 +34,8 @@ public class CustomController : MonoBehaviour
     {
         if(Movement == null) Movement = GetComponent<CustomCharacterMovement>();
         if(Animator == null) Animator = GetComponent<Animator>();
+        if(Targetable == null) Targetable = GetComponent<Targetable>();
+        if(Vision == null) Vision = GetComponent<Vision>();
     }
     
     protected virtual void Awake()
@@ -47,12 +49,12 @@ public class CustomController : MonoBehaviour
         canBlock  = Health.CanBlock;
         isHitReacting = Health.IsHitReacting;
         Health.OnBlockedAttack.AddListener(BlockedAttack);
-        foreach(Weapons weapon in Weapons)
-        {
-            Health.OnDeath.AddListener(weapon.DisableWeaponColliders);
-        }
         Health.OnDeath.AddListener(Death);
         Health.OnDamage.AddListener(Knockback);
+        // foreach(Weapons weapon in Weapons)
+        // {
+        //     Health.OnDeath.AddListener(weapon.DisableWeaponColliders);
+        // }
     }
 
     private void Knockback(DamageInfo damageInfo)
@@ -130,5 +132,13 @@ public class CustomController : MonoBehaviour
         isAlive = Health.IsAlive;
         canBlock  = Health.CanBlock;
         isHitReacting = Health.IsHitReacting;
+    }
+
+    public void MeleeHitAnimEvent(int attackIndex)
+    {
+        WeaponsMelee meleeweapon = Weapons[weaponIndex] as WeaponsMelee;
+        if (meleeweapon == null) return;
+        meleeweapon.MeleeHitAnimEvent(attackIndex);
+        
     }
 }

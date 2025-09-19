@@ -45,12 +45,12 @@ public abstract class Weapons : MonoBehaviour
     }
     
 
-    public void DisableWeaponColliders(DamageInfo damageInfo)
-    {
-        foreach (Collider collider in WeaponColliders)
-        {
-            collider.enabled = false;
-            if(collider.TryGetComponent(out DamageTrigger trigger))   trigger.enabled = false;
-        }
-    }
+    // public void DisableWeaponColliders(DamageInfo damageInfo)
+    // {
+    //     foreach (Collider collider in WeaponColliders)
+    //     {
+    //         collider.enabled = false;
+    //         if(collider.TryGetComponent(out DamageTrigger trigger))   trigger.enabled = false;
+    //     }
+    // }
 }

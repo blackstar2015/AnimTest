@@ -83,7 +83,8 @@ public class CustomPlayerController : CustomController
         
         if (Time.time < nextAttackTime) return;
         
-        //equippedWeapon.TryAttack();
+        equippedWeapon.TryAttack(transform.position + transform.forward * 5,gameObject,Targetable.Team);
+        Debug.DrawLine(transform.position, transform.position + transform.forward * 5, Color.cyan, 100f);
         Animator.SetTrigger(equippedWeapon.Data.AttackAnimName);
         Animator.SetInteger("Action", actionIndex);
         actionIndex++;

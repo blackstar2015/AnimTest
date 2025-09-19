@@ -313,6 +313,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 824655716487919010, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: '<WeaponColliders>k__BackingField.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3777459622835300163, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: '<WeaponColliders>k__BackingField.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3777459622835300163, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: '<WeaponColliders>k__BackingField.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4184142280857105467, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -321,7 +333,13 @@ PrefabInstance:
       propertyPath: <_staminaRegenDuration>k__BackingField
       value: 0.1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3607732304836208554, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 6830395724621421294, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 2619919713496777764, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 2731024534844025546, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 4573916940214824100, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 2698527332429705404, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
