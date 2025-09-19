@@ -834,19 +834,12 @@ ModelImporter:
           postInfinity: 3
           rotationOrder: 4
       events:
-      - time: 0.3112392
-        functionName: EnableTrigger
+      - time: 0.3549656
+        functionName: MeleeHitAnimEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0.6080692
-        functionName: DisableTrigger
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
+        intParameter: 9
         messageOptions: 0
       transformMask: []
       maskType: 3
