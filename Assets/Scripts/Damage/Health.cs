@@ -56,8 +56,8 @@ public class Health : MonoBehaviour, IDamageable
         IsHitReacting = true;
         agent.enabled = false;
         animator.applyRootMotion = false;
-        //yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        //yield return new WaitForEndOfFrame();
         IsHitReacting = false;
         animator.applyRootMotion = true;
         agent.enabled = true;
