@@ -9086,10 +9086,10 @@ MonoBehaviour:
   OnBlock:
     m_PersistentCalls:
       m_Calls: []
-  OnUpdateStamina:
+  OnBlockedAttack:
     m_PersistentCalls:
       m_Calls: []
-  OnBlockedAttack:
+  OnUpdateStamina:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &6490803663116844267

@@ -23,6 +23,20 @@ public class DebugStuff : MonoBehaviour
         TogglePlayerInvincibility();
         ToggleEnemyInvincibility();
         IncrementEnemies();
+        KillAllEnemies();
+    }
+
+    private void KillAllEnemies()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            List<CustomEnemyController> enemies = _enemies;
+            foreach (CustomEnemyController enemy in enemies)
+            {
+                DamageInfo damageInfo = new DamageInfo(1000,DamageType.None,false,enemy.gameObject, this.gameObject,_player.gameObject,0);
+                enemy.GetComponent<Health>().OnDeath.Invoke(damageInfo);
+            }
+        }
     }
 
     private void IncrementEnemies()
@@ -67,7 +81,7 @@ public class DebugStuff : MonoBehaviour
             CustomEnemyController enemy = Instantiate(_enemyPrefab, _spawnTranform.position, _spawnTranform.rotation);
             _enemies.Add(enemy);
             enemy.GetComponent<Health>().OnDeath.AddListener(RemoveEnemy);
-        }       
+        }
     }
 
     private void RemoveEnemy(DamageInfo damageInfo)

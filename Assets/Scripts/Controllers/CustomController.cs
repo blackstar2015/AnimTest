@@ -89,7 +89,7 @@ public class CustomController : MonoBehaviour
         isAlive = false;
         Movement.Stop();
         Movement.CanMove = false;
-        this.enabled = false; 
+        enabled = false; 
     }
 
     private void BlockedAttack(DamageInfo damageInfo)
