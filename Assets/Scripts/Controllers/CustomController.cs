@@ -75,8 +75,10 @@ public class CustomController : MonoBehaviour
         WeaponMeleeData data = damageInfo.Victim.GetComponent<CustomController>().Weapons[CurrentWeaponIndex].Data as WeaponMeleeData;
         if (data != null)
         {
-            rb.AddForce(damageInfo.KnockBackForce * data.ComboData[CurrentActionIndex-1].KnockbackDirection, ForceMode.Impulse);
-            Debug.DrawRay(rb.position +new Vector3(0,1,0), data.ComboData[CurrentActionIndex-1].KnockbackDirection * 1000, Color.red, Mathf.Infinity, false);
+            rb.AddForce(damageInfo.KnockBackForce * (data.ComboData[CurrentActionIndex - 1].KnockbackDirection + rb.transform.forward), ForceMode.Impulse);
+            //Debug.DrawRay(rb.position +new Vector3(0,1,0), (data.ComboData[CurrentActionIndex - 1].KnockbackDirection + rb.transform.forward) * 1000, Color.red, Mathf.Infinity, false);
+            //Debug.DrawRay(rb.position +new Vector3(0,1,0), rb.transform.forward * 1000, Color.blue, Mathf.Infinity, false);
+            //Debug.DrawRay(rb.position +new Vector3(0,1,0), data.ComboData[CurrentActionIndex - 1].KnockbackDirection * 1000, Color.green, Mathf.Infinity, false);
         }
         else rb.AddForce(damageInfo.KnockBackForce * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
         yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length);
