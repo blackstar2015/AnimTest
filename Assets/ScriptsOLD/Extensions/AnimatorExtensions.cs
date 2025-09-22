@@ -144,12 +144,12 @@ namespace RPGCharacterAnims.Extensions
 		/// <param name="leftWeapon">Left weapon number. Use Weapon.cs enum.</param>
 		/// <param name="rightWeapon">Right weapon number. Use Weapon.cs enum.</param>
 		/// <param name="weaponSide">Weapon side: 0-None, 1-Left, 2-Right, 3-Dual.</param>
-		public static void SetWeapons(this Animator animator, AnimatorWeapon animatorWeapon, int weaponSwitch, Weapon leftWeapon, Weapon rightWeapon, Side weaponSide)
+		public static void SetWeapons(this Animator animator, AnimatorWeapon animatorWeapon, int weaponSwitch, Lookups.Weapon leftWeapon, Lookups.Weapon rightWeapon, Side weaponSide)
 		{
 			{ animator.SetInteger(AnimationParameters.Weapon, ( int )animatorWeapon); }
 			if (weaponSwitch != -2) { animator.SetInteger(AnimationParameters.WeaponSwitch, weaponSwitch); }
-			if (leftWeapon != Weapon.Unarmed) { animator.SetInteger(AnimationParameters.LeftWeapon, ( int )leftWeapon); }
-			if (rightWeapon != Weapon.Unarmed) { animator.SetInteger(AnimationParameters.RightWeapon, ( int )rightWeapon); }
+			if (leftWeapon != Lookups.Weapon.Unarmed) { animator.SetInteger(AnimationParameters.LeftWeapon, ( int )leftWeapon); }
+			if (rightWeapon != Lookups.Weapon.Unarmed) { animator.SetInteger(AnimationParameters.RightWeapon, ( int )rightWeapon); }
 			if (weaponSide != Side.Unchanged) { animator.SetInteger(AnimationParameters.Side, ( int )weaponSide); }
 		}
 	}

@@ -108,12 +108,12 @@ namespace RPGCharacterAnims
 			if (!rpgCharacterController.CanStartAction(HandlerTypes.Attack)) { return; }
 
 			// Attack Left.
-			if (rpgCharacterController.leftWeapon == Weapon.Unarmed && rpgCharacterController.rightWeapon == Weapon.Unarmed) {
+			if (rpgCharacterController.leftWeapon == Lookups.Weapon.Unarmed && rpgCharacterController.rightWeapon == Lookups.Weapon.Unarmed) {
 				if (GUI.Button(new Rect(25, 85, 100, 30), "Attack L"))
 				{ rpgCharacterController.StartAction(HandlerTypes.Attack, new AttackContext("Attack", Side.Left)); }
 			}
 			// Attack Right.
-			if (rpgCharacterController.rightWeapon == Weapon.Unarmed && rpgCharacterController.leftWeapon == Weapon.Unarmed) {
+			if (rpgCharacterController.rightWeapon == Lookups.Weapon.Unarmed && rpgCharacterController.leftWeapon == Lookups.Weapon.Unarmed) {
 				if (GUI.Button(new Rect(130, 85, 100, 30), "Attack R"))
 				{ rpgCharacterController.StartAction(HandlerTypes.Attack, new AttackContext("Attack", Side.Right)); }
 			}
@@ -202,14 +202,14 @@ namespace RPGCharacterAnims
 			var switchWeaponContext = new SwitchWeaponContext();
 
 			// Unarmed.
-			if (rpgCharacterController.rightWeapon != Weapon.Unarmed
-				|| rpgCharacterController.leftWeapon != Weapon.Unarmed) {
+			if (rpgCharacterController.rightWeapon != Lookups.Weapon.Unarmed
+				|| rpgCharacterController.leftWeapon != Lookups.Weapon.Unarmed) {
 				if (GUI.Button(new Rect(1115, 280, 100, 30), "Unarmed")) {
 					doSwitch = true;
 					switchWeaponContext.type = "Switch";
 					switchWeaponContext.side = "Both";
-					switchWeaponContext.leftWeapon = Weapon.Unarmed;
-					switchWeaponContext.rightWeapon = Weapon.Unarmed;
+					switchWeaponContext.leftWeapon = Lookups.Weapon.Unarmed;
+					switchWeaponContext.rightWeapon = Lookups.Weapon.Unarmed;
 				}
 			}
 			var offset = 310;
@@ -223,7 +223,7 @@ namespace RPGCharacterAnims
 						doSwitch = true;
 						switchWeaponContext.type = "Switch";
 						switchWeaponContext.side = "None";
-						switchWeaponContext.leftWeapon = Weapon.Unarmed;
+						switchWeaponContext.leftWeapon = Lookups.Weapon.Unarmed;
 						switchWeaponContext.rightWeapon = weapon;
 					}
 				}

@@ -72,24 +72,25 @@ public class CustomPlayerController : CustomController
         // send player input to character movement
         Movement.SetMoveInput(moveInput);
         Movement.SetLookDirection(moveInput);
+        HandleAttack();
         LookInCameraDirection = !Movement.IsDashing;
         if (LookInCameraDirection) Movement.SetLookDirection(Camera.main.transform.forward);
-        if (_isAttacking) HandleAttack();
     }
     private void HandleAttack()
     {
-        Weapons equippedWeapon = Weapons[weaponIndex];
+        if (!_isAttacking) return;
+        Weapon equippedWeapon = Weapons[weaponIndex];
         float nextAttackTime = _lastAttackTime + 1/equippedWeapon.Data.AttackRate;
         
         if (Time.time < nextAttackTime) return;
         
-        //equippedWeapon.TryAttack();
+        equippedWeapon.TryAttack(transform.position + transform.forward * 5,gameObject,Targetable.Team);
         Animator.SetTrigger(equippedWeapon.Data.AttackAnimName);
         Animator.SetInteger("Action", actionIndex);
-        actionIndex++;
-        WeaponsMelee melee = equippedWeapon as WeaponsMelee;
+        WeaponMelee melee = equippedWeapon as WeaponMelee;
         if (melee == null)  return;
-        if (actionIndex > melee?.MeleeData.ComboData.Length) actionIndex = 1;
+        actionIndex++;
+        if (actionIndex > melee?.MeleeData.ComboData.Length-1) actionIndex = 0;
         _lastAttackTime =  Time.time;
     }
 }

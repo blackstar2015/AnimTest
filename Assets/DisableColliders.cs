@@ -39,9 +39,9 @@ public class DisableColliders : StateMachineBehaviour
     //}
 
     // OnStateMachineExit is called when exiting a state machine via its Exit Node
-    override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
-    {
-        DamageInfo damageInfo = new DamageInfo(0,DamageType.None,false,animator.gameObject, animator.gameObject, animator.gameObject, 0);
-        animator.GetComponent<CustomController>().Weapons[animator.GetInteger("WeaponIndex")].DisableWeaponColliders(damageInfo);
-    }
+    // override public void OnStateMachineExit(Animator animator, int stateMachinePathHash)
+    // {
+    //     DamageInfo damageInfo = new DamageInfo(0,DamageType.None,false,animator.gameObject, animator.gameObject, animator.gameObject, 0);
+    //     animator.GetComponent<CustomController>().Weapons[animator.GetInteger("WeaponIndex")].DisableWeaponColliders(damageInfo);
+    // }
 }

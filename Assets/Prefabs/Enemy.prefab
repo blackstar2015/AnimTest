@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 8089329468702881073}
   - component: {fileID: 6849809075481193866}
   - component: {fileID: 2014271128733828441}
+  - component: {fileID: 7097943158623928176}
+  - component: {fileID: 3220486211538726260}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Player
@@ -251,10 +253,10 @@ MonoBehaviour:
   <Movement>k__BackingField: {fileID: 5724002578159896901}
   <Animator>k__BackingField: {fileID: 2014271128733828441}
   <Health>k__BackingField: {fileID: 0}
-  <Targetable>k__BackingField: {fileID: 0}
-  <Vision>k__BackingField: {fileID: 0}
+  <Targetable>k__BackingField: {fileID: 7097943158623928176}
+  <Vision>k__BackingField: {fileID: 3220486211538726260}
   <Weapons>k__BackingField:
-  - {fileID: 5187209594223791945}
+  - {fileID: 270963974981190449}
   <LookInCameraDirection>k__BackingField: 0
   actionIndex: 1
   weaponIndex: 0
@@ -313,6 +315,41 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7097943158623928176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2981525915324084267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04164883cb5fe92498475fbc07974791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Team>k__BackingField: 1
+  <IsTargetable>k__BackingField: 1
+  <ViewPosition>k__BackingField: {fileID: 0}
+--- !u!114 &3220486211538726260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2981525915324084267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d55062f2a7bf54da30aec898b7a60f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _range: 5
+  _FOV: 120
+  _visibilityMask:
+    serializedVersion: 2
+    m_Bits: 65
+  _occlusionMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &1204539712949440014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -334,13 +371,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6156954022994822924}
     - target: {fileID: 6290343235093446983, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
-      propertyPath: '<WeaponColliders>k__BackingField.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2574108280680795823}
-    - target: {fileID: 6290343235093446983, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
-      propertyPath: '<WeaponColliders>k__BackingField.Array.data[1]'
-      value: 
-      objectReference: {fileID: 612651978336432409}
+      propertyPath: <WeaponColliders>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7039256315202561560, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.4633161
@@ -381,22 +414,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6290343235093446983, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1282651382489328603, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 270963974981190449}
   m_SourcePrefab: {fileID: 100100000, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
---- !u!114 &5187209594223791945 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6290343235093446983, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
+--- !u!1 &106827305753732565 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1282651382489328603, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
   m_PrefabInstance: {fileID: 1204539712949440014}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &270963974981190449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106827305753732565}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf3abd20ccd679d45890fc3965fc2d20, type: 3}
+  m_Script: {fileID: 11500000, guid: e07c4ad31f9d3b640966b98df947fcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Data>k__BackingField: {fileID: 11400000, guid: 2fc9ccc3755e5be4c9686075b09f29c0, type: 2}
+  <WeaponMesh>k__BackingField: {fileID: 6156954022994822924}
+  <WeaponColliders>k__BackingField: []
 --- !u!4 &8144500639370651670 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7039256315202561560, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
@@ -878,18 +924,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100050, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3251835010893017025}
-    - targetCorrespondingSourceObject: {fileID: 100044, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2574108280680795823}
-    - targetCorrespondingSourceObject: {fileID: 100044, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4446489893168025109}
-    - targetCorrespondingSourceObject: {fileID: 100032, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4069435604548915209}
-    - targetCorrespondingSourceObject: {fileID: 100032, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 612651978336432409}
   m_SourcePrefab: {fileID: 100100000, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
 --- !u!4 &5618944474893368526 stripped
 Transform:
@@ -929,81 +963,3 @@ MonoBehaviour:
   isUsed: 0
   leftHandPositionWeight: 0
   leftHandRotationWeight: 0
---- !u!1 &5618944474893656240 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100044, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
-  m_PrefabInstance: {fileID: 5618944474893756028}
-  m_PrefabAsset: {fileID: 0}
---- !u!135 &2574108280680795823
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5618944474893656240}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.2
-  m_Center: {x: -0.2, y: 0, z: 0}
---- !u!114 &4446489893168025109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5618944474893656240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7843c5523db051e459959fbded11795b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _weaponIndex: 0
---- !u!1 &5618944474893656252 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100032, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
-  m_PrefabInstance: {fileID: 5618944474893756028}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4069435604548915209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5618944474893656252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7843c5523db051e459959fbded11795b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _weaponIndex: 0
---- !u!135 &612651978336432409
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5618944474893656252}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 0.2
-  m_Center: {x: -0.2, y: 0, z: 0}

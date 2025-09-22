@@ -19,12 +19,12 @@ MonoBehaviour:
   <Range>k__BackingField: 5
   <EffectiveRange>k__BackingField: 4
   <WeaponIndex>k__BackingField: 1
-  <DamageType>k__BackingField: 0
+  <DamageType>k__BackingField: 1
   <AttackAnimName>k__BackingField: 2HandedSword
   <HitMask>k__BackingField:
     serializedVersion: 2
-    m_Bits: 64
-  <KnockbackForce>k__BackingField: 250
+    m_Bits: 65
+  <KnockbackForce>k__BackingField: 1000
   <ComboData>k__BackingField:
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359

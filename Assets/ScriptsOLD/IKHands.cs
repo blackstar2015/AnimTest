@@ -41,7 +41,7 @@ namespace RPGCharacterAnims
 		/// <summary>
 		/// Smoothly blend IK on and off so there's no snapping into position.
 		/// </summary>
-		public void BlendIK(bool blendOn, float delay, float timeToBlend, Weapon weapon)
+		public void BlendIK(bool blendOn, float delay, float timeToBlend, Lookups.Weapon weapon)
 		{
             // If using 2 handed weapon.
 			if (weapon.Is2HandedWeapon()) {
@@ -54,7 +54,7 @@ namespace RPGCharacterAnims
 			if (!blendOn) { isUsed = false; }
 		}
 
-		private IEnumerator _BlendIK(bool blendOn, float delay, float timeToBlend, Weapon weapon)
+		private IEnumerator _BlendIK(bool blendOn, float delay, float timeToBlend, Lookups.Weapon weapon)
         {
             GetCurrentWeaponAttachPoint(weapon);
 			yield return new WaitForSeconds(delay);
@@ -102,11 +102,11 @@ namespace RPGCharacterAnims
 			}
 		}
 
-		private void GetCurrentWeaponAttachPoint(Weapon weapon)
+		private void GetCurrentWeaponAttachPoint(Lookups.Weapon weapon)
 		{
-			var weaponType = (Weapon)weapon;
+			var weaponType = (Lookups.Weapon)weapon;
 			switch (weaponType) {
-				case Weapon.TwoHandSword: blendToTransform = rpgCharacterWeaponController.twoHandSword.transform.GetChild(0).transform; break;
+				case Lookups.Weapon.TwoHandSword: blendToTransform = rpgCharacterWeaponController.twoHandSword.transform.GetChild(0).transform; break;
 			}
 		}
     }

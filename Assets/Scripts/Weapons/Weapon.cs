@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
 
-public abstract class Weapons : MonoBehaviour
+public abstract class Weapon : MonoBehaviour
 {
     [field: SerializeField, Required, InlineEditor] public WeaponData Data { get; private set; }
     [field: SerializeField] public GameObject WeaponMesh  { get; set; }
@@ -45,12 +45,12 @@ public abstract class Weapons : MonoBehaviour
     }
     
 
-    public void DisableWeaponColliders(DamageInfo damageInfo)
-    {
-        foreach (Collider collider in WeaponColliders)
-        {
-            collider.enabled = false;
-            if(collider.TryGetComponent(out DamageTrigger trigger))   trigger.enabled = false;
-        }
-    }
+    // public void DisableWeaponColliders(DamageInfo damageInfo)
+    // {
+    //     foreach (Collider collider in WeaponColliders)
+    //     {
+    //         collider.enabled = false;
+    //         if(collider.TryGetComponent(out DamageTrigger trigger))   trigger.enabled = false;
+    //     }
+    // }
 }
