@@ -27,14 +27,16 @@ public class Health : MonoBehaviour, IDamageable
     [TabGroup("Properties"), ShowInInspector] public float MissingStamina => _maxStamina - _currentStamina;
     [TabGroup("Properties"), ShowInInspector] public float CurrentStaminaPercentage => _currentStamina / _maxStamina;
     [TabGroup("Properties"), ShowInInspector ] public bool CanBlock => _currentStamina >= 1f;
-    [TabGroup("Properties"), ShowInInspector] public bool IsBlocking;
-    [TabGroup("Properties"), ShowInInspector] public bool IsHitReacting;
-
+    [TabGroup("Properties"), ShowInInspector ] public bool IsPerfectBlocking { get; set; }
+    [TabGroup("Properties"), ShowInInspector] public bool IsBlocking{ get; set; }
+    [TabGroup("Properties"), ShowInInspector] public bool IsHitReacting { get; set; }
+    
+    //Events
     [TabGroup("Events")]public UnityEvent<DamageInfo> OnDamage;
     [TabGroup("Events")] public UnityEvent<DamageInfo> OnDeath;
     [TabGroup("Events")] public UnityEvent<DamageInfo> OnBlock;
-    [TabGroup("Events")] public UnityEvent<DamageInfo> OnBlockedAttack;
     [TabGroup("Events")] public UnityEvent OnUpdateStamina;
+    //[TabGroup("Events")] public UnityEvent<DamageInfo> OnBlockedAttack;
 
 
     private void Awake()
@@ -104,7 +106,7 @@ public class Health : MonoBehaviour, IDamageable
             return ;
         }
         OnBlock.Invoke(damageInfo);
-        damageInfo.Instigator.GetComponent<Health>().OnBlockedAttack.Invoke(damageInfo);
+        //damageInfo.Instigator.GetComponent<Health>().OnBlockedAttack.Invoke(damageInfo);
     }
     public void Death(DamageInfo damageInfo)
     {

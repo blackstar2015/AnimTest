@@ -1180,6 +1180,18 @@ BlendTree:
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 0
+--- !u!114 &-6186221740755255840
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f30803ab5b43cd84e980f8dea7b8696a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-6151287849153843260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2423,10 +2435,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f9538351b4ae440b3edc3001567709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _applyRootMotion: 0
+  _applyRootMotion: 1
   _rootMotionRotationTime: 0.2
   _meleeResetTime: 0
-  _canMove: 1
+  _canMove: 0
   _canShoot: 0
   _canMelee: 1
   _visibleWeaponIndex: 0
@@ -4931,6 +4943,7 @@ AnimatorState:
   - {fileID: 3111332168332787357}
   m_StateMachineBehaviours:
   - {fileID: -8633911869826905515}
+  - {fileID: -6186221740755255840}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

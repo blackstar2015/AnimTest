@@ -23,11 +23,13 @@ public class CustomController : MonoBehaviour
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly]public bool CanBlock => canBlock;
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly]public bool IsHitReacting => isHitReacting;
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool IsBlockedAttack => isBlockedAttack;
+    [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool IsPerfectBlocking =>  isPerfectBlocking;
     protected bool isBlocking { get; set; }
     protected bool canBlock  { get; set; }
     protected bool isHitReacting { get; set; }
     protected bool isAlive { get; set; }
     protected bool isBlockedAttack { get; set; }
+    protected bool isPerfectBlocking { get; set; }
     
     public int CurrentWeaponIndex => weaponIndex;
     public int CurrentActionIndex => actionIndex;
@@ -50,7 +52,7 @@ public class CustomController : MonoBehaviour
         isAlive = Health.IsAlive;
         canBlock  = Health.CanBlock;
         isHitReacting = Health.IsHitReacting;
-        Health.OnBlockedAttack.AddListener(BlockedAttack);
+        Health.OnBlock.AddListener(BlockedAttack);
         Health.OnDeath.AddListener(Death);
         Health.OnDamage.AddListener(Knockback);
         // foreach(Weapons weapon in Weapons)
@@ -80,9 +82,6 @@ public class CustomController : MonoBehaviour
         {
             Vector3 knockbackDirection = (data.ComboData[instigatorController.CurrentActionIndex].KnockbackDirection).normalized;
             rb.AddForce(damageInfo.KnockBackForce * (knockbackDirection + damageInfo.Instigator.transform.forward), ForceMode.Impulse);
-            //Debug.DrawRay(rb.position + new Vector3(0, 1, 0), (knockbackDirection + damageInfo.Instigator.transform.forward) * 1000, Color.red, 1, false);
-            //Debug.DrawRay(rb.position + new Vector3(0, 1, 0), rb.transform.forward * 1000, Color.blue, 1, false);
-            //Debug.DrawRay(rb.position + new Vector3(0, 1, 0), damageInfo.Instigator.transform.forward * 1000, Color.green, 1, false);
             AnimatorClipInfo[] currentClipInfo = instigatorController.Animator.GetCurrentAnimatorClipInfo(0);
             Debug.Log(instigatorController.CurrentActionIndex + " " 
                 + currentClipInfo[0].clip.name + " "
@@ -112,25 +111,44 @@ public class CustomController : MonoBehaviour
 
     private IEnumerator BlockedAttackRoutine(DamageInfo damageInfo)
     {
-        CustomCharacterMovement victimMovement = damageInfo.Victim.GetComponent<CustomCharacterMovement>();
-        Rigidbody victimRb = victimMovement.Rigidbody;
-        NavMeshAgent victimAgent = victimMovement.NavMeshAgent;
+        CustomController controller = damageInfo.Instigator.GetComponent<CustomController>();
+        WeaponMeleeData data = controller.Weapons[controller.CurrentWeaponIndex].Data as WeaponMeleeData;
+        CustomCharacterMovement movement = controller.Movement;
+        Rigidbody rb = movement.Rigidbody;
+        NavMeshAgent agent = movement.NavMeshAgent;
         Animator.applyRootMotion = false;
-        victimAgent.enabled = false;
-        victimRb.linearVelocity = Vector3.zero;
+        agent.enabled = false;
+        rb.linearVelocity = Vector3.zero;
         isBlockedAttack  = true;
         
         yield return new WaitForEndOfFrame();
-        victimRb.AddForce(damageInfo.KnockBackForce * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
+        
+        if (isPerfectBlocking && data != null)
+        {
+            Vector3 knockbackDirection = (data.ComboData[controller.CurrentActionIndex].KnockbackDirection).normalized;
+            rb.AddForce(damageInfo.KnockBackForce * (knockbackDirection + damageInfo.Instigator.transform.forward), ForceMode.Impulse);
+            Debug.DrawLine(transform.position, damageInfo.Instigator.transform.position, Color.red);
+        }
+        else rb.AddForce(damageInfo.KnockBackForce * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
+        
         yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length);
         
         isBlockedAttack =  false;
-        victimAgent.enabled = true;
+        rb.linearVelocity = Vector3.zero;
+        agent.enabled = true;
         yield return new WaitForEndOfFrame();
-        victimAgent.ResetPath();
+        agent.ResetPath();
         yield return null;
     }
 
+    private IEnumerator PerfectBlockRoutine()
+    {
+        isPerfectBlocking = true;
+        
+        yield return new WaitForSeconds(Weapons[CurrentWeaponIndex].Data.PerfectBlockTime);
+        
+        isPerfectBlocking = false;
+    }
     private void FindWeapons()
     {
         Weapons = GetComponentsInChildren<Weapon>();
@@ -141,12 +159,19 @@ public class CustomController : MonoBehaviour
         isAlive = Health.IsAlive;
         canBlock  = Health.CanBlock;
         isHitReacting = Health.IsHitReacting;
-    }
+        Health.IsPerfectBlocking = isPerfectBlocking;    }
 
+    #region AnimEvents
     public void MeleeHitAnimEvent(int attackIndex)
     {
         WeaponMelee meleeweapon = Weapons[weaponIndex] as WeaponMelee;
         if (meleeweapon == null) return;
         meleeweapon.MeleeHitAnimEvent(attackIndex);
     }
+
+    public void PerfectBlock()
+    {
+        StartCoroutine(PerfectBlockRoutine());
+    }
+    #endregion
 }
