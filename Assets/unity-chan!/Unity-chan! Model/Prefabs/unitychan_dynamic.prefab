@@ -8923,6 +8923,10 @@ MonoBehaviour:
   <CanShoot>k__BackingField: 1
   <CanMelee>k__BackingField: 1
   <CursorMode>k__BackingField: 1
+  _lastDashTime: -Infinity
+  _lastAttackTime: -Infinity
+  _isAttacking: 0
+  <MoveInput>k__BackingField: {x: 0, y: 0}
 --- !u!114 &1549061530283916620
 MonoBehaviour:
   m_ObjectHideFlags: 0

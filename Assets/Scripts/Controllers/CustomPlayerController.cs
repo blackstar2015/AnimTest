@@ -6,10 +6,10 @@ using UnityEngine.InputSystem;
 public class CustomPlayerController : CustomController
 {
     [field: SerializeField, TabGroup("Properties")] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
-    private float _lastDashTime = Mathf.NegativeInfinity;
-    private float _lastAttackTime = Mathf.NegativeInfinity;
-    private bool _isAttacking;
-    protected Vector2 MoveInput { get; set; }
+     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastDashTime = Mathf.NegativeInfinity;
+     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastAttackTime = Mathf.NegativeInfinity;
+     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private bool _isAttacking = false;
+     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] protected Vector2 MoveInput { get; set; }
     
     protected override void Awake()
     {

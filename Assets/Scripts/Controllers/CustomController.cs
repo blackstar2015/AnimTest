@@ -10,17 +10,19 @@ public class CustomController : MonoBehaviour
     [field: SerializeField, TabGroup("Components")]public Health Health { get; set; }
     [field: SerializeField, TabGroup("Components")]public Targetable Targetable { get; set; }
     [field: SerializeField, TabGroup("Components")]public Vision Vision { get; set; }
+
     [field: SerializeField, InlineButton(nameof(FindWeapons), "Find"), TabGroup("Weapons")] public Weapon[] Weapons { get; private set; }
+
     [field: SerializeField, TabGroup("Properties")] public bool LookInCameraDirection { get; set; }
     [field: SerializeField, TabGroup("Properties")] protected int actionIndex = 0;
-    [field: SerializeField, TabGroup("Properties")] protected int weaponIndex = 0;
-    [field: SerializeField, TabGroup("Properties"), HideInEditorMode]public bool CanShoot { get; set; } = true;
-    [field: SerializeField, TabGroup("Properties"), HideInEditorMode]public bool CanMelee { get; set; } = true;
-    [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool IsBlocking => isBlocking;
-    [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool IsAlive => isAlive;
-    [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool CanBlock => canBlock;
-    [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool IsHitReacting => isHitReacting;
-    [TabGroup("Properties"), ShowInInspector, HideInEditorMode]public bool IsBlockedAttack => isBlockedAttack;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] protected int weaponIndex = 0;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly]public bool CanShoot { get; set; } = true;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly]public bool CanMelee { get; set; } = true;
+    [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly]public bool IsBlocking => isBlocking;
+    [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly]public bool IsAlive => isAlive;
+    [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly]public bool CanBlock => canBlock;
+    [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly]public bool IsHitReacting => isHitReacting;
+    [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool IsBlockedAttack => isBlockedAttack;
     protected bool isBlocking { get; set; }
     protected bool canBlock  { get; set; }
     protected bool isHitReacting { get; set; }
@@ -78,10 +80,13 @@ public class CustomController : MonoBehaviour
         {
             Vector3 knockbackDirection = (data.ComboData[instigatorController.CurrentActionIndex].KnockbackDirection).normalized;
             rb.AddForce(damageInfo.KnockBackForce * (knockbackDirection + damageInfo.Instigator.transform.forward), ForceMode.Impulse);
-            Debug.DrawRay(rb.position + new Vector3(0, 1, 0), (knockbackDirection + damageInfo.Instigator.transform.forward) * 1000, Color.red, 1, false);
-            Debug.DrawRay(rb.position + new Vector3(0, 1, 0), rb.transform.forward * 1000, Color.blue, 1, false);
-            Debug.DrawRay(rb.position + new Vector3(0, 1, 0), damageInfo.Instigator.transform.forward * 1000, Color.green, 1, false);
-            Debug.Log(instigatorController.CurrentActionIndex);
+            //Debug.DrawRay(rb.position + new Vector3(0, 1, 0), (knockbackDirection + damageInfo.Instigator.transform.forward) * 1000, Color.red, 1, false);
+            //Debug.DrawRay(rb.position + new Vector3(0, 1, 0), rb.transform.forward * 1000, Color.blue, 1, false);
+            //Debug.DrawRay(rb.position + new Vector3(0, 1, 0), damageInfo.Instigator.transform.forward * 1000, Color.green, 1, false);
+            AnimatorClipInfo[] currentClipInfo = instigatorController.Animator.GetCurrentAnimatorClipInfo(0);
+            Debug.Log(instigatorController.CurrentActionIndex + " " 
+                + currentClipInfo[0].clip.name + " "
+                + data.ComboData[instigatorController.CurrentActionIndex].KnockbackDirection);
         }
         else rb.AddForce(damageInfo.KnockBackForce * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
         yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length/2);
@@ -116,7 +121,7 @@ public class CustomController : MonoBehaviour
         isBlockedAttack  = true;
         
         yield return new WaitForEndOfFrame();
-        victimRb.AddForce(damageInfo.KnockBackForce * 4 * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
+        victimRb.AddForce(damageInfo.KnockBackForce * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
         yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length);
         
         isBlockedAttack =  false;

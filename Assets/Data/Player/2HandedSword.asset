@@ -30,47 +30,47 @@ MonoBehaviour:
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
-    <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
-    <Angle>k__BackingField: 359
-    <Range>k__BackingField: 1.5
-    <KnockbackMultiplier>k__BackingField: 1
-    <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
-    <Angle>k__BackingField: 359
-    <Range>k__BackingField: 1.5
-    <KnockbackMultiplier>k__BackingField: 1
-    <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
-    <Angle>k__BackingField: 359
-    <Range>k__BackingField: 1.5
-    <KnockbackMultiplier>k__BackingField: 1
-    <KnockbackDirection>k__BackingField: {x: 1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
-    <Angle>k__BackingField: 359
-    <Range>k__BackingField: 1.5
-    <KnockbackMultiplier>k__BackingField: 1
-    <KnockbackDirection>k__BackingField: {x: 1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
-    <Angle>k__BackingField: 359
-    <Range>k__BackingField: 1.5
-    <KnockbackMultiplier>k__BackingField: 1
-    <KnockbackDirection>k__BackingField: {x: 1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
-    <Angle>k__BackingField: 359
-    <Range>k__BackingField: 1.5
-    <KnockbackMultiplier>k__BackingField: 1
-    <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
-    <Angle>k__BackingField: 359
-    <Range>k__BackingField: 1.5
-    <KnockbackMultiplier>k__BackingField: 1
-    <KnockbackDirection>k__BackingField: {x: 1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
-    <Angle>k__BackingField: 359
-    <Range>k__BackingField: 1.5
-    <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 359
+    <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 359
+    <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 359
+    <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 359
+    <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: 1, y: 0, z: 0}
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 359
+    <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 359
+    <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 359
+    <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
+  - <Damage>k__BackingField: 40
+    <Angle>k__BackingField: 359
+    <Range>k__BackingField: 1.5
+    <KnockbackMultiplier>k__BackingField: 1
+    <KnockbackDirection>k__BackingField: {x: 1, y: 0, z: 0}
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5

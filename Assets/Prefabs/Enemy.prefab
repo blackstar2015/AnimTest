@@ -262,6 +262,7 @@ MonoBehaviour:
   weaponIndex: 0
   <CanShoot>k__BackingField: 1
   <CanMelee>k__BackingField: 1
+  _target: {fileID: 0}
 --- !u!114 &6849809075481193866
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,8 +1,9 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class CustomEnemyController : CustomController
 {
-    private Transform _target;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private Transform _target;
 
 
     protected override void Awake()
