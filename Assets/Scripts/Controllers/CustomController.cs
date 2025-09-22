@@ -52,7 +52,7 @@ public class CustomController : MonoBehaviour
         isAlive = Health.IsAlive;
         canBlock  = Health.CanBlock;
         isHitReacting = Health.IsHitReacting;
-        Health.OnBlockedAttack.AddListener(BlockedAttack);
+        Health.OnBlock.AddListener(BlockedAttack);
         Health.OnDeath.AddListener(Death);
         Health.OnDamage.AddListener(Knockback);
         // foreach(Weapons weapon in Weapons)
@@ -82,9 +82,6 @@ public class CustomController : MonoBehaviour
         {
             Vector3 knockbackDirection = (data.ComboData[instigatorController.CurrentActionIndex].KnockbackDirection).normalized;
             rb.AddForce(damageInfo.KnockBackForce * (knockbackDirection + damageInfo.Instigator.transform.forward), ForceMode.Impulse);
-            //Debug.DrawRay(rb.position + new Vector3(0, 1, 0), (knockbackDirection + damageInfo.Instigator.transform.forward) * 1000, Color.red, 1, false);
-            //Debug.DrawRay(rb.position + new Vector3(0, 1, 0), rb.transform.forward * 1000, Color.blue, 1, false);
-            //Debug.DrawRay(rb.position + new Vector3(0, 1, 0), damageInfo.Instigator.transform.forward * 1000, Color.green, 1, false);
             AnimatorClipInfo[] currentClipInfo = instigatorController.Animator.GetCurrentAnimatorClipInfo(0);
             Debug.Log(instigatorController.CurrentActionIndex + " " 
                 + currentClipInfo[0].clip.name + " "
@@ -115,6 +112,7 @@ public class CustomController : MonoBehaviour
     private IEnumerator BlockedAttackRoutine(DamageInfo damageInfo)
     {
         CustomController controller = damageInfo.Instigator.GetComponent<CustomController>();
+        WeaponMeleeData data = controller.Weapons[controller.CurrentWeaponIndex].Data as WeaponMeleeData;
         CustomCharacterMovement movement = controller.Movement;
         Rigidbody rb = movement.Rigidbody;
         NavMeshAgent agent = movement.NavMeshAgent;
@@ -125,13 +123,11 @@ public class CustomController : MonoBehaviour
         
         yield return new WaitForEndOfFrame();
         
-        WeaponMeleeData data = controller.Weapons[controller.CurrentWeaponIndex].Data as WeaponMeleeData;
         if (isPerfectBlocking && data != null)
         {
             Vector3 knockbackDirection = (data.ComboData[controller.CurrentActionIndex].KnockbackDirection).normalized;
-            rb.AddForce(damageInfo.KnockBackForce * 40 * (knockbackDirection + damageInfo.Instigator.transform.forward), ForceMode.Impulse);
+            rb.AddForce(damageInfo.KnockBackForce * (knockbackDirection + damageInfo.Instigator.transform.forward), ForceMode.Impulse);
             Debug.DrawLine(transform.position, damageInfo.Instigator.transform.position, Color.red);
-            Debug.Log("PERFECT BLOCK");
         }
         else rb.AddForce(damageInfo.KnockBackForce * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
         
