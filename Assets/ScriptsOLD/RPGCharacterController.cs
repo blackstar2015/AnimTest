@@ -188,13 +188,13 @@ namespace RPGCharacterAnims
 		/// Integer weapon number for the right hand. See the Weapon enum in AnimationData.cs for a
 		/// full list.
 		/// </summary>
-		[HideInInspector] public Weapon rightWeapon = Weapon.Unarmed;
+		[HideInInspector] public Lookups.Weapon rightWeapon = Lookups.Weapon.Unarmed;
 
 		/// <summary>
 		/// Integer weapon number for the left hand. See the Weapon enum in AnimationData.cs for a
 		/// full list.
 		/// </summary>
-		[HideInInspector] public Weapon leftWeapon = Weapon.Unarmed;
+		[HideInInspector] public Lookups.Weapon leftWeapon = Lookups.Weapon.Unarmed;
 
 		/// <summary>
 		/// Returns whether the character is holding a two-handed weapon. Two-handed weapons are
@@ -465,7 +465,7 @@ namespace RPGCharacterAnims
         /// <param name="leftWeapon">Left side weapon. See Weapon enum in AnimationData.cs.</param>
         /// <param name="rightWeapon">Right-hand weapon. See Weapon enum in AnimationData.cs.</param>
         /// <param name="duration">Duration in seconds that animation is locked.</param>
-        public void Attack(int attackNumber, Side attackSide, Weapon leftWeapon, Weapon rightWeapon, float duration)
+        public void Attack(int attackNumber, Side attackSide, Lookups.Weapon leftWeapon, Lookups.Weapon rightWeapon, float duration)
         {
 	        animator.SetSide(attackSide);
 			_isAttacking = true;
@@ -625,7 +625,7 @@ namespace RPGCharacterAnims
 		/// <summary>
 		/// Turns IK to 1 instantly.
 		/// </summary>
-		public void SetIKOn(Weapon weapon)
+		public void SetIKOn(Lookups.Weapon weapon)
 		{
 			if (ikHands != null) { ikHands.BlendIK(true, 0, 0, weapon); }
 		}

@@ -24,7 +24,7 @@ MonoBehaviour:
   <HitMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 65
-  <KnockbackForce>k__BackingField: 250
+  <KnockbackForce>k__BackingField: 1000
   <ComboData>k__BackingField:
   - <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359

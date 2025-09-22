@@ -232,12 +232,12 @@ namespace RPGCharacterAnims
 
 			var doSwitch = false;
 			var context = new SwitchWeaponContext();
-			var weaponNumber = Weapon.Unarmed;
+			var weaponNumber = Lookups.Weapon.Unarmed;
 
 			// Cycle through 2Handed weapons if any input happens on the up-down axis.
 			if (Mathf.Abs(inputSwitchUpDown) > 0.1f) {
-				var twoHandedWeapons = new Weapon[] {
-					Weapon.TwoHandSword
+				var twoHandedWeapons = new Lookups.Weapon[] {
+                    Lookups.Weapon.TwoHandSword
 				};
 				// If we're not wielding 2Handed weapon already, just switch to the first one in the list.
 				if (System.Array.IndexOf(twoHandedWeapons, rpgCharacterController.rightWeapon) == -1)
@@ -254,7 +254,7 @@ namespace RPGCharacterAnims
 				doSwitch = true;
 				context.type = HandlerTypes.Switch;
 				context.side = "None";
-				context.leftWeapon = Weapon.Unarmed;
+				context.leftWeapon = Lookups.Weapon.Unarmed;
 				context.rightWeapon = weaponNumber;
 			}
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WeaponsMelee : Weapons
+public class WeaponMelee : Weapon
 {
     private Vector3 _aimPosition;
     private Vector3 _attackOrigin;

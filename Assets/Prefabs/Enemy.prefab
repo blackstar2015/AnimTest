@@ -256,7 +256,7 @@ MonoBehaviour:
   <Targetable>k__BackingField: {fileID: 7097943158623928176}
   <Vision>k__BackingField: {fileID: 3220486211538726260}
   <Weapons>k__BackingField:
-  - {fileID: 5187209594223791945}
+  - {fileID: 270963974981190449}
   <LookInCameraDirection>k__BackingField: 0
   actionIndex: 1
   weaponIndex: 0
@@ -414,22 +414,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6290343235093446983, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1282651382489328603, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 270963974981190449}
   m_SourcePrefab: {fileID: 100100000, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
---- !u!114 &5187209594223791945 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6290343235093446983, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
+--- !u!1 &106827305753732565 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1282651382489328603, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
   m_PrefabInstance: {fileID: 1204539712949440014}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &270963974981190449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106827305753732565}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf3abd20ccd679d45890fc3965fc2d20, type: 3}
+  m_Script: {fileID: 11500000, guid: e07c4ad31f9d3b640966b98df947fcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Data>k__BackingField: {fileID: 11400000, guid: 2fc9ccc3755e5be4c9686075b09f29c0, type: 2}
+  <WeaponMesh>k__BackingField: {fileID: 6156954022994822924}
+  <WeaponColliders>k__BackingField: []
 --- !u!4 &8144500639370651670 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7039256315202561560, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}

@@ -1,7 +1,7 @@
 using LazyObjectPooler;
 using UnityEngine;
 
-public class WeaponsRanged : Weapons
+public class WeaponsRanged : Weapon
 {
     [field: SerializeField] public Transform Muzzle { get; private set; }
 

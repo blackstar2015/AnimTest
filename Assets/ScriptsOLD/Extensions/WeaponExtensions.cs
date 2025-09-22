@@ -9,31 +9,31 @@ namespace RPGCharacterAnims.Extensions
 		/// </summary>
 		/// <param name="weapon">Weapon value to check.</param>
 		/// <returns>True if 2 Handed, false if not.</returns>
-		public static bool Is2HandedWeapon(this Weapon weapon)
-		{ return weapon == Weapon.TwoHandSword; }
+		public static bool Is2HandedWeapon(this Lookups.Weapon weapon)
+		{ return weapon == Lookups.Weapon.TwoHandSword; }
 
 		/// <summary>
 		/// Checks if the weapon is equipped, i.e not Relaxing, or Unarmed.
 		/// </summary>
 		/// <param name="weapon">Weapon value to check.</param>
 		/// <returns>True or false.</returns>
-		public static bool HasEquippedWeapon(this Weapon weapon)
-		{ return weapon != Weapon.Unarmed; }
+		public static bool HasEquippedWeapon(this Lookups.Weapon weapon)
+		{ return weapon != Lookups.Weapon.Unarmed; }
 
 		/// <summary>
 		/// Checks if the weapon is empty, i.e Relaxing, or Unarmed.
 		/// </summary>
 		/// <param name="weapon">Weapon value to check.</param>
 		/// <returns>True or false.</returns>
-		public static bool HasNoWeapon(this Weapon weapon)
-		{ return weapon == Weapon.Unarmed; }
+		public static bool HasNoWeapon(this Lookups.Weapon weapon)
+		{ return weapon == Lookups.Weapon.Unarmed; }
 
 		/// <summary>
 		/// Returns true if the weapon number can use IKHands.
 		/// </summary>
 		/// <param name="weapon">Weapon to test.</param>
-		public static bool IsIKWeapon(this Weapon weapon)
-		{ return weapon == Weapon.TwoHandSword; }
+		public static bool IsIKWeapon(this Lookups.Weapon weapon)
+		{ return weapon == Lookups.Weapon.TwoHandSword; }
 
 		/// <summary>
 		/// This converts the Weapon into AnimatorWeapon, which is used in the Animator component to determine the
@@ -42,10 +42,10 @@ namespace RPGCharacterAnims.Extensions
 		/// </summary>
 		/// <param name="weapon">Weapon to convert.</param>
 		/// <returns></returns>
-		public static AnimatorWeapon ToAnimatorWeapon(this Weapon weapon)
+		public static AnimatorWeapon ToAnimatorWeapon(this Lookups.Weapon weapon)
 		{
-			if (weapon == Weapon.Unarmed || weapon == Weapon.TwoHandSword)
-			{ return ( AnimatorWeapon )weapon; }
+			if (weapon == Lookups.Weapon.Unarmed || weapon == Lookups.Weapon.TwoHandSword)
+			{ return (AnimatorWeapon)weapon; }
 
 			return AnimatorWeapon.UNARMED;
 		}

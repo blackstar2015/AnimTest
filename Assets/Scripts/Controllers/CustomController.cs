@@ -10,9 +10,9 @@ public class CustomController : MonoBehaviour
     [field: SerializeField, TabGroup("Components")]public Health Health { get; set; }
     [field: SerializeField, TabGroup("Components")]public Targetable Targetable { get; set; }
     [field: SerializeField, TabGroup("Components")]public Vision Vision { get; set; }
-    [field: SerializeField, InlineButton(nameof(FindWeapons), "Find"), TabGroup("Weapons")] public Weapons[] Weapons { get; private set; }
+    [field: SerializeField, InlineButton(nameof(FindWeapons), "Find"), TabGroup("Weapons")] public Weapon[] Weapons { get; private set; }
     [field: SerializeField, TabGroup("Properties")] public bool LookInCameraDirection { get; set; }
-    [field: SerializeField, TabGroup("Properties")] protected int actionIndex = 1;
+    [field: SerializeField, TabGroup("Properties")] protected int actionIndex = 0;
     [field: SerializeField, TabGroup("Properties")] protected int weaponIndex = 0;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode]public bool CanShoot { get; set; } = true;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode]public bool CanMelee { get; set; } = true;
@@ -71,18 +71,22 @@ public class CustomController : MonoBehaviour
         agent.enabled = false;
         rb.linearVelocity = Vector3.zero;
         yield return new WaitForEndOfFrame();
-        
-        WeaponMeleeData data = damageInfo.Victim.GetComponent<CustomController>().Weapons[CurrentWeaponIndex].Data as WeaponMeleeData;
+
+        CustomController instigatorController = damageInfo.Instigator.GetComponent<CustomController>();
+        WeaponMeleeData data = instigatorController.Weapons[instigatorController.CurrentWeaponIndex].Data as WeaponMeleeData;
         if (data != null)
         {
-            rb.AddForce(damageInfo.KnockBackForce * (data.ComboData[CurrentActionIndex - 1].KnockbackDirection + rb.transform.forward), ForceMode.Impulse);
-            //Debug.DrawRay(rb.position +new Vector3(0,1,0), (data.ComboData[CurrentActionIndex - 1].KnockbackDirection + rb.transform.forward) * 1000, Color.red, Mathf.Infinity, false);
-            //Debug.DrawRay(rb.position +new Vector3(0,1,0), rb.transform.forward * 1000, Color.blue, Mathf.Infinity, false);
-            //Debug.DrawRay(rb.position +new Vector3(0,1,0), data.ComboData[CurrentActionIndex - 1].KnockbackDirection * 1000, Color.green, Mathf.Infinity, false);
+            Vector3 knockbackDirection = (data.ComboData[instigatorController.CurrentActionIndex].KnockbackDirection).normalized;
+            rb.AddForce(damageInfo.KnockBackForce * (knockbackDirection + damageInfo.Instigator.transform.forward), ForceMode.Impulse);
+            Debug.DrawRay(rb.position + new Vector3(0, 1, 0), (knockbackDirection + damageInfo.Instigator.transform.forward) * 1000, Color.red, 1, false);
+            Debug.DrawRay(rb.position + new Vector3(0, 1, 0), rb.transform.forward * 1000, Color.blue, 1, false);
+            Debug.DrawRay(rb.position + new Vector3(0, 1, 0), damageInfo.Instigator.transform.forward * 1000, Color.green, 1, false);
+            Debug.Log(instigatorController.CurrentActionIndex);
         }
         else rb.AddForce(damageInfo.KnockBackForce * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
-        yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length/2);
         //Animator.applyRootMotion = true;
+        rb.linearVelocity = Vector3.zero;
         agent.enabled = true;
         yield return new WaitForEndOfFrame();
         agent.ResetPath();
@@ -120,13 +124,11 @@ public class CustomController : MonoBehaviour
         yield return new WaitForEndOfFrame();
         victimAgent.ResetPath();
         yield return null;
-        
-        
     }
 
     private void FindWeapons()
     {
-        Weapons = GetComponentsInChildren<Weapons>();
+        Weapons = GetComponentsInChildren<Weapon>();
     }
 
     protected virtual void Update()
@@ -138,9 +140,8 @@ public class CustomController : MonoBehaviour
 
     public void MeleeHitAnimEvent(int attackIndex)
     {
-        WeaponsMelee meleeweapon = Weapons[weaponIndex] as WeaponsMelee;
+        WeaponMelee meleeweapon = Weapons[weaponIndex] as WeaponMelee;
         if (meleeweapon == null) return;
         meleeweapon.MeleeHitAnimEvent(attackIndex);
-        
     }
 }
