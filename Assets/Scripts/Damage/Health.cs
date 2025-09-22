@@ -27,9 +27,11 @@ public class Health : MonoBehaviour, IDamageable
     [TabGroup("Properties"), ShowInInspector] public float MissingStamina => _maxStamina - _currentStamina;
     [TabGroup("Properties"), ShowInInspector] public float CurrentStaminaPercentage => _currentStamina / _maxStamina;
     [TabGroup("Properties"), ShowInInspector ] public bool CanBlock => _currentStamina >= 1f;
-    [TabGroup("Properties"), ShowInInspector] public bool IsBlocking;
-    [TabGroup("Properties"), ShowInInspector] public bool IsHitReacting;
-
+    [TabGroup("Properties"), ShowInInspector ] public bool IsPerfectBlocking { get; set; }
+    [TabGroup("Properties"), ShowInInspector] public bool IsBlocking{ get; set; }
+    [TabGroup("Properties"), ShowInInspector] public bool IsHitReacting { get; set; }
+    
+    //Events
     [TabGroup("Events")]public UnityEvent<DamageInfo> OnDamage;
     [TabGroup("Events")] public UnityEvent<DamageInfo> OnDeath;
     [TabGroup("Events")] public UnityEvent<DamageInfo> OnBlock;
@@ -91,7 +93,7 @@ public class Health : MonoBehaviour, IDamageable
 
     private void HandleBlock(DamageInfo damageInfo)
     {
-        if(!IsAlive || !CanBlock) return;
+        if(!IsAlive || !CanBlock || IsPerfectBlocking) return;
         if (damageInfo.Amount < 1f) return;
 
         _currentStamina -= damageInfo.Amount;
