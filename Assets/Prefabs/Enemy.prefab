@@ -135,8 +135,6 @@ MonoBehaviour:
   <_staminaRegenDuration>k__BackingField: 5
   _deathLayer: Corpse
   _isInvincible: 0
-  IsBlocking: 0
-  IsHitReacting: 0
   OnDamage:
     m_PersistentCalls:
       m_Calls: []
@@ -170,9 +168,6 @@ MonoBehaviour:
           m_StringArgument: BlockedAttack
           m_BoolArgument: 0
         m_CallState: 2
-  OnBlockedAttack:
-    m_PersistentCalls:
-      m_Calls: []
   OnUpdateStamina:
     m_PersistentCalls:
       m_Calls: []

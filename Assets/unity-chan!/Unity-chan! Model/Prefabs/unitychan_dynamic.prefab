@@ -8513,6 +8513,7 @@ GameObject:
   - component: {fileID: 7088797807341960202}
   - component: {fileID: 6490803663116844267}
   - component: {fileID: 6279022987117095905}
+  - component: {fileID: 9168587843957717560}
   m_Layer: 6
   m_Name: unitychan_dynamic
   m_TagString: Untagged
@@ -9007,8 +9008,6 @@ MonoBehaviour:
   <_staminaRegenDuration>k__BackingField: 1
   _deathLayer: Corpse
   _isInvincible: 0
-  IsBlocking: 0
-  IsHitReacting: 0
   OnDamage:
     m_PersistentCalls:
       m_Calls: []
@@ -9016,9 +9015,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnBlock:
-    m_PersistentCalls:
-      m_Calls: []
-  OnBlockedAttack:
     m_PersistentCalls:
       m_Calls: []
   OnUpdateStamina:
@@ -9059,6 +9055,21 @@ MonoBehaviour:
   _occlusionMask:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &9168587843957717560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 858821131268b9f4d8eae0716cba4393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _raiseEvent: 8
+  _value: {fileID: 400328}
+  _gameEventAsset: {fileID: 11400000, guid: f7e4cf998b3a90e4194279bd08e4e5e4, type: 2}
 --- !u!1 &6620052710620931291
 GameObject:
   m_ObjectHideFlags: 0
