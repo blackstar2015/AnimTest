@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 2HandedSword
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 10
-  <AttackRate>k__BackingField: 0.8
+  <AttackRate>k__BackingField: 1.2
   <Duration>k__BackingField: 1
   <CritChance>k__BackingField: 5
   <Range>k__BackingField: 5
@@ -21,6 +21,7 @@ MonoBehaviour:
   <WeaponIndex>k__BackingField: 1
   <DamageType>k__BackingField: 1
   <AttackAnimName>k__BackingField: 2HandedSword
+  <PerfectBlockTime>k__BackingField: 1
   <HitMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 65
