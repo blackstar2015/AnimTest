@@ -1,9 +1,8 @@
 using GameEvents;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
+using Sirenix.OdinInspector;
 using Random = UnityEngine.Random;
 
 public class DebugStuff : MonoBehaviour
@@ -17,8 +16,8 @@ public class DebugStuff : MonoBehaviour
     [SerializeField] private float _spawnDelay = 2f;
     [field: SerializeField] private int _numberOfEnemies { get; set; } = 0;
     [SerializeField] private AnimationCurve _numEnemyCurve;
-
-
+    [field: SerializeField, HideInEditorMode, ReadOnly] private int num { get; set; } 
+    
     private void Start()
     {
         _player = _playerTransform.CurrentValue.gameObject.GetComponent<CustomPlayerController>();
@@ -37,8 +36,9 @@ public class DebugStuff : MonoBehaviour
 
     private int CalculateNumberOfEnemies()
     {
-        int numberOfEnemies = _numberOfEnemies + Mathf.FloorToInt(_numEnemyCurve.Evaluate(Time.time));
-        return _numberOfEnemies;
+        _numEnemyCurve.postWrapMode = WrapMode.ClampForever;
+        num = _numberOfEnemies + Mathf.FloorToInt(_numEnemyCurve.Evaluate(Time.time));
+        return num;
     }
 
     private void KillAllEnemies()
