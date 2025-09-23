@@ -15,7 +15,7 @@ public class DebugStuff : MonoBehaviour
     [SerializeField] private List<CustomEnemyController>  _enemies;
     [SerializeField] private bool _shouldSpawn = false;
     [SerializeField] private float _spawnDelay = 2f;
-    [field: SerializeField] private int _numberOfEnemies { get;  set; }
+    [field: SerializeField] private int _numberOfEnemies { get; set; } = 0;
     [SerializeField] private AnimationCurve _numEnemyCurve;
 
 
@@ -37,7 +37,7 @@ public class DebugStuff : MonoBehaviour
 
     private int CalculateNumberOfEnemies()
     {
-        _numberOfEnemies = Mathf.FloorToInt(_numEnemyCurve.Evaluate(Time.time));
+        int numberOfEnemies = _numberOfEnemies + Mathf.FloorToInt(_numEnemyCurve.Evaluate(Time.time));
         return _numberOfEnemies;
     }
 
@@ -99,9 +99,9 @@ public class DebugStuff : MonoBehaviour
 
     private IEnumerator SpawnEnemyRoutine()
     {
-            CustomEnemyController enemy = Instantiate(_enemyPrefab, GetRandomSpawnPoint().position, GetRandomSpawnPoint().rotation);
-            _enemies.Add(enemy);
-            enemy.GetComponent<Health>().OnDeath.AddListener(RemoveEnemy);
+        CustomEnemyController enemy = Instantiate(_enemyPrefab, GetRandomSpawnPoint().position, GetRandomSpawnPoint().rotation);
+        _enemies.Add(enemy);
+        enemy.GetComponent<Health>().OnDeath.AddListener(RemoveEnemy);
         yield return new WaitForSeconds(_spawnDelay);
     }
 
