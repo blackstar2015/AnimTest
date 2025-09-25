@@ -17,6 +17,6 @@ public class WeaponData : ScriptableObject
     [field: SerializeField] public string AttackAnimName { get; private set; } = "";
 
     [field: SerializeField] public float PerfectBlockTime { get; set; } = 1;
-    //[field: SerializeField] public Collider[] WeaponColliders {get; private set;}
     //[field: SerializeField] public EventReference SFX { get; private set; }
+    //[field: SerializeField] public Collider[] WeaponColliders {get; private set;}
 }

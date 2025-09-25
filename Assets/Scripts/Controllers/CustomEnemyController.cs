@@ -1,10 +1,12 @@
+using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class CustomEnemyController : CustomController
 {
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private Transform _target;
-
+    public bool CanAttackPlayer = false;
+    public Spawner spawner;
 
     protected override void Awake()
     {
@@ -23,8 +25,11 @@ public class CustomEnemyController : CustomController
         float distance = Vector3.Distance(transform.position, _target.position);
         if (_target.TryGetComponent(out Health health) && health.IsAlive)
         {
-            if(distance < Weapons[weaponIndex].Data.Range) Weapons[weaponIndex].
-                TryAttack(_target.position,this.gameObject,Targetable.Team);
+            if (distance < Weapons[weaponIndex].Data.Range && CanAttackPlayer) StartCoroutine(AttackRoutine());
+        }
+        else
+        {
+            CanAttackPlayer = false;
         }
         if (distance > stopDistance)
         {
@@ -36,5 +41,13 @@ public class CustomEnemyController : CustomController
             Movement.SetLookPosition(_target.position);
         }
 
+    }
+
+    private IEnumerator AttackRoutine()
+    {
+        Weapons[weaponIndex].TryAttack(_target.position,this.gameObject,Targetable.Team);
+        yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length);
+        CanAttackPlayer = false;
+        yield return null;
     }
 }
