@@ -5000,7 +5000,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 16512
+  m_VersionIndex: 16530
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5231,19 +5231,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2221545797251185327, guid: 97c87d64f6d9c33428ce83b0331bff43, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.13726586
+      value: 0.07216811
       objectReference: {fileID: 0}
     - target: {fileID: 2221545797251185327, guid: 97c87d64f6d9c33428ce83b0331bff43, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.399179
+      value: 1.0355222
       objectReference: {fileID: 0}
     - target: {fileID: 2221545797251185327, guid: 97c87d64f6d9c33428ce83b0331bff43, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.8181386
+      value: -2.1953313
       objectReference: {fileID: 0}
     - target: {fileID: 2943384482468443561, guid: 97c87d64f6d9c33428ce83b0331bff43, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.27
+      value: -19.51
       objectReference: {fileID: 0}
     - target: {fileID: 2943384482468443561, guid: 97c87d64f6d9c33428ce83b0331bff43, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5251,7 +5251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2943384482468443561, guid: 97c87d64f6d9c33428ce83b0331bff43, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 23.89
+      value: 23.2
       objectReference: {fileID: 0}
     - target: {fileID: 2943384482468443561, guid: 97c87d64f6d9c33428ce83b0331bff43, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5283,7 +5283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3157802281336817183, guid: 97c87d64f6d9c33428ce83b0331bff43, type: 3}
       propertyPath: m_Width
-      value: 15.05
+      value: 11.5
       objectReference: {fileID: 0}
     - target: {fileID: 3157802281336817183, guid: 97c87d64f6d9c33428ce83b0331bff43, type: 3}
       propertyPath: m_EndPoint.x
