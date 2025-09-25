@@ -1,5 +1,6 @@
 using GameEvents;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
@@ -7,7 +8,7 @@ public class SpawnPoint : MonoBehaviour
     [SerializeField] private TransformEventAsset _player;
     [SerializeField] private float _minDistance = 1f;
     private float _distanceToPlayer;
-    [SerializeField] public bool IsSpawning;
+    public bool IsSpawning => SpawnCheck();
 
     private void Update()
     {
@@ -29,7 +30,12 @@ public class SpawnPoint : MonoBehaviour
 
     private bool SpawnCheck()
     {
-        return IsSpawning = _distanceToPlayer < _minDistance;
+        Vision vision = _player.CurrentValue.gameObject.GetComponent<Vision>();
+        if (!vision.TestVisibility(transform.position) && _distanceToPlayer < _minDistance)
+        {
+            return true;
+        }
+        else return false;
     }
 
     private float CalculateDistanceToPlayer()
