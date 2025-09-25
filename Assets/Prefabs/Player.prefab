@@ -315,7 +315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9168587843957717560, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: _raiseEvent
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

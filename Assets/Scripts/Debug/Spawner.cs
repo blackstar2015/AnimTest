@@ -1,27 +1,27 @@
 using GameEvents;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
+using Sirenix.OdinInspector;
 using Random = UnityEngine.Random;
+using Sirenix.Utilities;
 
-public class DebugStuff : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     [SerializeField] private TransformEventAsset _playerTransform;
     [SerializeField] private CustomEnemyController _enemyPrefab;
     [SerializeField] private CustomPlayerController _player;
-    [SerializeField] private Transform[] _spawnTranforms;
+    [SerializeField] private List<SpawnPoint> _spawnTranforms;
     [SerializeField] private List<CustomEnemyController>  _enemies;
     [SerializeField] private bool _shouldSpawn = false;
     [SerializeField] private float _spawnDelay = 2f;
     [field: SerializeField] private int _numberOfEnemies { get; set; } = 0;
     [SerializeField] private AnimationCurve _numEnemyCurve;
-
-
+    [field: SerializeField, HideInEditorMode, ReadOnly] private int num { get; set; } 
+    
     private void Start()
     {
-        _player = _playerTransform.CurrentValue.gameObject.GetComponent<CustomPlayerController>();
+        FindPlayer();
     }
 
     private void Update()
@@ -35,10 +35,26 @@ public class DebugStuff : MonoBehaviour
         KillAllEnemies();
     }
 
+    private void FindPlayer()
+    {
+        _player = _playerTransform.CurrentValue.gameObject.GetComponent<CustomPlayerController>();
+    }
+
+    public void AddSpawnPoints(SpawnPoint spawnPoint)
+    {
+        if(!_spawnTranforms.Contains(spawnPoint))  _spawnTranforms.Add(spawnPoint);
+    }
+
+    public void RemoveSpawnPoints(SpawnPoint spawnPoint)
+    {
+        if (_spawnTranforms.Contains(spawnPoint))  _spawnTranforms.Remove(spawnPoint);
+    }
+
     private int CalculateNumberOfEnemies()
     {
-        int numberOfEnemies = _numberOfEnemies + Mathf.FloorToInt(_numEnemyCurve.Evaluate(Time.time));
-        return _numberOfEnemies;
+        _numEnemyCurve.postWrapMode = WrapMode.ClampForever;
+        num = _numberOfEnemies + Mathf.FloorToInt(_numEnemyCurve.Evaluate(Time.time));
+        return num;
     }
 
     private void KillAllEnemies()
@@ -91,6 +107,7 @@ public class DebugStuff : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        if(_spawnTranforms.IsNullOrEmpty()) return;
         if (Input.GetKeyDown(KeyCode.Keypad1) || (_enemies.Count < CalculateNumberOfEnemies() && _shouldSpawn))
         {
             StartCoroutine(SpawnEnemyRoutine());
@@ -99,7 +116,8 @@ public class DebugStuff : MonoBehaviour
 
     private IEnumerator SpawnEnemyRoutine()
     {
-        CustomEnemyController enemy = Instantiate(_enemyPrefab, GetRandomSpawnPoint().position, GetRandomSpawnPoint().rotation);
+        SpawnPoint spawnPoint = GetRandomSpawnPoint();
+        CustomEnemyController enemy = Instantiate(_enemyPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
         _enemies.Add(enemy);
         enemy.GetComponent<Health>().OnDeath.AddListener(RemoveEnemy);
         yield return new WaitForSeconds(_spawnDelay);
@@ -110,11 +128,11 @@ public class DebugStuff : MonoBehaviour
         _enemies.Remove(damageInfo.Victim.GetComponent<CustomEnemyController>());
     }
 
-    private Transform GetRandomSpawnPoint()
+    private SpawnPoint GetRandomSpawnPoint()
     {
-        int rand = Random.Range(0, _spawnTranforms.Length);
+        int rand = Random.Range(0, _spawnTranforms.Count);
 
-        return _spawnTranforms[rand];
+         return _spawnTranforms[rand];
 
     }
 }
