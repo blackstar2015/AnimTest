@@ -110,12 +110,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 3260361438803574282}
     m_Modifications:
     - target: {fileID: 436802227097849074, guid: 0c69cbdda2eff2c478125081f581ab87, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 436802227097849074, guid: 0c69cbdda2eff2c478125081f581ab87, type: 3}
       propertyPath: m_VersionIndex
-      value: 16533
+      value: 16539
       objectReference: {fileID: 0}
     - target: {fileID: 991139709650856379, guid: 0c69cbdda2eff2c478125081f581ab87, type: 3}
       propertyPath: m_LocalPosition.x
@@ -157,17 +153,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2512668111425399705, guid: 0c69cbdda2eff2c478125081f581ab87, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4557236408904168143, guid: 0c69cbdda2eff2c478125081f581ab87, type: 3}
       propertyPath: m_Name
       value: Room2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7992483750896835214, guid: 0c69cbdda2eff2c478125081f581ab87, type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

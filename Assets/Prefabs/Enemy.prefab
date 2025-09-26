@@ -259,6 +259,8 @@ MonoBehaviour:
   <CanShoot>k__BackingField: 1
   <CanMelee>k__BackingField: 1
   _target: {fileID: 0}
+  _stopDistance: 5
+  CanAttackPlayer: 0
 --- !u!114 &6849809075481193866
 MonoBehaviour:
   m_ObjectHideFlags: 0

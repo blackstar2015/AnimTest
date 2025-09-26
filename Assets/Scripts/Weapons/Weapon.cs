@@ -44,13 +44,4 @@ public abstract class Weapon : MonoBehaviour
         if (!string.IsNullOrEmpty(Data.AttackAnimName)) _animator.SetTrigger(Data.AttackAnimName);
     }
     
-
-    // public void DisableWeaponColliders(DamageInfo damageInfo)
-    // {
-    //     foreach (Collider collider in WeaponColliders)
-    //     {
-    //         collider.enabled = false;
-    //         if(collider.TryGetComponent(out DamageTrigger trigger))   trigger.enabled = false;
-    //     }
-    // }
 }

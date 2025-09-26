@@ -196,8 +196,7 @@ public abstract class CustomCharacterMovementBase : MonoBehaviour
 
     // path to destination using navmesh
     public virtual void MoveTo(Vector3 destination)
-    {
-        //NavMeshAgent.CompleteOffMeshLink();
+    { 
         if (!NavMeshAgent.isActiveAndEnabled || !NavMeshAgent.isOnNavMesh) return;
         NavMeshAgent.SetDestination(destination);
     }

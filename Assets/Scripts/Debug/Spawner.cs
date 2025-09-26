@@ -13,6 +13,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private CustomPlayerController _player;
     [SerializeField] private List<SpawnPoint> _spawnTranforms;
     [SerializeField] private List<CustomEnemyController>  _enemies;
+    [SerializeField] private CustomEnemyController _lastAttackingEnemy;
     [SerializeField] private bool _shouldSpawn = false;
     [SerializeField] private float _spawnDelay = 2f;
     [field: SerializeField] private int _numberOfEnemies { get; set; } = 0;
@@ -33,6 +34,25 @@ public class Spawner : MonoBehaviour
         ToggleEnemyInvincibility();
         IncrementEnemies();
         KillAllEnemies();
+        AssignAttackingEnemy();
+    }
+
+    private void AssignAttackingEnemy()
+    {
+        List<CustomEnemyController> AttackingEnemies = _enemies;
+        if(AttackingEnemies.Count <=0) return;
+        foreach (CustomEnemyController enemy in _enemies)
+        {
+            if(enemy.CanAttackPlayer) return;
+        }
+        // if (_lastAttackingEnemy != null && AttackingEnemies.Contains(_lastAttackingEnemy))
+        // {
+        //     AttackingEnemies.Remove(_lastAttackingEnemy);
+        // }
+        if(AttackingEnemies.Count <=0) return;
+        int rand = Random.Range(0, AttackingEnemies.Count);
+        AttackingEnemies[rand].CanAttackPlayer = true;
+        _lastAttackingEnemy = AttackingEnemies[rand];
     }
 
     private void FindPlayer()
