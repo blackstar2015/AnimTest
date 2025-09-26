@@ -20,6 +20,9 @@ public class CustomPlayerController : CustomController
      [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public static float CurrentSpeed;
      [SerializeField] public StringEventAsset PlayerSpeed;
      public event Action JumpEvent;
+     public event Action DodgeEvent;
+     public event Action BlockEvent;
+     public event Action AttackEvent;
     protected override void Awake()
     {
         base.Awake();
@@ -40,50 +43,59 @@ public class CustomPlayerController : CustomController
     }
     public virtual void OnMove(InputValue value)
     {
-        MoveInput = value.Get<Vector2>();
+        _moveInput2D = value.Get<Vector2>();
     }
 
     public virtual void OnJump(InputValue value)
     {
-        Movement?.TryJump();
+        JumpEvent?.Invoke();
     }
 
     public virtual void OnDash(InputValue value)
     {
-        if(!Movement.CanMove) return;
-        float nextDashTime = _lastDashTime + Movement.DashCooldown;
-        if (Time.time > nextDashTime)
-        {
-            Movement?.Dash(Animator.GetCurrentAnimatorStateInfo(0).length);
-            Animator?.SetTrigger("Dash");
-            _lastDashTime = Time.time;
-        }
+        // if(!Movement.CanMove) return;
+        // float nextDashTime = _lastDashTime + Movement.DashCooldown;
+        // if (Time.time > nextDashTime)
+        // {
+        //     Movement?.Dash(Animator.GetCurrentAnimatorStateInfo(0).length);
+        //     Animator?.SetTrigger("Dash");
+        //     _lastDashTime = Time.time;
+        // }
+        DodgeEvent?.Invoke();
     }
     public virtual void OnAttack(InputValue value)
     {
-        _isAttacking = value.isPressed;
+        //_isAttacking = value.isPressed;
+        AttackEvent?.Invoke();
     }
 
     public virtual void OnBlock(InputValue value)
     {
-        isBlocking = CanBlock && value.isPressed;
+        //isBlocking = CanBlock && value.isPressed;
+        BlockEvent?.Invoke();
     }
     protected virtual void Update()
     {
-        base.Update();
-        if (Movement == null) return;
-        // find correct right/forward directions based on main camera rotation
-        Vector3 up = Vector3.up;
-        Vector3 right = Camera.main.transform.right;
-        Vector3 forward = Vector3.Cross(right, up);
-        Vector3 moveInput = forward * MoveInput.y + right * MoveInput.x;
-
-        // send player input to character movement
-        Movement.SetMoveInput(moveInput);
-        Movement.SetLookDirection(moveInput);
-        HandleAttack();
-        LookInCameraDirection = !Movement.IsDashing;
-        if (LookInCameraDirection) Movement.SetLookDirection(Camera.main.transform.forward);
+        // base.Update();
+        // if (Movement == null) return;
+        // // find correct right/forward directions based on main camera rotation
+        // Vector3 up = Vector3.up;
+        // Vector3 right = Camera.main.transform.right;
+        // Vector3 forward = Vector3.Cross(right, up);
+        // Vector3 moveInput = forward * MoveInput.y + right * MoveInput.x;
+        //
+        // // send player input to character movement
+        // Movement.SetMoveInput(moveInput);
+        // Movement.SetLookDirection(moveInput);
+        // HandleAttack();
+        // LookInCameraDirection = !Movement.IsDashing;
+        // if (LookInCameraDirection) Movement.SetLookDirection(Camera.main.transform.forward);
+        
+        _currentStateName = _stateMachine.CurrentState.ToString();
+        MoveInput2D = _moveInput2D;
+        CurrentSpeed = _stateMachine.rb.linearVelocity.magnitude;
+        Mathf.Ceil(CurrentSpeed);
+        PlayerSpeed.Invoke(CurrentSpeed.ToString());
     }
     private void HandleAttack()
     {
