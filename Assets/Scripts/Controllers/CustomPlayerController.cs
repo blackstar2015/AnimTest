@@ -1,3 +1,5 @@
+using System;
+using GameEvents;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,8 +10,16 @@ public class CustomPlayerController : CustomController
      [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastDashTime = Mathf.NegativeInfinity;
      [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastAttackTime = Mathf.NegativeInfinity;
      [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private bool _isAttacking = false;
+     //StateMachine Stuff
      [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] protected Vector2 MoveInput { get; set; }
-    
+     
+     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] private string _currentStateName { get; set; }
+     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] private PlayerStateMachine _stateMachine { get;set; }
+     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] private Vector2 _moveInput2D { get; set; }
+     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public Vector2 MoveInput2D { get; set; }
+     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public static float CurrentSpeed;
+     [SerializeField] public StringEventAsset PlayerSpeed;
+     public event Action JumpEvent;
     protected override void Awake()
     {
         base.Awake();
