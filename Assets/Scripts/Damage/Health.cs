@@ -63,7 +63,7 @@ public class Health : MonoBehaviour, IDamageable
         IsHitReacting = false;
         animator.applyRootMotion = true;
         agent.enabled = true;
-        agent.ResetPath();
+        if(agent.isOnNavMesh) agent.ResetPath();
         yield return null;        
     }
     public void Damage(DamageInfo damageInfo)

@@ -39,8 +39,8 @@ public class Spawner : MonoBehaviour
 
     private void AssignAttackingEnemy()
     {
-        if(_enemies.Count <=0) return;
         List<CustomEnemyController> AttackingEnemies = _enemies;
+        if(AttackingEnemies.Count <=0) return;
         foreach (CustomEnemyController enemy in _enemies)
         {
             if(enemy.CanAttackPlayer) return;
@@ -49,6 +49,7 @@ public class Spawner : MonoBehaviour
         // {
         //     AttackingEnemies.Remove(_lastAttackingEnemy);
         // }
+        if(AttackingEnemies.Count <=0) return;
         int rand = Random.Range(0, AttackingEnemies.Count);
         AttackingEnemies[rand].CanAttackPlayer = true;
         _lastAttackingEnemy = AttackingEnemies[rand];

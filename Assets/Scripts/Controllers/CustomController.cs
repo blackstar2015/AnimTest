@@ -93,7 +93,7 @@ public class CustomController : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         agent.enabled = true;
         yield return new WaitForEndOfFrame();
-        agent.ResetPath();
+        if(agent.isOnNavMesh) agent.ResetPath();
         yield return null;
     }
     private void Death(DamageInfo arg0)
@@ -137,7 +137,7 @@ public class CustomController : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         agent.enabled = true;
         yield return new WaitForEndOfFrame();
-        agent.ResetPath();
+        if(agent.isOnNavMesh) agent.ResetPath();
         yield return null;
     }
 
