@@ -17,6 +17,7 @@ public class CustomCharacterAnimations : MonoBehaviour
     [TabGroup("Events")]public UnityEvent OnLand = new UnityEvent();
     [TabGroup("Events")]public UnityEvent OnShoot = new UnityEvent();
     [TabGroup("Events")]public UnityEvent OnHit = new UnityEvent();
+    private StateMachine _stateMachine;
     
     
     protected virtual void OnValidate()
@@ -42,29 +43,29 @@ public class CustomCharacterAnimations : MonoBehaviour
         Animator.SetFloat("VerticalVelocity", velocity.y);
         Animator.SetFloat("VelocityX", velocityX);
         Animator.SetFloat("VelocityZ", velocityZ);
-        Animator.SetBool("IsAlive", _controller.IsAlive);
-        Animator.SetBool("HitReact", _controller.IsHitReacting);
-        Animator.SetBool("IsBlocking", _controller.IsBlocking);
-        Animator.SetBool("CanBlock", _controller.CanBlock);
-        Animator.SetBool("BlockedAttack", _controller.IsBlockedAttack);
+        Animator.SetBool("IsAlive", _stateMachine.IsAlive);
+        Animator.SetBool("HitReact", _stateMachine.IsHitReacting);
+        Animator.SetBool("IsBlocking", _stateMachine.IsBlocking);
+        Animator.SetBool("CanBlock", _stateMachine.CanBlock);
+        Animator.SetBool("BlockedAttack", _stateMachine.IsBlockedAttack);
         
     }
     #region AnimationEvents
     public void Sheath(int index)
     {
-        GameObject weaponMesh = _controller.Weapons[index].WeaponMesh;
+        GameObject weaponMesh = _stateMachine.Weapons[index].WeaponMesh;
         weaponMesh.SetActive(false);
     }
 
     public void UnSheath(int index)
     {
-        GameObject weaponMesh = _controller.Weapons[index].WeaponMesh;
+        GameObject weaponMesh = _stateMachine.Weapons[index].WeaponMesh;
         weaponMesh.SetActive(true);
     }
 
     public void DisableTrigger(int index)
     {
-        foreach (Collider collider in _controller.Weapons[index].WeaponColliders)
+        foreach (Collider collider in _stateMachine.Weapons[index].WeaponColliders)
         {
             collider.enabled = false;
         }
@@ -72,7 +73,7 @@ public class CustomCharacterAnimations : MonoBehaviour
 
     public void EnableTrigger(int index)
     {
-        foreach (Collider collider in _controller.Weapons[index].WeaponColliders)
+        foreach (Collider collider in _stateMachine.Weapons[index].WeaponColliders)
         {
             Debug.Log(collider.gameObject, collider.gameObject);
             collider.enabled = true;

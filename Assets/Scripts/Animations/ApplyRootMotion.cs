@@ -11,22 +11,22 @@ public class ApplyRootMotion : StateMachineBehaviour
     [SerializeField] private int _visibleWeaponIndex = 0;
 
     private CustomCharacterMovement _movement;
-    private CustomController _controller;
+    private StateMachine _stateMachine;
     // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
     // similar to start
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // we can get components on character GameObject like normal
         _movement = animator.GetComponent<CustomCharacterMovement>();
-        _controller = animator.GetComponent<CustomController>();
+        _stateMachine = animator.GetComponent<StateMachine>();
 
         // set movement states
         _movement.CanMove = _canMove;
         animator.applyRootMotion = _applyRootMotion;
 
         // set control options
-        _controller.CanShoot = _canShoot;
-        _controller.CanMelee = _canMelee;
+        _stateMachine.CanShoot = _canShoot;
+        _stateMachine.CanMelee = _canMelee;
         //_controller.LookInCameraDirection = false;
         // show correct weapon if component in use
         // if(animator.TryGetComponent(out WeaponMeshController meshController))
@@ -62,7 +62,7 @@ public class ApplyRootMotion : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _controller.LookInCameraDirection = true;
+        _stateMachine.LookInCameraDirection = true;
         animator.applyRootMotion = false;
         _movement.CanMove = true;
     }

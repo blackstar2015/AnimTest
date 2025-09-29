@@ -71,7 +71,7 @@ public class Health : MonoBehaviour, IDamageable
         if (!IsAlive || _isInvincible) return;                       
         if (damageInfo.Amount < 1f) return;
         GameObject victomGO = damageInfo.Victim.gameObject;
-        if(victomGO.GetComponent<CustomController>().IsBlocking)
+        if(victomGO.GetComponent<StateMachine>().IsBlocking)
         {
             HandleBlock(damageInfo);
             return;

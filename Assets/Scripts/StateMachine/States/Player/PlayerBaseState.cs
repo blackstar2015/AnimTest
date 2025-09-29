@@ -14,15 +14,15 @@ public abstract class PlayerBaseState : State
 
     public override void Enter()
     {
-
+        Debug.Log("Entering " + stateMachine.CurrentState);
     }
     public override void Exit()
     {
-
+        Debug.Log("Exiting " + stateMachine.CurrentState);
     }
     public override void Tick(float deltaTime)
     {
-        
+        Debug.Log("Current State " + stateMachine.CurrentState);
     }
 
     protected override void Jump()
@@ -37,22 +37,9 @@ public abstract class PlayerBaseState : State
     {
         if (!stateMachine.CanMove) return;
         
-        //StartCoroutine(DashCoroutine(DashAnimLength));
+        stateMachine.Dodge(stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length);
     }
-    private IEnumerator DashCoroutine(float DashAnimLength)
-    {
-        if (!stateMachine.CanMove) yield break;
-        stateMachine.IsDashing = true;
-        if (stateMachine.LocalMoveInput == Vector3.zero) _dashDirection = -1 * stateMachine.transform.forward;
-        else _dashDirection = stateMachine.LocalMoveInput.normalized;
-        stateMachine.SetLookDirection(_dashDirection);
-        stateMachine.rb.AddForce(_dashDirection * stateMachine.DashSpeed);
-
-        yield return new WaitForSeconds(DashAnimLength);
-
-        stateMachine.IsDashing = false;
-        yield return null;
-    }
+    
     protected override void Attack()
     {
 

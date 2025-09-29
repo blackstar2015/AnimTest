@@ -1,9 +1,11 @@
 using GameEvents;
 using Sirenix.OdinInspector;
 using System.Collections;
+using CharacterMovement;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(CustomPlayerController))]
 public class PlayerStateMachine : StateMachine
 {
     //[field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public Vector3 Momentum => rb.linearVelocity;
@@ -12,13 +14,7 @@ public class PlayerStateMachine : StateMachine
     //[field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public Vector3 LookDirection { get; protected set; }
     //[field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public Vector3 SurfaceVelocity { get; set; }
     //[field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public bool HasMoveInput { get; set; }
-
-    //[field: FoldoutGroup("Jumping Properties"), SerializeField] public bool IsJumping { get; set; }
-    //[field: FoldoutGroup("Jumping Properties"), SerializeField] public float JumpForce = 10f;
-    //[field: FoldoutGroup("Jumping Properties"), SerializeField] public float DoubleJumpForce = 5f;
-    //[field: FoldoutGroup("Jumping Properties"), SerializeField] public float AirControl = .9f;
-    //[field: FoldoutGroup("Jumping Properties"), SerializeField] public int JumpCounter { get; internal set; } = 1;
-    //[field: FoldoutGroup("Jumping Properties"), SerializeField] public int MaxJumps = 2;
+    
 
 
 
@@ -48,6 +44,7 @@ public class PlayerStateMachine : StateMachine
     //[FoldoutGroup("WallRun"), SerializeField] public LayerMask WallRunLayer;
     //[FoldoutGroup("Running Properties"), SerializeField] public float WallRunAccelerationFactor = 1.0f;
 
+    [field: SerializeField, TabGroup("Properties")] public CustomPlayerController PlayerController => Controller as CustomPlayerController;
     [field: SerializeField, TabGroup("Properties")] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastDashTime = Mathf.NegativeInfinity;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastAttackTime = Mathf.NegativeInfinity;
@@ -55,23 +52,31 @@ public class PlayerStateMachine : StateMachine
     [SerializeField, TabGroup("Dashing")] public float DashSpeed = 1000f;
     [ShowInInspector, TabGroup("Dashing")] public bool IsDashing { get;  set; } = false;
     [ShowInInspector, TabGroup("Dashing")] public float DashCooldown { get;  set; } = 2f;
-    private Vector3 _dashDirection;
+    [ShowInInspector, TabGroup("Dashing")] private Vector3 _dashDirection;
+    
+    [field: TabGroup("Airborne"), SerializeField] public bool IsJumping { get; set; }
+    [field: TabGroup("Airborne"), SerializeField] public float JumpForce = 10f;
+    [field: TabGroup("Airborne"), SerializeField] public float DoubleJumpForce = 5f;
+    [field: TabGroup("Airborne"), SerializeField] public float AirControl = .9f;
+    [field: TabGroup("Airborne"), SerializeField] public int JumpCounter { get; internal set; } = 1;
+    [field: TabGroup("Airborne"), SerializeField] public int MaxJumps = 2;
 
     public override void Awake()
     {
         base.Awake();
-
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        PlayerController.SetStateMachine(this);
         SwitchState(new PlayerIdleState(this));
+        
     }
-    public void Dash(float DashAnimLength)
+    public void Dodge(float DashAnimLength)
     {
         if (!CanMove) return;
-        StartCoroutine(DashCoroutine(DashAnimLength));
+        StartCoroutine(DodgeCoroutine(DashAnimLength));
     }
 
-    private IEnumerator DashCoroutine(float DashAnimLength)
+    private IEnumerator DodgeCoroutine(float DashAnimLength)
     {
         if (!CanMove) yield break;
         IsDashing = true;
@@ -84,5 +89,20 @@ public class PlayerStateMachine : StateMachine
 
         IsDashing = false;
         yield return null;
+    }
+    
+    public override void Update()
+    {
+        IsGrounded = CheckGrounded();
+        if (IsGrounded) JumpCounter = 1;
+        Vector3 up = Vector3.up;
+        Vector3 right = Camera.main.transform.right;
+        Vector3 forward = Vector3.Cross(right, up);
+        Vector3 moveInput = forward * PlayerController.MoveInput.y + right * PlayerController.MoveInput.x; 
+        SetMoveInput(moveInput);
+        SetLookDirection(moveInput);
+        if (LookInCameraDirection) SetLookDirection(Camera.main.transform.forward);
+        transform.rotation = Quaternion.LookRotation(LookDirection);
+        base.Update();
     }
 }

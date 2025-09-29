@@ -333,6 +333,10 @@ PrefabInstance:
       propertyPath: <CharacterMovement>k__BackingField
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8428097702922912964, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: _health
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 9168587843957717560, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: _raiseEvent
       value: 6
@@ -345,19 +349,274 @@ PrefabInstance:
     - {fileID: 11400114, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
     - {fileID: 11400116, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
     - {fileID: 341077868634195652, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 6279022987117095905, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 6490803663116844267, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 7088797807341960202, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 6646258801994868413, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 463778865678524921, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 1549061530283916620, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 1532479158359380478, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 4232728749745926633, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 3256644554216865773, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - {fileID: 9500000, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100338, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6344934346143405813}
+      addedObject: {fileID: 8206407805899252167}
+    - targetCorrespondingSourceObject: {fileID: 100338, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 44325480066457856}
+    - targetCorrespondingSourceObject: {fileID: 100338, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7238899286046161372}
+    - targetCorrespondingSourceObject: {fileID: 100338, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8513000166114765673}
+    - targetCorrespondingSourceObject: {fileID: 100338, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6000172916517008407}
+    - targetCorrespondingSourceObject: {fileID: 100338, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8871652861506144943}
+    - targetCorrespondingSourceObject: {fileID: 100338, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8087779336067418280}
+    - targetCorrespondingSourceObject: {fileID: 100338, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 330957598634712481}
+    - targetCorrespondingSourceObject: {fileID: 100338, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3095104545453119121}
+    - targetCorrespondingSourceObject: {fileID: 100338, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4945607486210798958}
   m_SourcePrefab: {fileID: 100100000, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
 --- !u!1 &7987039994458121870 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100338, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
   m_PrefabInstance: {fileID: 7987039994458022268}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6344934346143405813
+--- !u!114 &8206407805899252167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987039994458121870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: 0}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &44325480066457856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987039994458121870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08023c7659fa61e43b7aa2ff52141c88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Movement>k__BackingField: {fileID: 0}
+  <Animator>k__BackingField: {fileID: 7238899286046161372}
+  <Health>k__BackingField: {fileID: 0}
+  <Targetable>k__BackingField: {fileID: 6000172916517008407}
+  <Vision>k__BackingField: {fileID: 8871652861506144943}
+  <Weapons>k__BackingField: []
+  <LookInCameraDirection>k__BackingField: 0
+  actionIndex: 0
+  weaponIndex: 0
+  <CanShoot>k__BackingField: 1
+  <CanMelee>k__BackingField: 1
+  <CursorMode>k__BackingField: 1
+  _lastDashTime: -Infinity
+  _lastAttackTime: -Infinity
+  _isAttacking: 0
+  <MoveInput>k__BackingField: {x: 0, y: 0}
+--- !u!95 &7238899286046161372
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987039994458121870}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8513000166114765673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987039994458121870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2bb40f32588b174382d593435f42740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_currentHealth>k__BackingField: 100
+  <_currentStamina>k__BackingField: 100
+  <_maxHealth>k__BackingField: 100
+  <_maxStamina>k__BackingField: 100
+  <_staminaRegenDuration>k__BackingField: 5
+  _deathLayer: Corpse
+  _isInvincible: 0
+  OnDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBlock:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUpdateStamina:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6000172916517008407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987039994458121870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04164883cb5fe92498475fbc07974791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Team>k__BackingField: 1
+  <IsTargetable>k__BackingField: 1
+  <ViewPosition>k__BackingField: {fileID: 0}
+--- !u!114 &8871652861506144943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987039994458121870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d55062f2a7bf54da30aec898b7a60f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _range: 5
+  _FOV: 120
+  _visibilityMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _occlusionMask:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!54 &8087779336067418280
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987039994458121870}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &330957598634712481
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987039994458121870}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &3095104545453119121
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987039994458121870}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &4945607486210798958
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -370,54 +629,77 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Movement>k__BackingField: {fileID: 0}
+  <Controller>k__BackingField: {fileID: 0}
   <Animator>k__BackingField: {fileID: 0}
   <Health>k__BackingField: {fileID: 0}
   <Targetable>k__BackingField: {fileID: 0}
   <Vision>k__BackingField: {fileID: 0}
+  <rb>k__BackingField: {fileID: 0}
+  <Collider>k__BackingField: {fileID: 0}
+  <NavAgent>k__BackingField: {fileID: 0}
   <Weapons>k__BackingField: []
   <LookInCameraDirection>k__BackingField: 0
   actionIndex: 0
   weaponIndex: 0
   <CanShoot>k__BackingField: 1
   <CanMelee>k__BackingField: 1
-  <rb>k__BackingField: {fileID: 0}
-  <Controller>k__BackingField: {fileID: 0}
-  <Animator>k__BackingField: {fileID: 0}
-  <Collider>k__BackingField: {fileID: 0}
-  <MoveInput>k__BackingField: {x: 0, y: 0, z: 0}
-  <LocalMoveInput>k__BackingField: {x: 0, y: 0, z: 0}
-  <LookDirection>k__BackingField: {x: 0, y: 0, z: 0}
-  <SurfaceVelocity>k__BackingField: {x: 0, y: 0, z: 0}
-  <HasMoveInput>k__BackingField: 0
+  <Speed>k__BackingField: 5
+  <Acceleration>k__BackingField: 10
+  <TurnSpeed>k__BackingField: 15
+  <OnlyTurnWithInput>k__BackingField: 1
+  <StoppingDistance>k__BackingField: 0.25
+  <LookInMoveDirection>k__BackingField: 1
+  <ControlRotation>k__BackingField: 1
+  <Fix3DSpriteRotation>k__BackingField: 0
+  <ParentToSurface>k__BackingField: 0
+  <Gravity>k__BackingField: -20
+  <JumpHeight>k__BackingField: 2.25
+  <AirControl>k__BackingField: 0.1
+  <AirTurning>k__BackingField: 1
+  <Height>k__BackingField: 1.8
+  <Radius>k__BackingField: 0.3
+  <GroundCheckOffset>k__BackingField: 0.1
+  <GroundCheckDistance>k__BackingField: 0.4
+  <MaxSlopeAngle>k__BackingField: 40
+  <CoyoteMaxJumpDistance>k__BackingField: 0.5
+  <GroundMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 1
+  <MinGroundedVelocity>k__BackingField: 5
+  OnGrounded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFootstep:
+    m_PersistentCalls:
+      m_Calls: []
+  <StepHeight>k__BackingField: 0.3
+  <StepHeightAllowance>k__BackingField: 0.1
+  <StepHeightForwardOffset>k__BackingField: 0.05
+  <SpeedVariation>k__BackingField: 0.5
+  <EnableAvoidance>k__BackingField: 0
+  <NeighborDistance>k__BackingField: 3
+  <CornerNeighborDistance>k__BackingField: 1
+  <NeighborMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 0
+  <MaxNeighbors>k__BackingField: 8
+  <IsClampedToNavMesh>k__BackingField: 1
+  <ClampLookAheadTime>k__BackingField: 0.25
+  <ClampSearchRadius>k__BackingField: 1
+  <EnableSplineConstraint>k__BackingField: 0
+  <SplineContainer>k__BackingField: {fileID: 0}
+  <SplineGravitation>k__BackingField: 20
+  <CursorMode>k__BackingField: 1
+  _lastDashTime: -Infinity
+  _lastAttackTime: -Infinity
+  _isAttacking: 0
+  DashSpeed: 1000
   <IsJumping>k__BackingField: 0
   JumpForce: 10
   DoubleJumpForce: 5
   AirControl: 0.9
   <JumpCounter>k__BackingField: 1
   MaxJumps: 2
-  PlayerMaxWalkSpeed: 10
-  WalkDeccelerationFactor: 1
-  WalkAccelerationFactor: 1
-  PlayerMaxRunSpeed: 20
-  RunDeccelerationFactor: 1
-  RunAccelerationFactor: 1
-  _groundCheckDistance: 0.4
-  _groundCheckOffset: 0.1
-  _maxSlopeAngle: 40
-  _parentToSurface: 0
-  _groundMask:
-    serializedVersion: 2
-    m_Bits: 0
-  <SurfaceObject>k__BackingField: {fileID: 0}
-  <LastGroundPosition>k__BackingField: {x: 0, y: 0, z: 0}
-  <GroundNormal>k__BackingField: {x: 0, y: 0, z: 0}
-  <LastGroundTime>k__BackingField: 0
-  WallRunCheckDistance: 2
-  WallRunCheckRadius: 2
-  WallRunLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  WallRunAccelerationFactor: 1
 --- !u!4 &7987039994458159796 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400328, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}

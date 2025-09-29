@@ -11,17 +11,23 @@ using UnityEngine.Events;
 using UnityEngine.Splines;
 using static Sirenix.OdinInspector.Editor.Internal.FastDeepCopier;
 
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(Targetable))]
+[RequireComponent(typeof(Vision))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class StateMachine : MonoBehaviour
 {
     protected State _currentState {  get; set; }
     public string CurrentState => _currentState.ToString();
-    [field: SerializeField, TabGroup("Components")] protected CustomCharacterMovement Movement { get; set; }
-    [field: SerializeField, TabGroup("Components")] protected Animator Animator { get; set; }
+    [field: SerializeField, TabGroup("Components")] protected CustomController Controller { get; set; }
+    [field: SerializeField, TabGroup("Components")] public Animator Animator { get; set; }
     [field: SerializeField, TabGroup("Components")] public Health Health { get; set; }
     [field: SerializeField, TabGroup("Components")] public Targetable Targetable { get; set; }
     [field: SerializeField, TabGroup("Components")] public Vision Vision { get; set; }
     [field: SerializeField, TabGroup("Components")] public Rigidbody rb { get; set; }
-    [field: SerializeField, TabGroup("Components")] public CustomPlayerController Controller { get; set; }
     [field: SerializeField, TabGroup("Components")] public CapsuleCollider Collider { get; set; }
     [field: SerializeField, TabGroup("Components")] public NavMeshAgent NavAgent { get; set; }
 
@@ -29,7 +35,7 @@ public class StateMachine : MonoBehaviour
 
     [field: SerializeField, TabGroup("Properties")] public bool LookInCameraDirection { get; set; }
     [field: SerializeField, TabGroup("Properties")] public int actionIndex = 0;
-    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] protected int weaponIndex = 0;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public int weaponIndex = 0;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public bool CanShoot { get; set; } = true;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public bool CanMelee { get; set; } = true;
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool IsBlocking => isBlocking;
@@ -38,12 +44,12 @@ public class StateMachine : MonoBehaviour
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool IsHitReacting => isHitReacting;
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool IsBlockedAttack => isBlockedAttack;
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool IsPerfectBlocking => isPerfectBlocking;
-    protected bool isBlocking { get; set; }
-    protected bool canBlock { get; set; }
-    protected bool isHitReacting { get; set; }
-    protected bool isAlive { get; set; }
-    protected bool isBlockedAttack { get; set; }
-    protected bool isPerfectBlocking { get; set; }
+    public bool isBlocking { get; set; }
+    public bool canBlock { get; set; }
+    public bool isHitReacting { get; set; }
+    public bool isAlive { get; set; }
+    public bool isBlockedAttack { get; set; }
+    public bool isPerfectBlocking { get; set; }
 
     public int CurrentWeaponIndex => weaponIndex;
     public int CurrentActionIndex => actionIndex;
@@ -78,33 +84,33 @@ public class StateMachine : MonoBehaviour
 
     // public properties
 #if UNITY_6000_0_OR_NEWER
-    [ShowInInspector, TabGroup("Properties")] public Vector3 Velocity { get => rb.linearVelocity;  set => rb.linearVelocity = value; }
+    [TabGroup("Properties")] public Vector3 Velocity { get => rb.linearVelocity;  set => rb.linearVelocity = value; }
 #else
         [ShowInInspector, TabGroup("Properties")] public override Vector3 Velocity { get => Rigidbody.velocity; protected set => Rigidbody.velocity = value; }
 #endif
-    [ShowInInspector, TabGroup("Properties")] public float MoveSpeedMultiplier { get; set; } = 1f;
-    [ShowInInspector, TabGroup("Properties")] public bool CanCoyoteJump => LastGroundedDistance < CoyoteMaxJumpDistance;
-    [ShowInInspector, TabGroup("Properties")] public float LastGroundedDistance => Vector3.Distance(transform.position, LastGroundedPosition);
-    [ShowInInspector, TabGroup("Properties")] public Vector3 FlattenedVelocity => new Vector3(Velocity.x, 0f, Velocity.z);
-    [ShowInInspector, TabGroup("Properties")] public float NormalizedSpeed => FlattenedVelocity.magnitude / Speed;
-    [ShowInInspector, TabGroup("Properties")] public Vector3 MoveInput { get; set; }
-    [ShowInInspector, TabGroup("Properties")] public Vector3 LocalMoveInput { get;  set; }
-    [ShowInInspector, TabGroup("Properties")] public Vector3 LookDirection { get;  set; }
-    [ShowInInspector, TabGroup("Properties")] public bool HasMoveInput { get;  set; }
-    [ShowInInspector, TabGroup("Properties")] public bool HasTurnInput { get; set; }
-    [ShowInInspector, TabGroup("Properties")] public bool IsGrounded { get; set; }
-    [ShowInInspector, TabGroup("Properties")] public GameObject SurfaceObject { get;    set; }
-    [ShowInInspector, TabGroup("Properties")] public Vector3 SurfaceVelocity { get; set; }
-    [ShowInInspector, TabGroup("Properties")] public bool CanMove { get; set; } = true;
-    [ShowInInspector, TabGroup("Properties")] public bool CanTurn { get; set; } = true;
-    [ShowInInspector, TabGroup("Properties")] public Vector3 GroundNormal { get; set;  } = Vector3.up;
-    [ShowInInspector, TabGroup("Properties")] public float LastGroundedTime { get; set; }
-    [ShowInInspector, TabGroup("Properties")] public Vector3 LastGroundedPosition { get; set; }
-    [ShowInInspector, TabGroup("Properties")] public float TurnSpeedMultiplier { get; set; } = 1f;
-    [ShowInInspector, TabGroup("Properties")] public Vector3 GroundCheckStart => transform.position + transform.up * GroundCheckOffset;
-    [ShowInInspector, TabGroup("Properties")] public Vector3 SplineLookDirection { get; set; }
-    [ShowInInspector, TabGroup("Properties")] public bool HasPath => NavAgent.hasPath;
-    [ShowInInspector, TabGroup("Properties")] public bool HasCompletePath => NavAgent.hasPath && Vector3.Distance(NavAgent.path.corners[NavAgent.path.corners.Length - 1], NavAgent.destination) < StoppingDistance;
+    [TabGroup("Properties")] public float MoveSpeedMultiplier { get; set; } = 1f;
+    [TabGroup("Properties")] public bool CanCoyoteJump => LastGroundedDistance < CoyoteMaxJumpDistance;
+    [TabGroup("Properties")] public float LastGroundedDistance => Vector3.Distance(transform.position, LastGroundedPosition);
+    [TabGroup("Properties")] public Vector3 FlattenedVelocity => new Vector3(Velocity.x, 0f, Velocity.z);
+    [TabGroup("Properties")] public float NormalizedSpeed => FlattenedVelocity.magnitude / Speed;
+    [TabGroup("Properties")] public Vector3 MoveInput { get; set; }
+    [TabGroup("Properties")] public Vector3 LocalMoveInput { get;  set; }
+    [TabGroup("Properties")] public Vector3 LookDirection { get;  set; }
+    [TabGroup("Properties")] public bool HasMoveInput { get;  set; }
+    [TabGroup("Properties")] public bool HasTurnInput { get; set; }
+    [TabGroup("Properties")] public bool IsGrounded { get; set; }
+    [TabGroup("Properties")] public GameObject SurfaceObject { get;    set; }
+    [TabGroup("Properties")] public Vector3 SurfaceVelocity { get; set; }
+    [TabGroup("Properties")] public bool CanMove { get; set; } = true;
+    [TabGroup("Properties")] public bool CanTurn { get; set; } = true;
+    [TabGroup("Properties")] public Vector3 GroundNormal { get; set;  } = Vector3.up;
+    [TabGroup("Properties")] public float LastGroundedTime { get; set; }
+    [TabGroup("Properties")] public Vector3 LastGroundedPosition { get; set; }
+    [TabGroup("Properties")] public float TurnSpeedMultiplier { get; set; } = 1f;
+    [TabGroup("Properties")] public Vector3 GroundCheckStart => transform.position + transform.up * GroundCheckOffset;
+    [TabGroup("Properties")] public Vector3 SplineLookDirection { get; set; }
+    [TabGroup("Properties")] public bool HasPath => NavAgent.hasPath;
+    [TabGroup("Properties")] public bool HasCompletePath => NavAgent.hasPath && Vector3.Distance(NavAgent.path.corners[NavAgent.path.corners.Length - 1], NavAgent.destination) < StoppingDistance;
 
     // step height fields
     [field: SerializeField, TabGroup("Step Height")] protected float StepHeight { get; set; } = 0.3f;
@@ -131,11 +137,11 @@ public class StateMachine : MonoBehaviour
 
     public virtual void Awake()
     {
+        Controller = GetComponent<CustomController>();
         rb = GetComponent<Rigidbody>();
-        Controller = GetComponent<CustomPlayerController>();
         Animator = GetComponent<Animator>();
         Collider = GetComponent<CapsuleCollider>();
-        Movement = GetComponent<CustomCharacterMovement>();
+        NavAgent = GetComponent<NavMeshAgent>();
         Health = GetComponent<Health>();
         Targetable = GetComponent<Targetable>();
         Vision = GetComponent<Vision>();
@@ -154,7 +160,7 @@ public class StateMachine : MonoBehaviour
         _currentState?.Enter();
     }
 
-    protected virtual void Update()
+    public virtual void Update()
     {
         isAlive = Health.IsAlive;
         canBlock = Health.CanBlock;
@@ -523,17 +529,15 @@ public class StateMachine : MonoBehaviour
         agent.enabled = false;
         rb.linearVelocity = Vector3.zero;
         yield return new WaitForEndOfFrame();
-
+    
         CustomController instigatorController = damageInfo.Instigator.GetComponent<CustomController>();
-        WeaponMeleeData data = instigatorController.Weapons[instigatorController.CurrentWeaponIndex].Data as WeaponMeleeData;
+        WeaponMeleeData data = Weapons[CurrentWeaponIndex].Data as WeaponMeleeData;
         if (data != null)
         {
-            Vector3 knockbackDirection = (data.ComboData[instigatorController.CurrentActionIndex].KnockbackDirection).normalized;
+            Vector3 knockbackDirection = (data.ComboData[CurrentActionIndex].KnockbackDirection).normalized;
             rb.AddForce(damageInfo.KnockBackForce * (knockbackDirection + damageInfo.Instigator.transform.forward), ForceMode.Impulse);
             AnimatorClipInfo[] currentClipInfo = Animator.GetCurrentAnimatorClipInfo(0);
-            Debug.Log(instigatorController.CurrentActionIndex + " "
-                + currentClipInfo[0].clip.name + " "
-                + data.ComboData[instigatorController.CurrentActionIndex].KnockbackDirection);
+           
         }
         else rb.AddForce(damageInfo.KnockBackForce * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
         yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length / 2);
@@ -547,8 +551,8 @@ public class StateMachine : MonoBehaviour
     private void Death(DamageInfo arg0)
     {
         isAlive = false;
-        Movement.Stop();
-        Movement.CanMove = false;
+        Stop();
+        CanMove = false;
         enabled = false;
     }
     private void BlockedAttack(DamageInfo damageInfo)
@@ -558,45 +562,42 @@ public class StateMachine : MonoBehaviour
     private IEnumerator BlockedAttackRoutine(DamageInfo damageInfo)
     {
         CustomController controller = damageInfo.Instigator.GetComponent<CustomController>();
-        WeaponMeleeData data = controller.Weapons[controller.CurrentWeaponIndex].Data as WeaponMeleeData;
-        Rigidbody rb = Movement.Rigidbody;
-        NavMeshAgent agent = Movement.NavMeshAgent;
+        WeaponMeleeData data = Weapons[CurrentWeaponIndex].Data as WeaponMeleeData;
+        //Rigidbody rb = Movement.Rigidbody;
+        //NavMeshAgent agent = Movement.NavMeshAgent;
         Animator.applyRootMotion = false;
-        agent.enabled = false;
+        NavAgent.enabled = false;
         rb.linearVelocity = Vector3.zero;
         isBlockedAttack = true;
-
+    
         yield return new WaitForEndOfFrame();
-
+    
         if (isPerfectBlocking && data != null)
         {
-            Vector3 knockbackDirection = (data.ComboData[controller.CurrentActionIndex].KnockbackDirection).normalized;
+            Vector3 knockbackDirection = (data.ComboData[CurrentActionIndex].KnockbackDirection).normalized;
             rb.AddForce(damageInfo.KnockBackForce * (knockbackDirection + damageInfo.Instigator.transform.forward), ForceMode.Impulse);
             Debug.DrawLine(transform.position, damageInfo.Instigator.transform.position, Color.red);
         }
         else rb.AddForce(damageInfo.KnockBackForce * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
-
+    
         yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length);
-
+    
         isBlockedAttack = false;
         rb.linearVelocity = Vector3.zero;
-        agent.enabled = true;
+        NavAgent.enabled = true;
         yield return new WaitForEndOfFrame();
-        if (agent.isOnNavMesh) agent.ResetPath();
+        if (NavAgent.isOnNavMesh) NavAgent.ResetPath();
         yield return null;
     }
     private IEnumerator PerfectBlockRoutine()
     {
         isPerfectBlocking = true;
-
+    
         yield return new WaitForSeconds(Weapons[CurrentWeaponIndex].Data.PerfectBlockTime);
-
+    
         isPerfectBlocking = false;
     }
-
-
-
-
+    
     #region AnimEvents
     public void MeleeHitAnimEvent(int attackIndex)
     {
@@ -607,7 +608,7 @@ public class StateMachine : MonoBehaviour
 
     public void PerfectBlock()
     {
-        StartCoroutine(PerfectBlockRoutine());
+        //StartCoroutine(PerfectBlockRoutine());
     }
     #endregion
 }
