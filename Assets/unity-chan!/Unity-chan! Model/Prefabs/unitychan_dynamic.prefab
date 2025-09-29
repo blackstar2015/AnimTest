@@ -8910,24 +8910,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08023c7659fa61e43b7aa2ff52141c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Movement>k__BackingField: {fileID: 341077868634195652}
-  <Animator>k__BackingField: {fileID: 9500000}
-  <Health>k__BackingField: {fileID: 0}
-  <Targetable>k__BackingField: {fileID: 6490803663116844267}
-  <Vision>k__BackingField: {fileID: 6279022987117095905}
-  <Weapons>k__BackingField:
-  - {fileID: 685008403000281846}
-  - {fileID: 5522024923081904833}
-  <LookInCameraDirection>k__BackingField: 1
-  actionIndex: 0
-  weaponIndex: 0
-  <CanShoot>k__BackingField: 1
-  <CanMelee>k__BackingField: 1
   <CursorMode>k__BackingField: 1
   _lastDashTime: -Infinity
   _lastAttackTime: -Infinity
   _isAttacking: 0
   <MoveInput>k__BackingField: {x: 0, y: 0}
+  <_currentStateName>k__BackingField: 
+  PlayerSpeed: {fileID: 0}
 --- !u!114 &1549061530283916620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8970,25 +8959,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 128d7bc463e4cde4a9093f624da9062c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <DampTime>k__BackingField: 0.1
+  _stateMachine: {fileID: 0}
   <Animator>k__BackingField: {fileID: 9500000}
-  <_controller>k__BackingField: {fileID: 463778865678524921}
-  <CharacterMovement>k__BackingField: {fileID: 341077868634195652}
-  OnFootR:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFootL:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLand:
-    m_PersistentCalls:
-      m_Calls: []
-  OnShoot:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHit:
-    m_PersistentCalls:
-      m_Calls: []
+  <_speed>k__BackingField: 0
+  <_isMoving>k__BackingField: 0
+  <_velocityX>k__BackingField: 0
+  <_velocityY>k__BackingField: 0
+  <_velocityZ>k__BackingField: 0
+  <DampTime>k__BackingField: 0.1
 --- !u!114 &7088797807341960202
 MonoBehaviour:
   m_ObjectHideFlags: 0

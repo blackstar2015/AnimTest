@@ -21,6 +21,7 @@ public class PlayerWalkingState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
+        stateMachine.rb.AddForce(stateMachine.LocalMoveInput * stateMachine.Speed * Time.deltaTime, ForceMode.Impulse);
         if(stateMachine.Velocity.magnitude <=.1f) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine));
             
        

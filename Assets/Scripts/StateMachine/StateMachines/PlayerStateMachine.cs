@@ -18,7 +18,7 @@ public class PlayerStateMachine : StateMachine
 
 
 
-    //[FoldoutGroup("Walking Properties"), SerializeField] public float PlayerMaxWalkSpeed = 10f;
+    [FoldoutGroup("Walking Properties"), SerializeField] public float PlayerMaxWalkSpeed = 5f;
     //[FoldoutGroup("Walking Properties"), SerializeField] public float WalkDeccelerationFactor = 1.0f;
     //[FoldoutGroup("Walking Properties"), SerializeField] public float WalkAccelerationFactor = 1.0f;
 
@@ -118,5 +118,6 @@ public class PlayerStateMachine : StateMachine
         SetLookDirection(moveInput);
         if (LookInCameraDirection) SetLookDirection(Camera.main.transform.forward);
         transform.rotation = Quaternion.LookRotation(LookDirection);
+        _currentState?.Tick(Time.deltaTime);
     }
 }

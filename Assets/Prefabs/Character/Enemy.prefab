@@ -246,18 +246,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de236cecf93d814c849b48097708908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Movement>k__BackingField: {fileID: 5724002578159896901}
-  <Animator>k__BackingField: {fileID: 2014271128733828441}
-  <Health>k__BackingField: {fileID: 0}
-  <Targetable>k__BackingField: {fileID: 7097943158623928176}
-  <Vision>k__BackingField: {fileID: 3220486211538726260}
-  <Weapons>k__BackingField:
-  - {fileID: 270963974981190449}
-  <LookInCameraDirection>k__BackingField: 0
-  actionIndex: 1
-  weaponIndex: 0
-  <CanShoot>k__BackingField: 1
-  <CanMelee>k__BackingField: 1
   _target: {fileID: 0}
   _stopDistance: 5
   CanAttackPlayer: 0
@@ -273,25 +261,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 128d7bc463e4cde4a9093f624da9062c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <DampTime>k__BackingField: 0.1
+  _stateMachine: {fileID: 0}
   <Animator>k__BackingField: {fileID: 2014271128733828441}
-  <_controller>k__BackingField: {fileID: 8089329468702881073}
-  <CharacterMovement>k__BackingField: {fileID: 5724002578159896901}
-  OnFootR:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFootL:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLand:
-    m_PersistentCalls:
-      m_Calls: []
-  OnShoot:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHit:
-    m_PersistentCalls:
-      m_Calls: []
+  <_speed>k__BackingField: 0
+  <_isMoving>k__BackingField: 0
+  <_velocityX>k__BackingField: 0
+  <_velocityY>k__BackingField: 0
+  <_velocityZ>k__BackingField: 0
+  <DampTime>k__BackingField: 0.1
 --- !u!95 &2014271128733828441
 Animator:
   serializedVersion: 7
