@@ -10,31 +10,27 @@ public class PlayerAirborneState : PlayerBaseState
 
     public override void Enter()
     {
-        stateMachine.Controller.JumpEvent += Jump;
+        base.Enter();
     }
 
     public override void Exit()
     {
-        stateMachine.Controller.JumpEvent -= Jump;
+        base.Exit();
     }
 
     public override  void Jump()
     {
-        if (stateMachine.JumpCounter < stateMachine.MaxJumps)
-        {
-            stateMachine.rb.linearVelocity = new Vector3(stateMachine.rb.linearVelocity.x, stateMachine.DoubleJumpForce, stateMachine.rb.linearVelocity.z);
-            stateMachine.JumpCounter++;
-        }       
+        
     }
 
-    public bool CheckWallRun()
-    {
-        if (!stateMachine.IsGrounded) return false;
+    //public bool CheckWallRun()
+    //{
+    //    if (!stateMachine.IsGrounded) return false;
 
-        bool hit = Physics.SphereCast(stateMachine.transform.position, stateMachine.WallRunCheckRadius, stateMachine.LookDirection, out RaycastHit hitInfo, stateMachine.WallRunCheckDistance, stateMachine.WallRunLayer);
+    //    bool hit = Physics.SphereCast(stateMachine.transform.position, stateMachine.WallRunCheckRadius, stateMachine.LookDirection, out RaycastHit hitInfo, stateMachine.WallRunCheckDistance, stateMachine.WallRunLayer);
 
-        return hit;
-    }
+    //    return hit;
+    //}
 
     public override void Tick(float deltaTime)
     {

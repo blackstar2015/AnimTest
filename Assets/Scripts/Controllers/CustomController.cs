@@ -55,10 +55,7 @@ public class CustomController : MonoBehaviour
         Health.OnBlock.AddListener(BlockedAttack);
         Health.OnDeath.AddListener(Death);
         Health.OnDamage.AddListener(Knockback);
-        // foreach(Weapons weapon in Weapons)
-        // {
-        //     Health.OnDeath.AddListener(weapon.DisableWeaponColliders);
-        // }
+
     }
 
     private void Knockback(DamageInfo damageInfo)

@@ -9,21 +9,16 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void Enter()
     {
-        Debug.Log("Entering Idle State");
-        stateMachine.Controller.JumpEvent += Jump;
+        base.Enter();
     }
 
     public override void Exit()
     {
-        Debug.Log("Exiting Idle State");
-        stateMachine.Controller.JumpEvent -= Jump;
+        base .Exit();
     }
 
     public override void Tick(float deltaTime)
     {
-        base.Tick(deltaTime);
-        if (stateMachine.HasMoveInput) stateMachine.SwitchState(new PlayerWalkingState(this.stateMachine));
-
-        if(!stateMachine.IsGrounded) stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine));
+        base.Tick(deltaTime);       
     }
 }
