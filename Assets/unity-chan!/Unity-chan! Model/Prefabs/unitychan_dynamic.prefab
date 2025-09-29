@@ -8928,11 +8928,6 @@ MonoBehaviour:
   _lastAttackTime: -Infinity
   _isAttacking: 0
   <MoveInput>k__BackingField: {x: 0, y: 0}
-  <_currentStateName>k__BackingField: 
-  <_stateMachine>k__BackingField: {fileID: 0}
-  <_moveInput2D>k__BackingField: {x: 0, y: 0}
-  <MoveInput2D>k__BackingField: {x: 0, y: 0}
-  PlayerSpeed: {fileID: 0}
 --- !u!114 &1549061530283916620
 MonoBehaviour:
   m_ObjectHideFlags: 0
