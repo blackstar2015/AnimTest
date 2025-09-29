@@ -10,10 +10,18 @@ public class PlayerIdleState : PlayerBaseState
     public override void Enter()
     {
         base.Enter();
+        stateMachine.Controller.JumpAction += Jump;
+        stateMachine.Controller.DodgeAction += Dodge;
+        stateMachine.Controller.BlockAction += Block;
+        stateMachine.Controller.AttackAction += Attack;
     }
 
     public override void Exit()
     {
+        stateMachine.Controller.JumpAction -= Jump;
+        stateMachine.Controller.DodgeAction -= Dodge;
+        stateMachine.Controller.BlockAction -= Block;
+        stateMachine.Controller.AttackAction -= Attack;
         base .Exit();
     }
 
@@ -21,4 +29,6 @@ public class PlayerIdleState : PlayerBaseState
     {
         base.Tick(deltaTime);       
     }
+
+
 }

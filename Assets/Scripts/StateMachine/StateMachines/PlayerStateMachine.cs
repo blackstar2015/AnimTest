@@ -52,9 +52,9 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastDashTime = Mathf.NegativeInfinity;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastAttackTime = Mathf.NegativeInfinity;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private bool _isAttacking = false;
-    [SerializeField, TabGroup("Dashing")] private float _dashSpeed = 1000f;
-    [ShowInInspector, TabGroup("Dashing")] public bool IsDashing { get; private set; } = false;
-    [ShowInInspector, TabGroup("Dashing")] public float DashCooldown { get; private set; } = 2f;
+    [SerializeField, TabGroup("Dashing")] public float DashSpeed = 1000f;
+    [ShowInInspector, TabGroup("Dashing")] public bool IsDashing { get;  set; } = false;
+    [ShowInInspector, TabGroup("Dashing")] public float DashCooldown { get;  set; } = 2f;
     private Vector3 _dashDirection;
 
     public override void Awake()
@@ -78,7 +78,7 @@ public class PlayerStateMachine : StateMachine
         if (LocalMoveInput == Vector3.zero) _dashDirection = -1 * transform.forward;
         else _dashDirection = LocalMoveInput.normalized;
         SetLookDirection(_dashDirection);
-        rb.AddForce(_dashDirection * _dashSpeed);
+        rb.AddForce(_dashDirection * DashSpeed);
 
         yield return new WaitForSeconds(DashAnimLength);
 

@@ -48,13 +48,10 @@ public abstract class State
         if (!machine.CanMove || !machine.CanCoyoteJump) return;
         Jump();
     }
-    protected virtual void Jump()
-    {
-        // calculate jump velocity from jump height and gravity
-        float jumpVelocity = Mathf.Sqrt(2f * -machine.Gravity * machine.JumpHeight);
-        // override current y velocity but maintain x/z velocity
-        machine.Velocity = new Vector3(machine.Velocity.x, jumpVelocity, machine.Velocity.z);
-    }
+    protected abstract void Jump();
+    protected abstract void Dodge();
+    protected abstract void Attack();
+    protected abstract void Block();
     protected virtual void MoveTo(Vector3 destination)
     {
         if (!machine.NavAgent.isActiveAndEnabled || !machine.NavAgent.isOnNavMesh) return;

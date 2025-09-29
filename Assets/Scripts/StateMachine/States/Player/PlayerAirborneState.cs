@@ -18,11 +18,6 @@ public class PlayerAirborneState : PlayerBaseState
         base.Exit();
     }
 
-    public override  void Jump()
-    {
-        
-    }
-
     //public bool CheckWallRun()
     //{
     //    if (!stateMachine.IsGrounded) return false;

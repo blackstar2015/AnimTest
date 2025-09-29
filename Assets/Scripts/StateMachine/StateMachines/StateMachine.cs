@@ -144,7 +144,7 @@ public class StateMachine : MonoBehaviour
         isHitReacting = Health.IsHitReacting;
         Health.OnBlock.AddListener(BlockedAttack);
         Health.OnDeath.AddListener(Death);
-        Health.OnDamage.AddListener(Knockback);
+        Health.OnDamage.AddListener(Knockback);        
     }
 
     public void SwitchState(State newState)

@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +10,11 @@ public class CustomPlayerController : CustomController
      [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastAttackTime = Mathf.NegativeInfinity;
      [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private bool _isAttacking = false;
      [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] protected Vector2 MoveInput { get; set; }
-    
+
+    [field: SerializeField, TabGroup("Events")] public Action JumpAction;
+    [field: SerializeField, TabGroup("Events")] public Action DodgeAction;
+    [field: SerializeField, TabGroup("Events")] public Action BlockAction;
+    [field: SerializeField, TabGroup("Events")] public Action AttackAction;
     protected override void Awake()
     {
         base.Awake();
