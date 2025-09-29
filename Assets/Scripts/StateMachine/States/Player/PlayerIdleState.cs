@@ -31,7 +31,7 @@ public class PlayerIdleState : PlayerBaseState
         base.Tick(deltaTime);
         
         if(stateMachine.HasMoveInput) stateMachine.SwitchState(new PlayerWalkingState(this.stateMachine));
-        if(!stateMachine.IsGrounded) stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine));
+        //if(!stateMachine.IsGrounded) stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine));
     }
 
 

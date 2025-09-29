@@ -10,18 +10,16 @@ public class ApplyRootMotion : StateMachineBehaviour
     [SerializeField] private bool _canMelee = true;
     [SerializeField] private int _visibleWeaponIndex = 0;
 
-    private CustomCharacterMovement _movement;
     private StateMachine _stateMachine;
     // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
     // similar to start
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // we can get components on character GameObject like normal
-        _movement = animator.GetComponent<CustomCharacterMovement>();
         _stateMachine = animator.GetComponent<StateMachine>();
 
         // set movement states
-        _movement.CanMove = _canMove;
+        _stateMachine.CanMove = _canMove;
         animator.applyRootMotion = _applyRootMotion;
 
         // set control options
@@ -55,7 +53,7 @@ public class ApplyRootMotion : StateMachineBehaviour
 
         // manually control player rotation during root motion
         if (stateInfo.normalizedTime > _rootMotionRotationTime) return;
-        Quaternion aimRotation = Quaternion.LookRotation(_movement.LookDirection);
+        Quaternion aimRotation = Quaternion.LookRotation(_stateMachine.LookDirection);
         Quaternion rotation = Quaternion.Lerp(animator.transform.rotation, aimRotation, Time.deltaTime * 15f);
         animator.transform.rotation = rotation;
     }
@@ -64,6 +62,6 @@ public class ApplyRootMotion : StateMachineBehaviour
     {
         _stateMachine.LookInCameraDirection = true;
         animator.applyRootMotion = false;
-        _movement.CanMove = true;
+        _stateMachine.CanMove = true;
     }
 }

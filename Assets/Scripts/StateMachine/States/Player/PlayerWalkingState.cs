@@ -14,13 +14,15 @@ public class PlayerWalkingState : PlayerBaseState
 
     public override void Exit()
     {
-        base.Exit();    
+        base.Exit();
     }
 
 
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
+        if(stateMachine.Velocity.magnitude <=.1f) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine));
+            
        
     }
 }

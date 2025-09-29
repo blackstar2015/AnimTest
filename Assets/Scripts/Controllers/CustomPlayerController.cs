@@ -76,24 +76,9 @@ public class CustomPlayerController : CustomController
     }
     protected virtual void Update()
     {
-        // base.Update();
-        // if (Movement == null) return;
-        // // find correct right/forward directions based on main camera rotation
-        // Vector3 up = Vector3.up;
-        // Vector3 right = Camera.main.transform.right;
-        // Vector3 forward = Vector3.Cross(right, up);
-        // Vector3 moveInput = forward * MoveInput.y + right * MoveInput.x;
-        //
-        // // send player input to character movement
-        // Movement.SetMoveInput(moveInput);
-        // Movement.SetLookDirection(moveInput);
-        // HandleAttack();
-        // LookInCameraDirection = !Movement.IsDashing;
-        // if (LookInCameraDirection) Movement.SetLookDirection(Camera.main.transform.forward);
         _currentStateName = _stateMachine.CurrentState.ToString();
-        CurrentSpeed = _stateMachine.rb.linearVelocity.magnitude;
-        Mathf.Ceil(CurrentSpeed);
-        PlayerSpeed.Invoke(CurrentSpeed.ToString());
+        CurrentSpeed = Mathf.Ceil(_stateMachine.rb.linearVelocity.magnitude);
+        //PlayerSpeed.Invoke(CurrentSpeed.ToString());
     }
     private void HandleAttack()
     {

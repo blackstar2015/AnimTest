@@ -12,6 +12,7 @@ using UnityEngine.Splines;
 using static Sirenix.OdinInspector.Editor.Internal.FastDeepCopier;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(CustomCharacterAnimations))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Targetable))]
 [RequireComponent(typeof(Vision))]
@@ -150,7 +151,7 @@ public class StateMachine : MonoBehaviour
         isHitReacting = Health.IsHitReacting;
         Health.OnBlock.AddListener(BlockedAttack);
         Health.OnDeath.AddListener(Death);
-        Health.OnDamage.AddListener(Knockback);        
+        Health.OnDamage.AddListener(Knockback);
     }
 
     public void SwitchState(State newState)
@@ -160,14 +161,7 @@ public class StateMachine : MonoBehaviour
         _currentState?.Enter();
     }
 
-    public virtual void Update()
-    {
-        isAlive = Health.IsAlive;
-        canBlock = Health.CanBlock;
-        isHitReacting = Health.IsHitReacting;
-        Health.IsPerfectBlocking = isPerfectBlocking;
-        _currentState?.Tick(Time.deltaTime);
-    }
+    
 
     //Movement
     public virtual void FootstepAnimEvent(AnimationEvent animationEvent)
@@ -244,7 +238,7 @@ public class StateMachine : MonoBehaviour
         NavAgent.ResetPath();
     }
 
-    protected virtual void NotFixedUpdate()
+    protected virtual void FixedUpdate()
     {
         // check for the ground
         IsGrounded = CheckGrounded();
@@ -349,7 +343,7 @@ public class StateMachine : MonoBehaviour
         StepCheck();
     }
 
-    protected virtual void NotUpdate()
+    public virtual void Update()
     {
         // rotates character towards movement direction
         if (ControlRotation && (HasTurnInput || !OnlyTurnWithInput) && (IsGrounded || AirTurning))
@@ -369,6 +363,12 @@ public class StateMachine : MonoBehaviour
             rb.MoveRotation(rotation);
             transform.rotation = rotation;
         }
+        
+        isAlive = Health.IsAlive;
+        canBlock = Health.CanBlock;
+        isHitReacting = Health.IsHitReacting;
+        Health.IsPerfectBlocking = isPerfectBlocking;
+        _currentState?.Tick(Time.deltaTime);
     }
 
     protected virtual bool CheckGrounded()

@@ -66,6 +66,19 @@ public class PlayerStateMachine : StateMachine
         base.Awake();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        // assign frictionless physic material
+#if UNITY_6000_0_OR_NEWER
+        Collider.material = new PhysicsMaterial("NoFriction") { staticFriction = 0f, dynamicFriction = 0f, frictionCombine = PhysicsMaterialCombine.Minimum };
+#else
+            CapsuleCollider.material = new PhysicMaterial("NoFriction") { staticFriction = 0f, dynamicFriction = 0f, frictionCombine = PhysicMaterialCombine.Minimum };
+#endif
+
+        // disable NavMeshAgent movement
+        NavAgent.updatePosition = false;
+        NavAgent.updateRotation = false;
+
+        // match look direction to current facing
+        LookDirection = transform.forward;
         PlayerController.SetStateMachine(this);
         SwitchState(new PlayerIdleState(this));
         
@@ -93,16 +106,17 @@ public class PlayerStateMachine : StateMachine
     
     public override void Update()
     {
+        base.Update();
         IsGrounded = CheckGrounded();
         if (IsGrounded) JumpCounter = 1;
         Vector3 up = Vector3.up;
         Vector3 right = Camera.main.transform.right;
         Vector3 forward = Vector3.Cross(right, up);
-        Vector3 moveInput = forward * PlayerController.MoveInput.y + right * PlayerController.MoveInput.x; 
+        Vector3 moveInput = forward * PlayerController.MoveInput.y + right * PlayerController.MoveInput.x;
+        MoveInput = moveInput;
         SetMoveInput(moveInput);
         SetLookDirection(moveInput);
         if (LookInCameraDirection) SetLookDirection(Camera.main.transform.forward);
         transform.rotation = Quaternion.LookRotation(LookDirection);
-        base.Update();
     }
 }
