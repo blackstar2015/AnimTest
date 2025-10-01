@@ -8913,7 +8913,6 @@ MonoBehaviour:
   <CursorMode>k__BackingField: 1
   _lastDashTime: -Infinity
   _lastAttackTime: -Infinity
-  _isAttacking: 0
   <MoveInput>k__BackingField: {x: 0, y: 0}
   <_currentStateName>k__BackingField: 
   PlayerSpeed: {fileID: 0}
