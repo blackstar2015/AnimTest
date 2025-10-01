@@ -73,6 +73,7 @@ public class StateMachine : MonoBehaviour
     [field: SerializeField, TabGroup("Movement","Grounding")] public float CoyoteMaxJumpDistance { get; set; } = 0.5f;     // max distance allowed after leaving ground when doing a coyote jump
     [field: SerializeField, TabGroup("Movement","Grounding")] public LayerMask GroundMask { get; set; } = 1 << 0;          // mask for layers considered the ground
     [field: SerializeField, TabGroup("Movement", "Grounding")] public float MinGroundedVelocity { get; set; } = 5f;
+    [ShowInInspector, TabGroup("Movement", "Dashing")] public bool IsDashing { get; set; } = false;
     #endregion
     #region Events
     [TabGroup("Events")] public UnityEvent<GameObject> OnGrounded;

@@ -55,14 +55,7 @@ public class CustomPlayerController : CustomController
 
     public virtual void OnDash(InputValue value)
     {
-        if(!_stateMachine.CanMove) return;
-        float nextDashTime = _lastDashTime + _stateMachine.DashCooldown;
-        if (Time.time > nextDashTime)
-        {
-            _stateMachine?.Dodge(_stateMachine.Animator.GetCurrentAnimatorStateInfo(0).length);
-            _stateMachine.Animator?.SetTrigger("Dash");
-            _lastDashTime = Time.time;
-        }
+        _stateMachine.Dodge();
     }
     public virtual void OnAttack(InputValue value)
     {

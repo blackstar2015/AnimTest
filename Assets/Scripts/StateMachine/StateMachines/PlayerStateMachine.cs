@@ -1,8 +1,9 @@
+using CharacterMovement;
 using GameEvents;
 using Sirenix.OdinInspector;
 using System.Collections;
-using CharacterMovement;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 
 [RequireComponent(typeof(CustomPlayerController))]
@@ -16,7 +17,6 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField, TabGroup("Properties")] public bool debugStateTransitions = false;
 
     [ShowInInspector, TabGroup("Movement","Dashing")] public float DashSpeed = 1000f;
-    [ShowInInspector, TabGroup("Movement","Dashing")] public bool IsDashing { get;  set; } = false;
     [ShowInInspector, TabGroup("Movement","Dashing")] public float DashCooldown { get;  set; } = 2f;
 
     [ShowInInspector, TabGroup("Movement","Dashing")] private Vector3 _dashDirection;
@@ -45,10 +45,16 @@ public class PlayerStateMachine : StateMachine
         SwitchState(new PlayerIdleState(this));
         
     }
-    public void Dodge(float DashAnimLength)
+    public void Dodge()
     {
         if (!CanMove) return;
-        StartCoroutine(DodgeCoroutine(DashAnimLength));
+        float nextDashTime = _lastDashTime + DashCooldown;
+        if (Time.time > nextDashTime)
+        {
+            float DashAnimLength = Animator.GetCurrentAnimatorClipInfo(0).Length;
+            StartCoroutine(DodgeCoroutine(DashAnimLength));
+            _lastDashTime = Time.time;
+        }
     }
 
     private IEnumerator DodgeCoroutine(float DashAnimLength)

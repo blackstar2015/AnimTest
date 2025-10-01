@@ -35,9 +35,6 @@ public abstract class PlayerBaseState : State
 
     protected override void Dodge()
     {
-        if (!stateMachine.CanMove) return;
-        
-        stateMachine.Dodge(stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length);
     }
     
     protected override void Attack()
