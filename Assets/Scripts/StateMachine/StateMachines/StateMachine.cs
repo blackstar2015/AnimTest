@@ -48,6 +48,7 @@ public class StateMachine : MonoBehaviour
     [field: SerializeField, TabGroup("Movement")] public bool ControlRotation { get; set; } = true;       // character turns towards movement direction
     [field: SerializeField, TabGroup("Movement")] public bool Fix3DSpriteRotation { get; set; } = false;
     [field: SerializeField, TabGroup("Movement")] public bool ParentToSurface { get; set; } = false;
+    [field: SerializeField, TabGroup("Movement")] public AnimationCurve IdleSpeedCurve;
     #endregion
     #region Airborne
     [field: SerializeField, TabGroup("Airborne")] public float Gravity { get; set; } = -20f;             // custom gravity value
@@ -701,15 +702,17 @@ public class StateMachine : MonoBehaviour
         isPerfectBlocking = false;
     }
     
-    public void LerpSpeed(Vector3 finalSpeed, float t)
+    public Vector3 LerpSpeed(Vector3 finalSpeed)
     {
         Vector3 startSpeed = rb.linearVelocity;
-        StartCoroutine(LerpSpeedRoutine(startSpeed, finalSpeed, t));
+        StartCoroutine(LerpSpeedRoutine(startSpeed, finalSpeed));
+        return rb.linearVelocity;
     }
 
-    private IEnumerator LerpSpeedRoutine(Vector3 startSpeed ,Vector3 finalSpeed, float t)
+    private IEnumerator LerpSpeedRoutine(Vector3 startSpeed ,Vector3 finalSpeed)
     {
-        rb.linearVelocity = Vector3.Slerp(startSpeed, finalSpeed, t * Time.deltaTime);
+        IdleSpeedCurve.Evaluate(Time.deltaTime);
+        rb.linearVelocity = Vector3.Slerp(startSpeed, finalSpeed, 1);
         yield return null;
     }
 

@@ -16,7 +16,8 @@ public class PlayerIdleState : PlayerBaseState
         stateMachine.PlayerController.DodgeAction += Dodge;
         stateMachine.PlayerController.BlockAction += Block;
         stateMachine.PlayerController.AttackAction += Attack;
-        stateMachine.LerpSpeed(Vector3.zero, stateMachine.WalkDeccelerationFactor);
+        stateMachine.rb.linearVelocity = stateMachine.LerpSpeed(Vector3.zero);
+        stateMachine.Stop();
     }
 
     public override void Exit()
