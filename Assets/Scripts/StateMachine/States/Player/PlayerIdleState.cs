@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
 {
-    
+    private float idleV;
+
     public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
@@ -15,6 +16,7 @@ public class PlayerIdleState : PlayerBaseState
         stateMachine.PlayerController.DodgeAction += Dodge;
         stateMachine.PlayerController.BlockAction += Block;
         stateMachine.PlayerController.AttackAction += Attack;
+        stateMachine.LerpSpeed(Vector3.zero, stateMachine.WalkDeccelerationFactor);
     }
 
     public override void Exit()
@@ -29,7 +31,6 @@ public class PlayerIdleState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
-        
         if(stateMachine.HasMoveInput) stateMachine.SwitchState(new PlayerWalkingState(this.stateMachine));
         //if(!stateMachine.IsGrounded) stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine));
     }

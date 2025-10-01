@@ -8,18 +8,8 @@ using UnityEngine;
 [RequireComponent(typeof(CustomPlayerController))]
 public class PlayerStateMachine : StateMachine
 {
-    //[field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public Vector3 Momentum => rb.linearVelocity;
-    //[field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public Vector3 MoveInput { get; set; }
-    //[field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public Vector3 LocalMoveInput { get; set; }
-    //[field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public Vector3 LookDirection { get; protected set; }
-    //[field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public Vector3 SurfaceVelocity { get; set; }
-    //[field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public bool HasMoveInput { get; set; }
-    
-
-
-
     [FoldoutGroup("Walking Properties"), SerializeField] public float PlayerMaxWalkSpeed = 5f;
-    //[FoldoutGroup("Walking Properties"), SerializeField] public float WalkDeccelerationFactor = 1.0f;
+    [FoldoutGroup("Walking Properties"), SerializeField] public float WalkDeccelerationFactor = 1.0f;
     //[FoldoutGroup("Walking Properties"), SerializeField] public float WalkAccelerationFactor = 1.0f;
 
     //[FoldoutGroup("Running Properties"), SerializeField] public float PlayerMaxRunSpeed = 20f;
