@@ -8,48 +8,20 @@ using UnityEngine;
 [RequireComponent(typeof(CustomPlayerController))]
 public class PlayerStateMachine : StateMachine
 {
-    [FoldoutGroup("Walking Properties"), SerializeField] public float PlayerMaxWalkSpeed = 5f;
-    [FoldoutGroup("Walking Properties"), SerializeField] public float WalkDeccelerationFactor = 1.0f;
-    //[FoldoutGroup("Walking Properties"), SerializeField] public float WalkAccelerationFactor = 1.0f;
-
-    //[FoldoutGroup("Running Properties"), SerializeField] public float PlayerMaxRunSpeed = 20f;
-    //[FoldoutGroup("Running Properties"), SerializeField] public float RunDeccelerationFactor = 1.0f;
-    //[FoldoutGroup("Running Properties"), SerializeField] public float RunAccelerationFactor = 1.0f;
-
-    //[FoldoutGroup("Grounding"), SerializeField] private float _groundCheckDistance = .4f;
-    //[FoldoutGroup("Grounding"), SerializeField] private float _groundCheckOffset = .1f;
-    //[FoldoutGroup("Grounding"), SerializeField] protected float _maxSlopeAngle = 40f; 
-    //[FoldoutGroup("Grounding"), SerializeField] private bool _parentToSurface;
-    //[FoldoutGroup("Grounding"), ReadOnly, HideInEditorMode, SerializeField] private LayerMask _groundMask;
-    //[FoldoutGroup("Grounding"), ReadOnly, HideInEditorMode, SerializeField] public bool IsGrounded { get; set; }
-    //[FoldoutGroup("Grounding"), ReadOnly, HideInEditorMode, SerializeField] private Vector3 _groundCheckStart => transform.position + transform.up * _groundCheckOffset;
-
-    //[field: FoldoutGroup("Grounding"), ReadOnly, HideInEditorMode, SerializeField] public GameObject SurfaceObject { get; protected set; }
-    //[field: FoldoutGroup("Grounding"), ReadOnly, HideInEditorMode, SerializeField] public Vector3 LastGroundPosition { get; protected set; }
-    //[field: FoldoutGroup("Grounding"), ReadOnly, HideInEditorMode, SerializeField] public Vector3 GroundNormal { get; set; }
-    //[field: FoldoutGroup("Grounding"), ReadOnly, HideInEditorMode, SerializeField] public float LastGroundTime { get; protected set; }
-
-    //[FoldoutGroup("WallRun"), SerializeField] public float WallRunCheckDistance = 2f;
-    //[FoldoutGroup("WallRun"), SerializeField] public float WallRunCheckRadius = 2f;
-    //[FoldoutGroup("WallRun"), SerializeField] public LayerMask WallRunLayer;
-    //[FoldoutGroup("Running Properties"), SerializeField] public float WallRunAccelerationFactor = 1.0f;
+    [field: SerializeField, TabGroup("Properties")] public float PlayerMaxWalkSpeed = 5f;
 
     [field: SerializeField, TabGroup("Properties")] public CustomPlayerController PlayerController => Controller as CustomPlayerController;
     [field: SerializeField, TabGroup("Properties")] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastDashTime = Mathf.NegativeInfinity;
-    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastAttackTime = Mathf.NegativeInfinity;
-    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private bool _isAttacking = false;
-    [SerializeField, TabGroup("Dashing")] public float DashSpeed = 1000f;
-    [ShowInInspector, TabGroup("Dashing")] public bool IsDashing { get;  set; } = false;
-    [ShowInInspector, TabGroup("Dashing")] public float DashCooldown { get;  set; } = 2f;
-    [ShowInInspector, TabGroup("Dashing")] private Vector3 _dashDirection;
+    [field: SerializeField, TabGroup("Properties")] public bool debugStateTransitions = false;
+
+    [ShowInInspector, TabGroup("Movement","Dashing")] public float DashSpeed = 1000f;
+    [ShowInInspector, TabGroup("Movement","Dashing")] public bool IsDashing { get;  set; } = false;
+    [ShowInInspector, TabGroup("Movement","Dashing")] public float DashCooldown { get;  set; } = 2f;
+
+    [ShowInInspector, TabGroup("Movement","Dashing")] private Vector3 _dashDirection;
     
-    [field: TabGroup("Airborne"), SerializeField] public bool IsJumping { get; set; }
-    [field: TabGroup("Airborne"), SerializeField] public float JumpForce = 10f;
-    [field: TabGroup("Airborne"), SerializeField] public float DoubleJumpForce = 5f;
-    [field: TabGroup("Airborne"), SerializeField] public float AirControl = .9f;
-    [field: TabGroup("Airborne"), SerializeField] public int JumpCounter { get; internal set; } = 1;
-    [field: TabGroup("Airborne"), SerializeField] public int MaxJumps = 2;
+
 
     public override void Awake()
     {
@@ -93,7 +65,15 @@ public class PlayerStateMachine : StateMachine
         IsDashing = false;
         yield return null;
     }
-    
+
+    public override void TryJump()
+    {
+        if(JumpCounter < MaxJumps)
+        {
+            Jump();
+            JumpCounter++;
+        }
+    }
     public override void Update()
     {
         base.Update();

@@ -14,15 +14,15 @@ public abstract class PlayerBaseState : State
 
     public override void Enter()
     {
-        Debug.Log("Entering " + stateMachine.CurrentState);
+        if(stateMachine.debugStateTransitions) Debug.Log("Entering " + stateMachine.CurrentState);
     }
     public override void Exit()
     {
-        Debug.Log("Exiting " + stateMachine.CurrentState);
+        if (stateMachine.debugStateTransitions) Debug.Log("Exiting " + stateMachine.CurrentState);
     }
     public override void Tick(float deltaTime)
     {
-        Debug.Log("Current State " + stateMachine.CurrentState);
+        if (stateMachine.debugStateTransitions) Debug.Log("Current State " + stateMachine.CurrentState);
     }
 
     protected override void Jump()

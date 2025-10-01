@@ -11,7 +11,6 @@ public class CustomPlayerController : CustomController
     [field: SerializeField, TabGroup("Properties")] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
      [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastDashTime = Mathf.NegativeInfinity;
      [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastAttackTime = Mathf.NegativeInfinity;
-     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private bool _isAttacking = false;
      [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public Vector2 MoveInput { get; set; }
 
     [field: SerializeField, TabGroup("Events")] public Action JumpAction;
@@ -67,7 +66,7 @@ public class CustomPlayerController : CustomController
     }
     public virtual void OnAttack(InputValue value)
     {
-        _isAttacking = value.isPressed;
+        _stateMachine.IsAttacking = value.isPressed;
     }
 
     public virtual void OnBlock(InputValue value)
@@ -80,21 +79,5 @@ public class CustomPlayerController : CustomController
         CurrentSpeed = Mathf.Ceil(_stateMachine.rb.linearVelocity.magnitude);
         //PlayerSpeed.Invoke(CurrentSpeed.ToString());
     }
-    private void HandleAttack()
-    {
-        if (!_isAttacking) return;
-        Weapon equippedWeapon = _stateMachine.Weapons[_stateMachine.weaponIndex];
-        float nextAttackTime = _lastAttackTime + 1/equippedWeapon.Data.AttackRate;
-        
-        if (Time.time < nextAttackTime) return;
-        
-        equippedWeapon.TryAttack(transform.position + transform.forward * 5,gameObject,_stateMachine.Targetable.Team);
-        _stateMachine.Animator.SetTrigger(equippedWeapon.Data.AttackAnimName);
-        _stateMachine.Animator.SetInteger("Action", _stateMachine.actionIndex);
-        WeaponMelee melee = equippedWeapon as WeaponMelee;
-        if (melee == null)  return;
-        _stateMachine.actionIndex++;
-        if (_stateMachine.actionIndex > melee?.MeleeData.ComboData.Length-1) _stateMachine.actionIndex = 0;
-        _lastAttackTime =  Time.time;
-    }
+   
 }

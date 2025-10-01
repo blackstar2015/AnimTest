@@ -20,7 +20,8 @@ public class CustomCharacterAnimations : MonoBehaviour
     [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _isBlocking => _stateMachine.IsBlocking;
     [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _canBlock => _stateMachine.CanBlock;
     [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _isBlockedAttack => _stateMachine.IsBlockedAttack;
-    
+    [ShowInInspector, TabGroup("Properties"), ReadOnly]private int _jumpCounter => _stateMachine.JumpCounter;
+
     protected virtual void OnValidate()
     {
         if (Animator == null) Animator = GetComponent<Animator>();
@@ -32,7 +33,7 @@ public class CustomCharacterAnimations : MonoBehaviour
         Vector3 velocity = _stateMachine.Velocity;
         _velocityY =  velocity.y;
         Vector3 flattenedVelocity = new Vector3(velocity.x, 0f, velocity.z);
-        _speed = Mathf.Min(_stateMachine.MoveInput.magnitude, flattenedVelocity.magnitude / _stateMachine.Speed);
+        _speed = Mathf.Min(_stateMachine.LocalMoveInput.magnitude, flattenedVelocity.magnitude / _stateMachine.Speed);
         _isMoving = _speed > 0 ? true : false;
         velocity = transform.InverseTransformDirection(velocity);
         _velocityX =  velocity.x * Mathf.Abs(_stateMachine.LocalMoveInput.x);
@@ -43,11 +44,13 @@ public class CustomCharacterAnimations : MonoBehaviour
         Animator.SetFloat("VerticalVelocity", _velocityY);
         Animator.SetFloat("VelocityX", _velocityX);
         Animator.SetFloat("VelocityZ", _velocityZ);
+        Animator.SetInteger("JumpCounter", _jumpCounter);
         Animator.SetBool("IsAlive", _isAlive);
         Animator.SetBool("HitReact", _isHitReacting);
         Animator.SetBool("IsBlocking", _isBlocking);
         Animator.SetBool("CanBlock", _canBlock);
         Animator.SetBool("BlockedAttack", _isBlockedAttack);
+
     }
     #region AnimationEvents
     public void Sheath(int index)

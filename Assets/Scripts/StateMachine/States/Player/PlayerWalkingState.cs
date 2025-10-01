@@ -23,7 +23,6 @@ public class PlayerWalkingState : PlayerBaseState
         base.Tick(deltaTime);
         stateMachine.rb.AddForce(stateMachine.LocalMoveInput * stateMachine.Speed * Time.deltaTime, ForceMode.Impulse);
         if(stateMachine.Velocity.magnitude * stateMachine.LocalMoveInput == Vector3.zero) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine));
-            
-       
+        if(stateMachine.IsAttacking) stateMachine.SwitchState(new PlayerAttackState(this.stateMachine));
     }
 }

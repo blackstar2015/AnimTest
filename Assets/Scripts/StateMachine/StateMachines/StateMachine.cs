@@ -39,34 +39,40 @@ public class StateMachine : MonoBehaviour
     [field: SerializeField, InlineButton(nameof(FindWeapons), "Find"), TabGroup("Weapons")] public Weapon[] Weapons { get; private set; }
     #endregion
     #region Movement
-    [field: SerializeField, TabGroup("Movement")] public float Speed { get; set; } = 5f;
-    [field: SerializeField, TabGroup("Movement")] public float Acceleration { get; set; } = 10f;
-    [field: SerializeField, TabGroup("Movement")] public float TurnSpeed { get; set; } = 15f;
-    [field: SerializeField, TabGroup("Movement")] public bool OnlyTurnWithInput { get; set; } = true;
-    [field: SerializeField, TabGroup("Movement")] public float StoppingDistance { get; set; } = 0.25f;
-    [field: SerializeField, TabGroup("Movement")] public bool LookInMoveDirection { get; set; } = true;
-    [field: SerializeField, TabGroup("Movement")] public bool ControlRotation { get; set; } = true;       // character turns towards movement direction
-    [field: SerializeField, TabGroup("Movement")] public bool Fix3DSpriteRotation { get; set; } = false;
-    [field: SerializeField, TabGroup("Movement")] public bool ParentToSurface { get; set; } = false;
-    [field: SerializeField, TabGroup("Movement")] public AnimationCurve IdleSpeedCurve;
+    [field: SerializeField, TabGroup("Movement","Basic")] public float Speed { get; set; } = 5f;
+    [field: SerializeField, TabGroup("Movement", "Basic")] public float Acceleration { get; set; } = 10f;
+    [field: SerializeField, TabGroup("Movement", "Basic")] public float TurnSpeed { get; set; } = 15f;
+    [field: SerializeField, TabGroup("Movement", "Basic")] public bool OnlyTurnWithInput { get; set; } = true;
+    [field: SerializeField, TabGroup("Movement", "Basic")] public float StoppingDistance { get; set; } = 0.25f;
+    [field: SerializeField, TabGroup("Movement", "Basic")] public bool LookInMoveDirection { get; set; } = true;
+    [field: SerializeField, TabGroup("Movement", "Basic")] public bool ControlRotation { get; set; } = true;       // character turns towards movement direction
+    [field: SerializeField, TabGroup("Movement", "Basic")] public bool Fix3DSpriteRotation { get; set; } = false;
+    [field: SerializeField, TabGroup("Movement", "Basic")] public bool ParentToSurface { get; set; } = false;
+    [field: SerializeField, TabGroup("Movement", "Idle")] public AnimationCurve IdleSpeedCurve;
+    [field: SerializeField, TabGroup("Movement", "Idle")] public float WalkDeccelerationFactor = 1.0f;
     #endregion
     #region Airborne
-    [field: SerializeField, TabGroup("Airborne")] public float Gravity { get; set; } = -20f;             // custom gravity value
-    [field: SerializeField, TabGroup("Airborne")] public float JumpHeight { get; set; } = 2.25f;         // peak height of jump
-    [field: SerializeField, TabGroup("Airborne")] public float AirControl { get; set; } = 0.1f;          // percentage of acceleration applied while airborne
-    [field: SerializeField, TabGroup("Airborne")] public bool AirTurning { get; set; } = true;           // character can turn while airborne
+    [field: SerializeField, TabGroup("Movement","Airborne")] public float Gravity { get; set; } = -20f;             // custom gravity value
+    [field: SerializeField, TabGroup("Movement","Airborne")] public float JumpHeight { get; set; } = 2.25f;         // peak height of jump  
+    [field: SerializeField, TabGroup("Movement", "Airborne")] public bool AirTurning { get; set; } = true;
+    [field: TabGroup("Movement", "Airborne"), SerializeField] public bool IsJumping { get; set; }
+    [field: TabGroup("Movement", "Airborne"), SerializeField] public float JumpForce = 10f;
+    [field: TabGroup("Movement", "Airborne"), SerializeField] public float DoubleJumpForce = 5f;
+    [field: TabGroup("Movement", "Airborne"), SerializeField] public float AirControl = .9f;
+    [field: TabGroup("Movement", "Airborne"), SerializeField] public int JumpCounter { get; internal set; } = 1;
+    [field: TabGroup("Movement", "Airborne"), SerializeField] public int MaxJumps = 2;// character can turn while airborne
     #endregion
     #region Size
     [field: SerializeField, TabGroup("Size")] public float Height { get; set; } = 1.8f;
     [field: SerializeField, TabGroup("Size")] public float Radius { get; set; } = 0.3f;
     #endregion
     #region Grounding
-    [field: SerializeField, TabGroup("Grounding")] public float GroundCheckOffset { get; set; } = 0.1f;         // height inside character where grounding ray starts
-    [field: SerializeField, TabGroup("Grounding")] public float GroundCheckDistance { get; set; } = 0.4f;       // distance down from offset position
-    [field: SerializeField, TabGroup("Grounding")] public float MaxSlopeAngle { get; set; } = 40f;              // maximum climbable slope, character will slip on anything higher
-    [field: SerializeField, TabGroup("Grounding")] public float CoyoteMaxJumpDistance { get; set; } = 0.5f;     // max distance allowed after leaving ground when doing a coyote jump
-    [field: SerializeField, TabGroup("Grounding")] public LayerMask GroundMask { get; set; } = 1 << 0;          // mask for layers considered the ground
-    [field: SerializeField, TabGroup("Grounding")] public float MinGroundedVelocity { get; set; } = 5f;
+    [field: SerializeField, TabGroup("Movement","Grounding")] public float GroundCheckOffset { get; set; } = 0.1f;         // height inside character where grounding ray starts
+    [field: SerializeField, TabGroup("Movement","Grounding")] public float GroundCheckDistance { get; set; } = 0.4f;       // distance down from offset position
+    [field: SerializeField, TabGroup("Movement","Grounding")] public float MaxSlopeAngle { get; set; } = 40f;              // maximum climbable slope, character will slip on anything higher
+    [field: SerializeField, TabGroup("Movement","Grounding")] public float CoyoteMaxJumpDistance { get; set; } = 0.5f;     // max distance allowed after leaving ground when doing a coyote jump
+    [field: SerializeField, TabGroup("Movement","Grounding")] public LayerMask GroundMask { get; set; } = 1 << 0;          // mask for layers considered the ground
+    [field: SerializeField, TabGroup("Movement", "Grounding")] public float MinGroundedVelocity { get; set; } = 5f;
     #endregion
     #region Events
     [TabGroup("Events")] public UnityEvent<GameObject> OnGrounded;
@@ -107,6 +113,9 @@ public class StateMachine : MonoBehaviour
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public int weaponIndex = 0;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public bool CanShoot { get; set; } = true;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public bool CanMelee { get; set; } = true;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastAttackTime = Mathf.NegativeInfinity;
+    //[field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private bool _isAttacking = false;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public bool IsAttacking { get; internal set; }
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool IsBlocking => isBlocking;
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool IsAlive => isAlive;
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool CanBlock => canBlock;
@@ -215,7 +224,7 @@ public class StateMachine : MonoBehaviour
         SetLookDirection(direction);
     }
 
-    public void TryJump()
+    public virtual void TryJump()
     {
         if (!CanMove || !CanCoyoteJump) return;
         Jump();
@@ -701,19 +710,23 @@ public class StateMachine : MonoBehaviour
     
         isPerfectBlocking = false;
     }
-    
-    public Vector3 LerpSpeed(Vector3 finalSpeed)
-    {
-        Vector3 startSpeed = rb.linearVelocity;
-        StartCoroutine(LerpSpeedRoutine(startSpeed, finalSpeed));
-        return rb.linearVelocity;
-    }
 
-    private IEnumerator LerpSpeedRoutine(Vector3 startSpeed ,Vector3 finalSpeed)
+    public void HandleAttack()
     {
-        IdleSpeedCurve.Evaluate(Time.deltaTime);
-        rb.linearVelocity = Vector3.Slerp(startSpeed, finalSpeed, 1);
-        yield return null;
+        if (!IsAttacking) return;
+        Weapon equippedWeapon = Weapons[weaponIndex];
+        float nextAttackTime = _lastAttackTime + 1 / equippedWeapon.Data.AttackRate;
+
+        if (Time.time < nextAttackTime) return;
+
+        equippedWeapon.TryAttack(transform.position + transform.forward * 5, gameObject, Targetable.Team);
+        Animator.SetTrigger(equippedWeapon.Data.AttackAnimName);
+        Animator.SetInteger("Action", actionIndex);
+        WeaponMelee melee = equippedWeapon as WeaponMelee;
+        if (melee == null) return;
+        actionIndex++;
+        if (actionIndex > melee?.MeleeData.ComboData.Length - 1) actionIndex = 0;
+        _lastAttackTime = Time.time;
     }
 
     #region AnimEvents

@@ -30,7 +30,8 @@ public class PlayerAirborneState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
-        if(stateMachine.IsGrounded) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine));
+        if(stateMachine.IsGrounded && stateMachine.rb.linearVelocity.magnitude <= .1f) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine));
+        if(stateMachine.IsGrounded && stateMachine.rb.linearVelocity.magnitude > .1f) stateMachine.SwitchState(new PlayerWalkingState(this.stateMachine));
         //if (CheckWallRun()) stateMachine.SwitchState(new PlayerWallRunningState(this.stateMachine));
     }
 }
