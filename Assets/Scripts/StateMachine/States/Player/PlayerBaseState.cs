@@ -58,4 +58,9 @@ public abstract class PlayerBaseState : State
     {
         stateMachine.isBlocking = stateMachine.CanBlock && isPressed;
     }
+
+    protected override void Sprint(bool isPressed)
+    {
+        stateMachine.MoveSpeedMultiplier = isPressed ? 2 : 1;
+    }
 }

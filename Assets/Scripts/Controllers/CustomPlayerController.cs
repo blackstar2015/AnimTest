@@ -17,6 +17,7 @@ public class CustomPlayerController : CustomController
     [field: SerializeField, TabGroup("Events")] public Action DodgeAction;
     [field: SerializeField, TabGroup("Events")] public Action<bool> BlockAction;
     [field: SerializeField, TabGroup("Events")] public Action<bool> AttackAction;
+    [field: SerializeField, TabGroup("Events")] public Action<bool> SprintAction;
     
     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] private string _currentStateName { get; set; }
     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public static float CurrentSpeed;
@@ -65,6 +66,11 @@ public class CustomPlayerController : CustomController
     public virtual void OnBlock(InputValue value)
     {
         BlockAction?.Invoke(value.isPressed);
+    }
+
+    public virtual void OnSprint(InputValue value)
+    {
+        SprintAction?.Invoke(value.isPressed);
     }
     protected virtual void Update()
     {

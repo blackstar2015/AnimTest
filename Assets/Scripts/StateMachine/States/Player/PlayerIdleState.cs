@@ -15,6 +15,7 @@ public class PlayerIdleState : PlayerBaseState
         stateMachine.PlayerController.DodgeAction += Dodge;
         stateMachine.PlayerController.BlockAction += Block;
         stateMachine.PlayerController.AttackAction += Attack;
+        stateMachine.PlayerController.SprintAction += Sprint;
     }
 
     public override void Exit()
@@ -23,6 +24,7 @@ public class PlayerIdleState : PlayerBaseState
         stateMachine.PlayerController.DodgeAction -= Dodge;
         stateMachine.PlayerController.BlockAction -= Block;
         stateMachine.PlayerController.AttackAction -= Attack;
+        stateMachine.PlayerController.SprintAction -= Sprint;
         base .Exit();
     }
 

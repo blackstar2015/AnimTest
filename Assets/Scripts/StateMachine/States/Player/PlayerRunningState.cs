@@ -13,6 +13,7 @@ public class PlayerRunningState : PlayerBaseState
         stateMachine.PlayerController.DodgeAction += Dodge;
         stateMachine.PlayerController.BlockAction += Block;
         stateMachine.PlayerController.AttackAction += Attack;
+        stateMachine.PlayerController.SprintAction += Sprint;
        base.Enter();
     }
 
@@ -22,6 +23,7 @@ public class PlayerRunningState : PlayerBaseState
         stateMachine.PlayerController.DodgeAction -= Dodge;
         stateMachine.PlayerController.BlockAction -= Block;
         stateMachine.PlayerController.AttackAction -= Attack;
+        stateMachine.PlayerController.SprintAction -= Sprint;
         base .Exit();
     }
 
