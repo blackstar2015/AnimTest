@@ -18,6 +18,13 @@
       },
       "hash": "8b3450c749534bf3694d42f940ca730f7047a59e"
     },
+    "com.qhenshaw.editortools": {
+      "version": "https://github.com/qhenshaw/EditorTools.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f5ec7fa4a230fb3774f2265b39e08218815123da"
+    },
     "com.qhenshaw.gameevents": {
       "version": "https://github.com/qhenshaw/GameEvents.git",
       "depth": 0,
@@ -34,6 +41,19 @@
         "com.unity.inputsystem": "1.4.4"
       },
       "hash": "99f25079a1f39086e43bc4fabb1a60d1e413e0ff"
+    },
+    "com.qhenshaw.unitytools": {
+      "version": "https://github.com/qhenshaw/UnityTools.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.textmeshpro": "3.0.0",
+        "com.unity.ugui": "2.0.0",
+        "com.unity.inputsystem": "1.0.0",
+        "com.unity.cinemachine": "3.0.0",
+        "com.unity.2d.sprite": "1.0.0"
+      },
+      "hash": "07bb1456543da001572dd03a5af8d9f573c7a991"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -154,6 +174,15 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.polybrush": {
+      "version": "1.1.8",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.settings-manager": "2.0.1"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.probuilder": {
       "version": "6.0.6",
       "depth": 0,
@@ -262,6 +291,14 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.unity.textmeshpro": {
+      "version": "5.0.0",
+      "depth": 1,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.ugui": "2.0.0"
+      }
     },
     "com.unity.timeline": {
       "version": "1.8.7",
