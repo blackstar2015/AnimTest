@@ -13,7 +13,7 @@ public class PlayerStateMachine : StateMachine
 
     [field: SerializeField, TabGroup("Properties")] public CustomPlayerController PlayerController => Controller as CustomPlayerController;
     [field: SerializeField, TabGroup("Properties")] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
-    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastDashTime = Mathf.NegativeInfinity;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public float LastDashTime = Mathf.NegativeInfinity;
     [field: SerializeField, TabGroup("Properties")] public bool debugStateTransitions = false;
 
     [ShowInInspector, TabGroup("Movement","Dashing")] public float DashSpeed = 1000f;
@@ -45,40 +45,33 @@ public class PlayerStateMachine : StateMachine
         SwitchState(new PlayerIdleState(this));
         
     }
-    public void Dodge()
+    public void Dodge(float DashAnimLength)
     {
-        if (!CanMove) return;
-        float nextDashTime = _lastDashTime + DashCooldown;
-        if (Time.time > nextDashTime)
-        {
-            float DashAnimLength = Animator.GetCurrentAnimatorClipInfo(0).Length;
-            StartCoroutine(DodgeCoroutine(DashAnimLength));
-            _lastDashTime = Time.time;
-        }
+        StartCoroutine(DodgeCoroutine(DashAnimLength));
     }
 
-    private IEnumerator DodgeCoroutine(float DashAnimLength)
+    public IEnumerator DodgeCoroutine(float DashAnimLength)
     {
         if (!CanMove) yield break;
         IsDashing = true;
-        if (LocalMoveInput == Vector3.zero) _dashDirection = -1 * transform.forward;
-        else _dashDirection = LocalMoveInput.normalized;
+        if (LocalMoveInput == Vector3.zero)
+        {
+            _dashDirection = (-transform.forward).normalized;
+        }
+        else
+        {
+            _dashDirection = LocalMoveInput.normalized;
+        }
+
+        LookInCameraDirection = false;
         SetLookDirection(_dashDirection);
         rb.AddForce(_dashDirection * DashSpeed);
 
         yield return new WaitForSeconds(DashAnimLength);
-
+        
+        LookInCameraDirection = true;
         IsDashing = false;
         yield return null;
-    }
-
-    public override void TryJump()
-    {
-        if(JumpCounter < MaxJumps)
-        {
-            Jump();
-            JumpCounter++;
-        }
     }
     public override void Update()
     {

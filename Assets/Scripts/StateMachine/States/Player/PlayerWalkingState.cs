@@ -10,11 +10,19 @@ public class PlayerWalkingState : PlayerBaseState
     public override void Enter()
     {
         base.Enter();   
+        stateMachine.PlayerController.JumpAction += Jump;
+        stateMachine.PlayerController.DodgeAction += Dodge;
+        stateMachine.PlayerController.BlockAction += Block;
+        stateMachine.PlayerController.AttackAction += Attack;
     }
 
     public override void Exit()
     {
-        base.Exit();
+        stateMachine.PlayerController.JumpAction -= Jump;
+        stateMachine.PlayerController.DodgeAction -= Dodge;
+        stateMachine.PlayerController.BlockAction -= Block;
+        stateMachine.PlayerController.AttackAction -= Attack;
+        base .Exit();
     }
 
 

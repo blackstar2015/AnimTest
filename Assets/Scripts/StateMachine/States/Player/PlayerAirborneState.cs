@@ -10,14 +10,20 @@ public class PlayerAirborneState : PlayerBaseState
 
     public override void Enter()
     {
+        stateMachine.PlayerController.JumpAction += Jump;
+        stateMachine.PlayerController.DodgeAction += Dodge;
+        stateMachine.PlayerController.BlockAction += Block;
+        stateMachine.PlayerController.AttackAction += Attack;
         base.Enter();
     }
-
     public override void Exit()
     {
-        base.Exit();
+        stateMachine.PlayerController.JumpAction -= Jump;
+        stateMachine.PlayerController.DodgeAction -= Dodge;
+        stateMachine.PlayerController.BlockAction -= Block;
+        stateMachine.PlayerController.AttackAction -= Attack;
+        base .Exit();
     }
-
     //public bool CheckWallRun()
     //{
     //    if (!stateMachine.IsGrounded) return false;

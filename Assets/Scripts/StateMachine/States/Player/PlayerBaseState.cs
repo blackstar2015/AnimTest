@@ -27,23 +27,35 @@ public abstract class PlayerBaseState : State
 
     protected override void Jump()
     {
-        // calculate jump velocity from jump height and gravity
-        float jumpVelocity = Mathf.Sqrt(2f * -stateMachine.Gravity * stateMachine.JumpHeight);
-        // override current y velocity but maintain x/z velocity
-        stateMachine.Velocity = new Vector3(stateMachine.Velocity.x, jumpVelocity, stateMachine.Velocity.z);
+        if(stateMachine.JumpCounter < stateMachine.MaxJumps)
+        {
+            // calculate jump velocity from jump height and gravity
+            float jumpVelocity = Mathf.Sqrt(2f * -stateMachine.Gravity * stateMachine.JumpHeight);
+            // override current y velocity but maintain x/z velocity
+            stateMachine.Velocity = new Vector3(stateMachine.Velocity.x, jumpVelocity, stateMachine.Velocity.z);
+            stateMachine.JumpCounter++;
+        }
     }
 
     protected override void Dodge()
     {
+        if (!stateMachine.CanMove) return;
+        float nextDashTime = stateMachine.LastDashTime + stateMachine.DashCooldown;
+        if (Time.time > nextDashTime)
+        {
+            float DashAnimLength = stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length;
+            stateMachine.Dodge(DashAnimLength);
+            stateMachine.LastDashTime = Time.time;
+        }
     }
     
-    protected override void Attack()
+    protected override void Attack(bool isPressed)
     {
-
+        stateMachine.IsAttacking = isPressed;
     }
 
-    protected override void Block()
+    protected override void Block(bool isPressed)
     {
-        
+        stateMachine.isBlocking = stateMachine.CanBlock && isPressed;
     }
 }

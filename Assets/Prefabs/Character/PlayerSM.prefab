@@ -713,7 +713,7 @@ MonoBehaviour:
   OnFootstep:
     m_PersistentCalls:
       m_Calls: []
-  <LookInCameraDirection>k__BackingField: 0
+  <LookInCameraDirection>k__BackingField: 1
   actionIndex: 0
   weaponIndex: 0
   <CanShoot>k__BackingField: 1
@@ -739,7 +739,7 @@ MonoBehaviour:
   <SplineGravitation>k__BackingField: 20
   PlayerMaxWalkSpeed: 5
   <CursorMode>k__BackingField: 1
-  _lastDashTime: -Infinity
+  LastDashTime: -Infinity
   debugStateTransitions: 0
   DashSpeed: 1000
 --- !u!114 &7004841265191975933

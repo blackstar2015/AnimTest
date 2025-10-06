@@ -50,8 +50,8 @@ public abstract class State
     }
     protected abstract void Jump();
     protected abstract void Dodge();
-    protected abstract void Attack();
-    protected abstract void Block();
+    protected abstract void Attack(bool isPressed);
+    protected abstract void Block(bool isPressed);
     protected virtual void MoveTo(Vector3 destination)
     {
         if (!machine.NavAgent.isActiveAndEnabled || !machine.NavAgent.isOnNavMesh) return;

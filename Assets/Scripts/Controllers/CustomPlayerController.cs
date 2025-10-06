@@ -15,8 +15,8 @@ public class CustomPlayerController : CustomController
 
     [field: SerializeField, TabGroup("Events")] public Action JumpAction;
     [field: SerializeField, TabGroup("Events")] public Action DodgeAction;
-    [field: SerializeField, TabGroup("Events")] public Action BlockAction;
-    [field: SerializeField, TabGroup("Events")] public Action AttackAction;
+    [field: SerializeField, TabGroup("Events")] public Action<bool> BlockAction;
+    [field: SerializeField, TabGroup("Events")] public Action<bool> AttackAction;
     
     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] private string _currentStateName { get; set; }
     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public static float CurrentSpeed;
@@ -50,21 +50,21 @@ public class CustomPlayerController : CustomController
 
     public virtual void OnJump(InputValue value)
     {
-        _stateMachine?.TryJump();
+        JumpAction?.Invoke();
     }
 
     public virtual void OnDash(InputValue value)
     {
-        _stateMachine.Dodge();
+        DodgeAction?.Invoke();
     }
     public virtual void OnAttack(InputValue value)
     {
-        _stateMachine.IsAttacking = value.isPressed;
+        AttackAction?.Invoke(value.isPressed);
     }
 
     public virtual void OnBlock(InputValue value)
     {
-        _stateMachine.isBlocking = _stateMachine.CanBlock && value.isPressed;
+        BlockAction?.Invoke(value.isPressed);
     }
     protected virtual void Update()
     {
