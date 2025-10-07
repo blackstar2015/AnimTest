@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerIdleState : PlayerBaseState
 {
     private float _idleStartTime = Mathf.NegativeInfinity;
+    private readonly int IdleHash = Animator.StringToHash("Idle");
     public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
@@ -16,6 +17,7 @@ public class PlayerIdleState : PlayerBaseState
         stateMachine.PlayerController.BlockAction += Block;
         stateMachine.PlayerController.AttackAction += Attack;
         stateMachine.PlayerController.SprintAction += Sprint;
+        stateMachine.Animator.CrossFadeInFixedTime(IdleHash, .1f);
     }
 
     public override void Exit()

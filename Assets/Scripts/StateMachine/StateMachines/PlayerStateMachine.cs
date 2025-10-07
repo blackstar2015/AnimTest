@@ -18,8 +18,9 @@ public class PlayerStateMachine : StateMachine
 
     [ShowInInspector, TabGroup("Movement","Dashing")] public float DashSpeed = 1000f;
     [ShowInInspector, TabGroup("Movement","Dashing")] public float DashCooldown { get;  set; } = 2f;
+    [ShowInInspector, TabGroup("Movement","Dashing")] public Vector3 DashDirection;
 
-    [ShowInInspector, TabGroup("Movement","Dashing")] private Vector3 _dashDirection;
+    [ShowInInspector, TabGroup("Movement", "Airborne")] public float LandingGravity = 10f;
     
 
 
@@ -56,16 +57,16 @@ public class PlayerStateMachine : StateMachine
         IsDashing = true;
         if (LocalMoveInput == Vector3.zero)
         {
-            _dashDirection = (-transform.forward).normalized;
+            DashDirection = (-transform.forward).normalized;
         }
         else
         {
-            _dashDirection = LocalMoveInput.normalized;
+            DashDirection = LocalMoveInput.normalized;
         }
 
         LookInCameraDirection = false;
-        SetLookDirection(_dashDirection);
-        rb.AddForce(_dashDirection * DashSpeed);
+        SetLookDirection(DashDirection);
+        rb.AddForce(DashDirection * DashSpeed);
 
         yield return new WaitForSeconds(DashAnimLength);
         
@@ -73,6 +74,14 @@ public class PlayerStateMachine : StateMachine
         IsDashing = false;
         yield return null;
     }
+
+    public void AirDodge(float DashAnimLength)
+    {
+        rb.linearVelocity = Vector3.zero;
+        DashDirection = transform.forward;
+        rb.AddForce(DashDirection * DashSpeed);
+    }
+
     public override void Update()
     {
         base.Update();
