@@ -75,13 +75,6 @@ public class PlayerStateMachine : StateMachine
         yield return null;
     }
 
-    public void AirDodge(float DashAnimLength)
-    {
-        rb.linearVelocity = Vector3.zero;
-        DashDirection = transform.forward;
-        rb.AddForce(DashDirection * DashSpeed);
-    }
-
     public override void Update()
     {
         base.Update();

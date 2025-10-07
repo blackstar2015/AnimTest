@@ -44,6 +44,7 @@ public abstract class PlayerBaseState : State
         if (Time.time > nextDashTime)
         {
             float DashAnimLength = stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length;
+            stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine));
             stateMachine.Dodge(DashAnimLength);
             stateMachine.LastDashTime = Time.time;
         }
