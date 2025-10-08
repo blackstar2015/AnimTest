@@ -21,6 +21,7 @@ public class PlayerStateMachine : StateMachine
     [ShowInInspector, TabGroup("Movement","Dashing")] public Vector3 DashDirection;
 
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float LandingGravity = 10f;
+    [ShowInInspector, TabGroup("Movement", "Airborne")] public float AirDashMultiplier = 10f;
     
 
 
@@ -64,13 +65,11 @@ public class PlayerStateMachine : StateMachine
             DashDirection = LocalMoveInput.normalized;
         }
 
-        LookInCameraDirection = false;
         SetLookDirection(DashDirection);
         rb.AddForce(DashDirection * DashSpeed);
 
         yield return new WaitForSeconds(DashAnimLength);
         
-        LookInCameraDirection = true;
         IsDashing = false;
         yield return null;
     }

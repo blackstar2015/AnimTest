@@ -61,7 +61,7 @@ public class PlayerLandingState : PlayerBaseState
         {
             stateMachine.rb.linearVelocity = Vector3.zero;
             stateMachine.DashDirection = stateMachine.transform.forward;
-            stateMachine.rb.AddForce(stateMachine.DashDirection * stateMachine.DashSpeed * 10);
+            stateMachine.rb.AddForce(stateMachine.DashDirection * stateMachine.DashSpeed * stateMachine.AirDashMultiplier);
             stateMachine.Animator.CrossFadeInFixedTime(AirborneDashHash, .1f);
             stateMachine.LastDashTime = Time.time;
         }

@@ -40,14 +40,7 @@ public abstract class PlayerBaseState : State
     protected override void Dodge()
     {
         if (!stateMachine.CanMove) return;
-        float nextDashTime = stateMachine.LastDashTime + stateMachine.DashCooldown;
-        if (Time.time > nextDashTime)
-        {
-            float DashAnimLength = stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length;
-            stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine));
-            stateMachine.Dodge(DashAnimLength);
-            stateMachine.LastDashTime = Time.time;
-        }
+        stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine));
     }
     
     protected override void Attack(bool isPressed)

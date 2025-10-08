@@ -73,7 +73,7 @@ public class PlayerAirborneState : PlayerBaseState
             float DashAnimLength = stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length;
             stateMachine.rb.linearVelocity = Vector3.zero;
             stateMachine.DashDirection = stateMachine.transform.forward;
-            stateMachine.rb.AddForce(stateMachine.DashDirection * stateMachine.DashSpeed);
+            stateMachine.rb.AddForce(stateMachine.DashDirection * stateMachine.DashSpeed * stateMachine.AirDashMultiplier);
             stateMachine.Animator.CrossFadeInFixedTime(AirborneDashHash, .1f);
             stateMachine.LastDashTime = Time.time;
         }
