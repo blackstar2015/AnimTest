@@ -5,7 +5,6 @@ public class PlayerAirborneState : PlayerBaseState
     private Vector3 _momentum;
     private readonly int AirborneJumpHash = Animator.StringToHash("AirborneJump");
     private readonly int AirborneFlipHash = Animator.StringToHash("AirborneFlip");
-    private readonly int AirborneDashHash = Animator.StringToHash("AirborneDash");
     public PlayerAirborneState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
@@ -23,14 +22,14 @@ public class PlayerAirborneState : PlayerBaseState
         {
             stateMachine.Animator.CrossFadeInFixedTime(AirborneFlipHash, .1f);
         }
-        //stateMachine.PlayerController.BlockAction += Block;
+        stateMachine.PlayerController.BlockAction += Block;
         //stateMachine.PlayerController.AttackAction += Attack;
         base.Enter();
     }
     public override void Exit()
     {
         stateMachine.PlayerController.JumpAction -= Jump;
-        stateMachine.PlayerController.DodgeAction -= Dodge;
+        //stateMachine.PlayerController.DodgeAction -= Dodge;
         //stateMachine.PlayerController.BlockAction -= Block;
         //stateMachine.PlayerController.AttackAction -= Attack;
         base .Exit();
@@ -64,18 +63,5 @@ public class PlayerAirborneState : PlayerBaseState
             stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine));
         }
     }
-    protected override void Dodge()
-    {
-        if (!stateMachine.CanMove) return;
-        float nextDashTime = stateMachine.LastDashTime + stateMachine.DashCooldown;
-        if (Time.time > nextDashTime)
-        {
-            float DashAnimLength = stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length;
-            stateMachine.rb.linearVelocity = Vector3.zero;
-            stateMachine.DashDirection = stateMachine.transform.forward;
-            stateMachine.rb.AddForce(stateMachine.DashDirection * stateMachine.DashSpeed * stateMachine.AirDashMultiplier);
-            stateMachine.Animator.CrossFadeInFixedTime(AirborneDashHash, .1f);
-            stateMachine.LastDashTime = Time.time;
-        }
-    }
+    
 }

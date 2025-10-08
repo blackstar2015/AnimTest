@@ -29,14 +29,7 @@ public class PlayerLandingState : PlayerBaseState
         if (stateMachine.IsGrounded)
         {
             stateMachine.Animator.CrossFadeInFixedTime(AirborneLandHash, .1f);
-            if(stateMachine.rb.linearVelocity.magnitude <= .1f)
-            {
-                stateMachine.SwitchState(new PlayerIdleState(this.stateMachine));
-            }
-            else
-            {
-                stateMachine.SwitchState(new PlayerWalkingState(this.stateMachine));
-            }
+            stateMachine.SwitchToMovement();
         }
     }
 
@@ -51,19 +44,5 @@ public class PlayerLandingState : PlayerBaseState
             stateMachine.JumpCounter++;
             stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine));
         }
-    }
-
-    protected override void Dodge()
-    {
-        if (!stateMachine.CanMove) return;
-        float nextDashTime = stateMachine.LastDashTime + stateMachine.DashCooldown - 1;
-        if (Time.time > nextDashTime)
-        {
-            stateMachine.rb.linearVelocity = Vector3.zero;
-            stateMachine.DashDirection = stateMachine.transform.forward;
-            stateMachine.rb.AddForce(stateMachine.DashDirection * stateMachine.DashSpeed * stateMachine.AirDashMultiplier);
-            stateMachine.Animator.CrossFadeInFixedTime(AirborneDashHash, .1f);
-            stateMachine.LastDashTime = Time.time;
-        }
-    }
+    }    
 }

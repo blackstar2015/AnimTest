@@ -17,7 +17,7 @@ public class PlayerWalkingState : PlayerBaseState
         stateMachine.PlayerController.BlockAction += Block;
         stateMachine.PlayerController.AttackAction += Attack;
         stateMachine.PlayerController.SprintAction += Sprint;
-        stateMachine.Animator.CrossFadeInFixedTime(MovementHash, .1f);
+        stateMachine.Animator.CrossFadeInFixedTime(MovementHash, 0f);
 
     }
 

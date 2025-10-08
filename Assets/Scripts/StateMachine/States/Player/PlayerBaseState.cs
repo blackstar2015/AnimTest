@@ -57,4 +57,5 @@ public abstract class PlayerBaseState : State
     {
         stateMachine.MoveSpeedMultiplier = isPressed ? 2 : 1;
     }
+
 }

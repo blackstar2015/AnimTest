@@ -17,7 +17,7 @@ public class PlayerIdleState : PlayerBaseState
         stateMachine.PlayerController.BlockAction += Block;
         stateMachine.PlayerController.AttackAction += Attack;
         stateMachine.PlayerController.SprintAction += Sprint;
-        stateMachine.Animator.CrossFadeInFixedTime(IdleHash, .1f);
+        stateMachine.Animator.CrossFadeInFixedTime(IdleHash, 0f);
     }
 
     public override void Exit()
@@ -34,7 +34,7 @@ public class PlayerIdleState : PlayerBaseState
     {
         base.Tick(deltaTime);
         if(stateMachine.HasMoveInput) stateMachine.SwitchState(new PlayerWalkingState(this.stateMachine));
-        if(!stateMachine.IsGrounded) stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine));
+        if(!stateMachine.IsGrounded && !stateMachine.IsDashing) stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine));
         if(stateMachine.IsAttacking) stateMachine.SwitchState(new PlayerAttackState(this.stateMachine));
     }
 

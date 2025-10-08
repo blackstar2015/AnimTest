@@ -1,9 +1,5 @@
-using CharacterMovement;
-using GameEvents;
 using Sirenix.OdinInspector;
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditorInternal;
 using UnityEngine;
 
 [RequireComponent(typeof(CustomPlayerController))]
@@ -47,29 +43,26 @@ public class PlayerStateMachine : StateMachine
         SwitchState(new PlayerIdleState(this));
         
     }
-    public void Dodge(float DashAnimLength)
+    public void Dodge(float DashAnimLength, Vector3 dodgeDirection, int DodgeHash)
     {
-        StartCoroutine(DodgeCoroutine(DashAnimLength));
+        StartCoroutine(DodgeCoroutine(DashAnimLength, dodgeDirection, DodgeHash));
     }
 
-    public IEnumerator DodgeCoroutine(float DashAnimLength)
+    public IEnumerator DodgeCoroutine(float DashAnimLength, Vector3 dodgeDirection, int DodgeHash)
     {
         if (!CanMove) yield break;
         IsDashing = true;
-        if (LocalMoveInput == Vector3.zero)
-        {
-            DashDirection = (-transform.forward).normalized;
-        }
-        else
-        {
-            DashDirection = LocalMoveInput.normalized;
-        }
+        Animator.applyRootMotion = true;
+        LookInCameraDirection = false;
 
-        SetLookDirection(DashDirection);
-        rb.AddForce(DashDirection * DashSpeed);
-
-        yield return new WaitForSeconds(DashAnimLength);
+        SetLookDirection(dodgeDirection);
+        Animator.CrossFadeInFixedTime(DodgeHash, 0.1f);
+        yield return new WaitForEndOfFrame();
+        rb.AddForce(dodgeDirection * DashSpeed, ForceMode.Impulse);
+        //yield return new WaitForSeconds(DashAnimLength);
         
+        Animator.applyRootMotion = false;
+        LookInCameraDirection = true;
         IsDashing = false;
         yield return null;
     }
@@ -89,5 +82,18 @@ public class PlayerStateMachine : StateMachine
         if (LookInCameraDirection) SetLookDirection(Camera.main.transform.forward);
         transform.rotation = Quaternion.LookRotation(LookDirection);
         _currentState?.Tick(Time.deltaTime);
+    }
+
+
+    public void SwitchToMovement()
+    {
+        if (rb.linearVelocity.magnitude <= .1f)
+        {
+            SwitchState(new PlayerIdleState(this));
+        }
+        else
+        {
+            SwitchState(new PlayerWalkingState(this));
+        }
     }
 }
