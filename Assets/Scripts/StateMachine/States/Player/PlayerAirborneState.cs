@@ -48,8 +48,6 @@ public class PlayerAirborneState : PlayerBaseState
         base.Tick(deltaTime);
         if(stateMachine.IsDashing) stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.transform.forward));
         if (stateMachine.Velocity.y <=.1f) stateMachine.SwitchState(new PlayerLandingState(this.stateMachine));
-
-        //if (CheckWallRun()) stateMachine.SwitchState(new PlayerWallRunningState(this.stateMachine));
     }
 
     protected override void Jump()

@@ -27,14 +27,18 @@ public class PlayerStateMachine : StateMachine
     [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneLand = "AirborneLand";
     [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneDash = "AirborneDash";
     [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Dash = "Dodge";
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int IdleHash = Animator.StringToHash(Idle);
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int MovementHash = Animator.StringToHash(Movement);
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int AirborneJumpHash = Animator.StringToHash(AirborneJump);
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int AirborneFlipHash = Animator.StringToHash(AirborneFlip);
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int AirborneFallHash = Animator.StringToHash(AirborneFall);
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int AirborneLandHash = Animator.StringToHash(AirborneLand);
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int AirborneDashHash = Animator.StringToHash(AirborneDash);
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int DodgeHash = Animator.StringToHash(Dash);
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Block = "Block";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Attack = "Attack";
+    [TabGroup("Movement", "AnimHashes")] public readonly int IdleHash = Animator.StringToHash(Idle);
+    [TabGroup("Movement", "AnimHashes")] public readonly int MovementHash = Animator.StringToHash(Movement);
+    [TabGroup("Movement", "AnimHashes")] public readonly int AirborneJumpHash = Animator.StringToHash(AirborneJump);
+    [TabGroup("Movement", "AnimHashes")] public readonly int AirborneFlipHash = Animator.StringToHash(AirborneFlip);
+    [TabGroup("Movement", "AnimHashes")] public readonly int AirborneFallHash = Animator.StringToHash(AirborneFall);
+    [TabGroup("Movement", "AnimHashes")] public readonly int AirborneLandHash = Animator.StringToHash(AirborneLand);
+    [TabGroup("Movement", "AnimHashes")] public readonly int AirborneDashHash = Animator.StringToHash(AirborneDash);
+    [TabGroup("Movement", "AnimHashes")] public readonly int DodgeHash = Animator.StringToHash(Dash);
+    [TabGroup("Movement", "AnimHashes")] public readonly int BlockHash = Animator.StringToHash(Block);
+    [TabGroup("Movement", "AnimHashes")] public readonly int AttackHash = Animator.StringToHash(Attack);
 
     public override void Awake()
     {
@@ -58,30 +62,6 @@ public class PlayerStateMachine : StateMachine
         SwitchState(new PlayerIdleState(this));
         
     }
-    public void Dodge(float DashAnimLength, Vector3 dodgeDirection, int DodgeHash)
-    {
-        StartCoroutine(DodgeCoroutine(DashAnimLength, dodgeDirection, DodgeHash));
-    }
-
-    public IEnumerator DodgeCoroutine(float DashAnimLength, Vector3 dodgeDirection, int DodgeHash)
-    {
-        if (!CanMove) yield break;
-        IsDashing = true;
-        Animator.applyRootMotion = true;
-        LookInCameraDirection = false;
-
-        SetLookDirection(dodgeDirection);
-        yield return new WaitForEndOfFrame();
-        Animator.CrossFadeInFixedTime(DodgeHash, 0f);
-        rb.AddForce(dodgeDirection * DashSpeed, ForceMode.Impulse);
-        yield return new WaitForSeconds(DashAnimLength);
-        
-        Animator.applyRootMotion = false;
-        LookInCameraDirection = true;
-        IsDashing = false;
-        yield return null;
-    }
-
     public override void Update()
     {
         base.Update();
@@ -110,5 +90,10 @@ public class PlayerStateMachine : StateMachine
         {
             SwitchState(new PlayerIdleState(this));
         }
+    }
+
+    public void ContinueAttack()
+    {
+        SwitchState(new PlayerAttackState(this, CurrentActionIndex));
     }
 }

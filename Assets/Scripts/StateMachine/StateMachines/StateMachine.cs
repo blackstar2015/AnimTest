@@ -712,7 +712,7 @@ public class StateMachine : MonoBehaviour
         isPerfectBlocking = false;
     }
 
-    public void HandleAttack()
+    public virtual void HandleAttack()
     {
         if (!IsAttacking) return;
         Weapon equippedWeapon = Weapons[weaponIndex];
