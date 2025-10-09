@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class CustomPlayerController : CustomController
 {
-    private PlayerStateMachine _stateMachine;
+    private PlayerStateMachine stateMachine;
     [field: SerializeField, TabGroup("Properties")] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
      [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastDashTime = Mathf.NegativeInfinity;
      [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastAttackTime = Mathf.NegativeInfinity;
@@ -30,19 +30,19 @@ public class CustomPlayerController : CustomController
 
     public void SetStateMachine(PlayerStateMachine stateMachine)
     {
-        _stateMachine = stateMachine;
+        this.stateMachine = stateMachine;
     }
     public void OnWeaponSwitch()
     {
-        if (_stateMachine.CurrentWeaponIndex >= _stateMachine.Weapons.Length - 1)
+        if (stateMachine.CurrentWeaponIndex >= stateMachine.Weapons.Length - 1)
         {
-            _stateMachine.weaponIndex = 0;
+            stateMachine.weaponIndex = 0;
         }
         else
         {
-            _stateMachine.weaponIndex++;
+            stateMachine.weaponIndex++;
         }
-        _stateMachine.Animator.SetInteger("WeaponIndex", _stateMachine.weaponIndex);
+        stateMachine.Animator.SetInteger("WeaponIndex", stateMachine.weaponIndex);
     }
     public virtual void OnMove(InputValue value)
     {
@@ -56,19 +56,30 @@ public class CustomPlayerController : CustomController
 
     public virtual void OnDash(InputValue value)
     {
-        if (!_stateMachine.CanMove) return;
-        float nextDashTime = _stateMachine.LastDashTime + _stateMachine.DashCooldown;
+        if (!stateMachine.CanMove) return;
+        float nextDashTime = stateMachine.LastDashTime + stateMachine.DashCooldown;
 
         if (Time.time > nextDashTime)
         {
-            float DashAnimLength = _stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length;
+            float DashAnimLength = stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length;
             DodgeAction?.Invoke();
-            _stateMachine.LastDashTime = Time.time;
+            stateMachine.LastDashTime = Time.time;
         }
     }
     public virtual void OnAttack(InputValue value)
     {
-        AttackAction?.Invoke(value.isPressed);
+        Weapon equippedWeapon = stateMachine.Weapons[stateMachine.weaponIndex];
+        float nextAttackTime = stateMachine.LastAttackTime + 2;
+
+        if (Time.time > nextAttackTime)
+        {
+            AttackAction?.Invoke(value.isPressed);
+            WeaponMelee melee = equippedWeapon as WeaponMelee;
+            if (melee == null) return;
+            stateMachine.actionIndex++;
+            if (stateMachine.actionIndex > melee?.MeleeData.ComboData.Length - 1) stateMachine.actionIndex = 1;
+            stateMachine.LastAttackTime = Time.time;
+        }
     }
 
     public virtual void OnBlock(InputValue value)
@@ -82,8 +93,8 @@ public class CustomPlayerController : CustomController
     }
     protected virtual void Update()
     {
-        _currentStateName = _stateMachine.CurrentState.ToString();
-        CurrentSpeed = Mathf.Ceil(_stateMachine.rb.linearVelocity.magnitude);
+        _currentStateName = stateMachine.CurrentState.ToString();
+        CurrentSpeed = Mathf.Ceil(stateMachine.rb.linearVelocity.magnitude);
         //PlayerSpeed.Invoke(CurrentSpeed.ToString());
     }
    

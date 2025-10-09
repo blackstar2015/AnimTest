@@ -110,11 +110,11 @@ public class StateMachine : MonoBehaviour
     [TabGroup("Properties")] public bool HasPath => NavAgent.hasPath;
     [TabGroup("Properties")] public bool HasCompletePath => NavAgent.hasPath && Vector3.Distance(NavAgent.path.corners[NavAgent.path.corners.Length - 1], NavAgent.destination) < StoppingDistance;
     [field: SerializeField, TabGroup("Properties")] public bool LookInCameraDirection { get; set; }
-    [field: SerializeField, TabGroup("Properties")] public int actionIndex = 0;
+    [field: SerializeField, TabGroup("Properties")] public int actionIndex = 1;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public int weaponIndex = 0;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public bool CanShoot { get; set; } = true;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public bool CanMelee { get; set; } = true;
-    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastAttackTime = Mathf.NegativeInfinity;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public float LastAttackTime = Mathf.NegativeInfinity;
     //[field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private bool _isAttacking = false;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public bool IsAttacking { get; internal set; }
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool IsBlocking => isBlocking;
@@ -712,23 +712,7 @@ public class StateMachine : MonoBehaviour
         isPerfectBlocking = false;
     }
 
-    public virtual void HandleAttack()
-    {
-        if (!IsAttacking) return;
-        Weapon equippedWeapon = Weapons[weaponIndex];
-        float nextAttackTime = _lastAttackTime + 1 / equippedWeapon.Data.AttackRate;
-
-        if (Time.time < nextAttackTime) return;
-
-        equippedWeapon.TryAttack(transform.position + transform.forward * 5, gameObject, Targetable.Team);
-        Animator.SetTrigger(equippedWeapon.Data.AttackAnimName);
-        Animator.SetInteger("Action", actionIndex);
-        WeaponMelee melee = equippedWeapon as WeaponMelee;
-        if (melee == null) return;
-        actionIndex++;
-        if (actionIndex > melee?.MeleeData.ComboData.Length - 1) actionIndex = 0;
-        _lastAttackTime = Time.time;
-    }
+    
 
     #region AnimEvents
     public void MeleeHitAnimEvent(int attackIndex)
@@ -737,7 +721,6 @@ public class StateMachine : MonoBehaviour
         if (meleeweapon == null) return;
         meleeweapon.MeleeHitAnimEvent(attackIndex);
     }
-
     public void PerfectBlock()
     {
         //StartCoroutine(PerfectBlockRoutine());

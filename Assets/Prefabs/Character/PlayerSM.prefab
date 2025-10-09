@@ -845,7 +845,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   <LookInCameraDirection>k__BackingField: 1
-  actionIndex: 0
+  actionIndex: 1
   weaponIndex: 0
   <CanShoot>k__BackingField: 1
   <CanMelee>k__BackingField: 1
