@@ -2,10 +2,14 @@ using UnityEngine;
 
 public class PlayerDodgingState : PlayerBaseState
 {
-    private readonly int DodgeHash = Animator.StringToHash("Dodge");
-    private readonly int AirborneDashHash = Animator.StringToHash("AirborneDash");
-    public PlayerDodgingState(PlayerStateMachine stateMachine) : base(stateMachine)
+    private int _dodgeHash => stateMachine.DodgeHash;
+    private int _airborneDashHash => stateMachine.AirborneDashHash;
+
+    private Vector3 _dashDirection {  get; set; }
+
+    public PlayerDodgingState(PlayerStateMachine stateMachine, Vector3 dashDirection) : base(stateMachine)
     {
+        _dashDirection = dashDirection;
     }
 
     public override void Enter()
@@ -13,60 +17,28 @@ public class PlayerDodgingState : PlayerBaseState
         base.Enter();
         stateMachine.Animator.applyRootMotion = true;
         stateMachine.LookInCameraDirection = false;
-
+        stateMachine.SetLookDirection(_dashDirection);
     }
     public override void Exit()
     {
         stateMachine.Animator.applyRootMotion = false;
         stateMachine.LookInCameraDirection = true;
-        base .Exit();
+        base.Exit();
     }
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
-        if(stateMachine.IsGrounded)
-        {
-            Dash();
-        }
-        else
-        {
-            AirDash();
-        }
-    }
-    private void Dash()
-    {
-        if (!stateMachine.CanMove) return;
-        float nextDashTime = stateMachine.LastDashTime + stateMachine.DashCooldown;
-        if (Time.time > nextDashTime)
-        {
-            float DashAnimLength = stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length;
-            if(stateMachine.LocalMoveInput == Vector3.zero)
-            {
-                stateMachine.DashDirection = -stateMachine.transform.forward;
-            }
-            else
-            {
-                stateMachine.DashDirection = stateMachine.LocalMoveInput;
-            }
-            stateMachine.Dodge(DashAnimLength, stateMachine.DashDirection, DodgeHash);
-
-            stateMachine.LastDashTime = Time.time;
-            stateMachine.SwitchToMovement();
-        }
+        PerformDash();
+        stateMachine.Invoke(nameof(stateMachine.SwitchToMovement), stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length);
     }
 
-    private void AirDash()
+    private void PerformDash()
     {
-        if (!stateMachine.CanMove) return;
-        float nextDashTime = stateMachine.LastDashTime + stateMachine.DashCooldown;
-        if (Time.time > nextDashTime)
-        {
-            float DashAnimLength = stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length;
-            stateMachine.rb.linearVelocity = Vector3.zero;
-            stateMachine.DashDirection = stateMachine.transform.forward;
-            stateMachine.rb.AddForce(stateMachine.DashDirection * stateMachine.DashSpeed * stateMachine.AirDashMultiplier);
-            stateMachine.Animator.CrossFadeInFixedTime(AirborneDashHash, .1f);
-            stateMachine.LastDashTime = Time.time;
-        }
+        if(!stateMachine.IsDashing) return;
+        stateMachine.IsDashing = false;
+        stateMachine.Animator.CrossFadeInFixedTime(_dodgeHash, 0f);
+        stateMachine.rb.AddForce(_dashDirection * stateMachine.DashSpeed, ForceMode.Impulse);
+        Debug.DrawRay(stateMachine.transform.position, _dashDirection * stateMachine.DashSpeed, Color.red, stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length);
+
     }
 }

@@ -39,8 +39,7 @@ public abstract class PlayerBaseState : State
 
     protected override void Dodge()
     {
-        if (!stateMachine.CanMove) return;
-        stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine));
+        stateMachine.IsDashing = true;
     }
     
     protected override void Attack(bool isPressed)

@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class PlayerLandingState : PlayerBaseState
 {
-    private readonly int AirborneFallHash = Animator.StringToHash("AirborneFall");
-    private readonly int AirborneLandHash = Animator.StringToHash("AirborneLand");
-    private readonly int AirborneDashHash = Animator.StringToHash("AirborneDash");
+    private int _airborneFallHash => stateMachine.AirborneFallHash;
+    private int _airborneLandHash => stateMachine.AirborneLandHash;
+    private int _airborneDashHash => stateMachine.AirborneDashHash;
     public PlayerLandingState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -14,7 +14,7 @@ public class PlayerLandingState : PlayerBaseState
         base.Enter();
         stateMachine.PlayerController.JumpAction += Jump;
         stateMachine.PlayerController.DodgeAction += Dodge;
-        stateMachine.Animator.CrossFadeInFixedTime(AirborneFallHash, .1f);
+        stateMachine.Animator.CrossFadeInFixedTime(_airborneFallHash, .1f);
     }
     public override void Exit() 
     {
@@ -26,9 +26,10 @@ public class PlayerLandingState : PlayerBaseState
     {
         base.Tick(deltaTime);
         stateMachine.rb.AddForce(-stateMachine.transform.up * stateMachine.LandingGravity);
+        if (stateMachine.IsDashing) stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.transform.forward));
         if (stateMachine.IsGrounded)
         {
-            stateMachine.Animator.CrossFadeInFixedTime(AirborneLandHash, .1f);
+            stateMachine.Animator.CrossFadeInFixedTime(_airborneLandHash, .1f);
             stateMachine.SwitchToMovement();
         }
     }

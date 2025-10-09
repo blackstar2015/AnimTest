@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class PlayerAirborneState : PlayerBaseState
 {
-    private Vector3 _momentum;
-    private readonly int AirborneJumpHash = Animator.StringToHash("AirborneJump");
-    private readonly int AirborneFlipHash = Animator.StringToHash("AirborneFlip");
+    private int AirborneJumpHash => stateMachine.AirborneJumpHash;
+    private int AirborneFlipHash => stateMachine.AirborneFlipHash;
+
     public PlayerAirborneState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
@@ -46,7 +46,8 @@ public class PlayerAirborneState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
-        if(stateMachine.Velocity.y <=.1f) stateMachine.SwitchState(new PlayerLandingState(this.stateMachine));
+        if(stateMachine.IsDashing) stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.transform.forward));
+        if (stateMachine.Velocity.y <=.1f) stateMachine.SwitchState(new PlayerLandingState(this.stateMachine));
 
         //if (CheckWallRun()) stateMachine.SwitchState(new PlayerWallRunningState(this.stateMachine));
     }

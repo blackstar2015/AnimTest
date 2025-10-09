@@ -18,8 +18,23 @@ public class PlayerStateMachine : StateMachine
 
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float LandingGravity = 10f;
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float AirDashMultiplier = 10f;
-    
 
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Idle = "Idle";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Movement = "Movement";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneJump = "AirborneJump";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneFlip = "AirborneFlip";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneFall = "AirborneFall";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneLand = "AirborneLand";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneDash = "AirborneDash";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Dash = "Dodge";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int IdleHash = Animator.StringToHash(Idle);
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int MovementHash = Animator.StringToHash(Movement);
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int AirborneJumpHash = Animator.StringToHash(AirborneJump);
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int AirborneFlipHash = Animator.StringToHash(AirborneFlip);
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int AirborneFallHash = Animator.StringToHash(AirborneFall);
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int AirborneLandHash = Animator.StringToHash(AirborneLand);
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int AirborneDashHash = Animator.StringToHash(AirborneDash);
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public readonly int DodgeHash = Animator.StringToHash(Dash);
 
     public override void Awake()
     {
@@ -56,10 +71,10 @@ public class PlayerStateMachine : StateMachine
         LookInCameraDirection = false;
 
         SetLookDirection(dodgeDirection);
-        Animator.CrossFadeInFixedTime(DodgeHash, 0.1f);
         yield return new WaitForEndOfFrame();
+        Animator.CrossFadeInFixedTime(DodgeHash, 0f);
         rb.AddForce(dodgeDirection * DashSpeed, ForceMode.Impulse);
-        //yield return new WaitForSeconds(DashAnimLength);
+        yield return new WaitForSeconds(DashAnimLength);
         
         Animator.applyRootMotion = false;
         LookInCameraDirection = true;
@@ -87,13 +102,13 @@ public class PlayerStateMachine : StateMachine
 
     public void SwitchToMovement()
     {
-        if (rb.linearVelocity.magnitude <= .1f)
+        if (rb.linearVelocity.magnitude >= .1f)
         {
-            SwitchState(new PlayerIdleState(this));
+            SwitchState(new PlayerWalkingState(this));
         }
         else
         {
-            SwitchState(new PlayerWalkingState(this));
+            SwitchState(new PlayerIdleState(this));
         }
     }
 }

@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
 {
-    private float _idleStartTime = Mathf.NegativeInfinity;
-    private readonly int IdleHash = Animator.StringToHash("Idle");
+    private int IdleHash => stateMachine.IdleHash;
     public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
@@ -17,7 +16,7 @@ public class PlayerIdleState : PlayerBaseState
         stateMachine.PlayerController.BlockAction += Block;
         stateMachine.PlayerController.AttackAction += Attack;
         stateMachine.PlayerController.SprintAction += Sprint;
-        stateMachine.Animator.CrossFadeInFixedTime(IdleHash, 0f);
+        stateMachine.Animator.CrossFadeInFixedTime(IdleHash,0f);
     }
 
     public override void Exit()
@@ -36,7 +35,6 @@ public class PlayerIdleState : PlayerBaseState
         if(stateMachine.HasMoveInput) stateMachine.SwitchState(new PlayerWalkingState(this.stateMachine));
         if(!stateMachine.IsGrounded && !stateMachine.IsDashing) stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine));
         if(stateMachine.IsAttacking) stateMachine.SwitchState(new PlayerAttackState(this.stateMachine));
+        if(stateMachine.IsDashing) stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, -stateMachine.transform.forward));
     }
-
-
 }
