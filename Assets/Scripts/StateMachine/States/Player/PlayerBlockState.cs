@@ -12,7 +12,7 @@ public class PlayerBlockState: PlayerBaseState
     {
         base.Enter();
         stateMachine.PlayerController.BlockAction += Block;
-        stateMachine.Animator.CrossFadeInFixedTime(_blockHash, 0.1f);
+        stateMachine.Animator.CrossFade(_blockHash, 0.1f);
     }
     public override void Exit()
     {

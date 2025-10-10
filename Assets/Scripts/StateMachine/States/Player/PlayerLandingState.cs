@@ -7,6 +7,7 @@ public class PlayerLandingState : PlayerBaseState
     private int _airborneDashHash => stateMachine.AirborneDashHash;
     public PlayerLandingState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
+        this.stateMachine =  stateMachine;
     }
 
     public override void Enter()
@@ -14,7 +15,7 @@ public class PlayerLandingState : PlayerBaseState
         base.Enter();
         stateMachine.PlayerController.JumpAction += Jump;
         stateMachine.PlayerController.DodgeAction += Dodge;
-        stateMachine.Animator.CrossFadeInFixedTime(_airborneFallHash, .1f);
+        stateMachine.Animator.CrossFade(_airborneFallHash, .1f);
     }
     public override void Exit() 
     {
@@ -29,7 +30,7 @@ public class PlayerLandingState : PlayerBaseState
         if (stateMachine.IsDashing) stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.transform.forward));
         if (stateMachine.IsGrounded)
         {
-            stateMachine.Animator.CrossFadeInFixedTime(_airborneLandHash, .1f);
+            stateMachine.Animator.CrossFade(_airborneLandHash, .1f);
             stateMachine.SwitchToMovement();
         }
     }

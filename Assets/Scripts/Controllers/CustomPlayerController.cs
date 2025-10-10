@@ -61,25 +61,13 @@ public class CustomPlayerController : CustomController
 
         if (Time.time > nextDashTime)
         {
-            float DashAnimLength = stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length;
             DodgeAction?.Invoke();
             stateMachine.LastDashTime = Time.time;
         }
     }
     public virtual void OnAttack(InputValue value)
     {
-        Weapon equippedWeapon = stateMachine.Weapons[stateMachine.weaponIndex];
-        float nextAttackTime = stateMachine.LastAttackTime + 2;
-
-        if (Time.time > nextAttackTime)
-        {
-            AttackAction?.Invoke(value.isPressed);
-            WeaponMelee melee = equippedWeapon as WeaponMelee;
-            if (melee == null) return;
-            stateMachine.actionIndex++;
-            if (stateMachine.actionIndex > melee?.MeleeData.ComboData.Length - 1) stateMachine.actionIndex = 1;
-            stateMachine.LastAttackTime = Time.time;
-        }
+        AttackAction?.Invoke(value.isPressed);
     }
 
     public virtual void OnBlock(InputValue value)

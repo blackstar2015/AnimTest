@@ -16,11 +16,11 @@ public class PlayerAirborneState : PlayerBaseState
         stateMachine.PlayerController.DodgeAction += Dodge;
         if (stateMachine.JumpCounter == 1)
         {
-            stateMachine.Animator.CrossFadeInFixedTime(AirborneJumpHash, 0f);
+            stateMachine.Animator.CrossFade(AirborneJumpHash, 0.1f);
         }
         else
         {
-            stateMachine.Animator.CrossFadeInFixedTime(AirborneFlipHash, .1f);
+            stateMachine.Animator.CrossFade(AirborneFlipHash, .1f);
         }
         stateMachine.PlayerController.BlockAction += Block;
         //stateMachine.PlayerController.AttackAction += Attack;

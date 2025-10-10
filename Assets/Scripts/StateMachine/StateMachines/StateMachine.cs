@@ -116,7 +116,7 @@ public class StateMachine : MonoBehaviour
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public bool CanMelee { get; set; } = true;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public float LastAttackTime = Mathf.NegativeInfinity;
     //[field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private bool _isAttacking = false;
-    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public bool IsAttacking { get; internal set; }
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public bool IsAttacking { get; internal set; } = false;
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool IsBlocking => isBlocking;
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool IsAlive => isAlive;
     [TabGroup("Properties"), ShowInInspector, HideInEditorMode, ReadOnly] public bool CanBlock => canBlock;
@@ -183,6 +183,16 @@ public class StateMachine : MonoBehaviour
         _currentState?.Enter();
     }
 
+    public void SwitchState(State newState, float delay = 0)
+    {
+        StartCoroutine(SwitchStateWithDelay(newState, delay));
+    }
+
+    public IEnumerator SwitchStateWithDelay(State newState, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SwitchState(newState);
+    }
     public virtual void FootstepAnimEvent(AnimationEvent animationEvent)
     {
         if (animationEvent.animatorClipInfo.weight > 0.5f && IsGrounded && NormalizedSpeed > 0.05f) OnFootstep.Invoke(SurfaceObject);

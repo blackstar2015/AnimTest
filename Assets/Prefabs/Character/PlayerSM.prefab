@@ -845,11 +845,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   <LookInCameraDirection>k__BackingField: 1
-  actionIndex: 1
+  actionIndex: 0
   weaponIndex: 0
   <CanShoot>k__BackingField: 1
   <CanMelee>k__BackingField: 1
-  _lastAttackTime: -Infinity
+  LastAttackTime: -Infinity
   <IsAttacking>k__BackingField: 0
   <StepHeight>k__BackingField: 0.3
   <StepHeightAllowance>k__BackingField: 0.1

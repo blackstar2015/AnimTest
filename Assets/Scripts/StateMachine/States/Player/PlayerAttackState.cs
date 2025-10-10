@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PlayerAttackState : PlayerBaseState
 {
-    private int _currentActionIndex;
-    public PlayerAttackState(PlayerStateMachine stateMachine, int currentActionIndex) : base(stateMachine)
+    private int _attackHash { get; set; }
+    public PlayerAttackState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
-        _currentActionIndex = currentActionIndex;
+        this.stateMachine = stateMachine;
     }
     public override void Enter()
     {
@@ -14,10 +14,7 @@ public class PlayerAttackState : PlayerBaseState
         stateMachine.PlayerController.DodgeAction += Dodge;
         stateMachine.PlayerController.BlockAction += Block;
         stateMachine.PlayerController.AttackAction += Attack;
-        string attack = "Attack" + (_currentActionIndex).ToString();
-        Debug.Log("Attack" + _currentActionIndex.ToString());
-        int AttackHash = Animator.StringToHash(attack); 
-        stateMachine.Animator.CrossFade(AttackHash, .1f);
+        
     }
     public override void Exit()
     {
@@ -32,30 +29,40 @@ public class PlayerAttackState : PlayerBaseState
     {
         base.Tick(deltaTime);
         
-        if(!stateMachine.IsAttacking)
+        if(stateMachine.IsAttacking)
         {
-            stateMachine.SwitchState(new PlayerIdleState(this.stateMachine));
+            HandleAttack();
         }
         else
         {
-            stateMachine.Invoke(nameof(stateMachine.ContinueAttack),5);
+            stateMachine.IsAttacking = false;
+            stateMachine.actionIndex = 0;
+            stateMachine.SwitchState(new PlayerIdleState(this.stateMachine));
         }
-        if(stateMachine.IsBlocking) stateMachine.SwitchState(new PlayerBlockState(this.stateMachine));
+        if(stateMachine.IsBlocking)
+        {
+            stateMachine.IsAttacking = false;
+            stateMachine.actionIndex = 0;
+            stateMachine.SwitchState(new PlayerBlockState(this.stateMachine));
+        }
     }
     
     public virtual void HandleAttack()
     {
         if (!stateMachine.IsAttacking) return;
         Weapon equippedWeapon = stateMachine.Weapons[stateMachine.weaponIndex];
-        float nextAttackTime = stateMachine.LastAttackTime + 1 / equippedWeapon.Data.AttackRate;
-
+        WeaponMelee melee = equippedWeapon as WeaponMelee;
+        if (melee == null) return; 
+        if (stateMachine.actionIndex >= melee?.MeleeData.ComboData.Length) stateMachine.actionIndex = 0;
+        _attackHash = melee.MeleeData.ComboData[stateMachine.actionIndex].AttackHash;
+        float nextAttackTime = stateMachine.LastAttackTime + 1 / melee.MeleeData.AttackRate;
         if (Time.time < nextAttackTime) return;
 
-        equippedWeapon.TryAttack(stateMachine.transform.position + stateMachine.transform.forward * 5, stateMachine.gameObject, stateMachine.Targetable.Team);
-        WeaponMelee melee = equippedWeapon as WeaponMelee;
-        if (melee == null) return;
+        Debug.Log(stateMachine.actionIndex + " " +  _attackHash );
+        stateMachine.Animator.CrossFade(_attackHash, .1f);
+        melee.TryAttack(stateMachine.transform.position + stateMachine.transform.forward * 5, stateMachine.gameObject, stateMachine.Targetable.Team);
+
         stateMachine.actionIndex++;
-        if (stateMachine.actionIndex > melee?.MeleeData.ComboData.Length - 1) stateMachine.actionIndex = 1;
         stateMachine.LastAttackTime = Time.time;
     }
 }

@@ -9,6 +9,7 @@ public class PlayerDodgingState : PlayerBaseState
 
     public PlayerDodgingState(PlayerStateMachine stateMachine, Vector3 dashDirection) : base(stateMachine)
     {
+        this.stateMachine = stateMachine;
         _dashDirection = dashDirection;
     }
 
@@ -36,7 +37,7 @@ public class PlayerDodgingState : PlayerBaseState
     {
         if(!stateMachine.IsDashing) return;
         stateMachine.IsDashing = false;
-        stateMachine.Animator.CrossFadeInFixedTime(_dodgeHash, 0f);
+        stateMachine.Animator.CrossFade(_dodgeHash, 0.1f);
         stateMachine.rb.AddForce(_dashDirection * stateMachine.DashSpeed, ForceMode.Impulse);
         Debug.DrawRay(stateMachine.transform.position, _dashDirection * stateMachine.DashSpeed, Color.red, stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length);
 

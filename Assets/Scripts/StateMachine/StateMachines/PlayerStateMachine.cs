@@ -94,6 +94,6 @@ public class PlayerStateMachine : StateMachine
 
     public void ContinueAttack()
     {
-        SwitchState(new PlayerAttackState(this, CurrentActionIndex));
+        SwitchState(new PlayerAttackState(this));
     }
 }
