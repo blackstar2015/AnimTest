@@ -52,37 +52,5 @@ public class CustomCharacterAnimations : MonoBehaviour
         Animator.SetBool("CanBlock", _canBlock);
         Animator.SetBool("BlockedAttack", _isBlockedAttack);
         Animator.SetBool("Dashing",_isDashing);
-
-
     }
-    #region AnimationEvents
-    public void Sheath(int index)
-    {
-        GameObject weaponMesh = _stateMachine.Weapons[index].WeaponMesh;
-        weaponMesh.SetActive(false);
-    }
-
-    public void UnSheath(int index)
-    {
-        GameObject weaponMesh = _stateMachine.Weapons[index].WeaponMesh;
-        weaponMesh.SetActive(true);
-    }
-
-    public void DisableTrigger(int index)
-    {
-        foreach (Collider collider in _stateMachine.Weapons[index].WeaponColliders)
-        {
-            collider.enabled = false;
-        }
-    }
-
-    public void EnableTrigger(int index)
-    {
-        foreach (Collider collider in _stateMachine.Weapons[index].WeaponColliders)
-        {
-            Debug.Log(collider.gameObject, collider.gameObject);
-            collider.enabled = true;
-        }
-    }
-    #endregion
 }

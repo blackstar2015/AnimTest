@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class PlayerAirborneState : PlayerBaseState
 {
-    private int AirborneJumpHash => stateMachine.AirborneJumpHash;
-    private int AirborneFlipHash => stateMachine.AirborneFlipHash;
+    //private int AirborneJumpHash => stateMachine.AirborneJumpHash;
+    //private int AirborneFlipHash => stateMachine.AirborneFlipHash;
+    private int AirborneJumpHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneJumpHash);
+    private int AirborneFlipHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneFlipHash);
 
     public PlayerAirborneState(PlayerStateMachine stateMachine) : base(stateMachine)
     {

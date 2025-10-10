@@ -9171,7 +9171,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Data>k__BackingField: {fileID: 11400000, guid: c2b550b4aab1ed645a7a0bcb8eff3ae7, type: 2}
   <WeaponMesh>k__BackingField: {fileID: 4184142280857105467}
-  <WeaponColliders>k__BackingField: []
+  <IdleHash>k__BackingField: 2HandSwordIdle
+  <MovementHash>k__BackingField: 2HandSwordMovement
+  <AirborneJumpHash>k__BackingField: 2HandSwordAirborneJump
+  <AirborneFlipHash>k__BackingField: 2HandSwordAirborneFlip
+  <AirborneFallHash>k__BackingField: 2HandSwordAirborneFall
+  <AirborneLandHash>k__BackingField: 2HandSwordAirborneLand
+  <AirborneDashHash>k__BackingField: 2HandSwordAirborneDash
+  <BlockHash>k__BackingField: 2HandSwordBlock
+  <DodgeHash>k__BackingField: 
+  <DamageHash>k__BackingField: 
+  <StunnedHash>k__BackingField: 
+  <SwitchToHash>k__BackingField: 
+  <SwitchFromHash>k__BackingField: 
 --- !u!1001 &7144945808238732804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9267,7 +9279,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Data>k__BackingField: {fileID: 11400000, guid: c6e5a705e0a59f747b427a99eb1fd5e4, type: 2}
   <WeaponMesh>k__BackingField: {fileID: 6620052710620931291}
-  <WeaponColliders>k__BackingField: []
+  <IdleHash>k__BackingField: Idle
+  <MovementHash>k__BackingField: Movement
+  <AirborneJumpHash>k__BackingField: AirborneJump
+  <AirborneFlipHash>k__BackingField: AirborneFlip
+  <AirborneFallHash>k__BackingField: AirborneFall
+  <AirborneLandHash>k__BackingField: AirborneLand
+  <AirborneDashHash>k__BackingField: AirborneDash
+  <BlockHash>k__BackingField: Block
+  <DodgeHash>k__BackingField: 
+  <DamageHash>k__BackingField: Damage
+  <StunnedHash>k__BackingField: Stunned
+  <SwitchToHash>k__BackingField: SwitchTo
+  <SwitchFromHash>k__BackingField: SwitchFrom
 --- !u!1001 &8099237604694587623
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -57,4 +57,30 @@ public abstract class PlayerBaseState : State
         stateMachine.MoveSpeedMultiplier = isPressed ? 2 : 1;
     }
 
+    protected override void WeaponSwitch()
+    {
+        int switchFromHash = Animator.StringToHash("SwitchingFrom");
+        stateMachine.Animator.CrossFade(switchFromHash, 0.2f);
+        if (stateMachine.CurrentWeaponIndex >= stateMachine.Weapons.Length - 1)
+        {
+            stateMachine.weaponIndex = 0;
+        }
+        else
+        {
+            stateMachine.weaponIndex++;
+        }
+        foreach (Weapon weapon in stateMachine.Weapons)
+        {
+            if (weapon.Data.WeaponIndex == stateMachine.weaponIndex)
+            {
+                weapon.WeaponMesh.SetActive(true);
+            }
+            else
+            {
+                weapon.WeaponMesh.SetActive(false);
+            }
+        }
+        int switchToHash = Animator.StringToHash("SwitchingTo");
+        stateMachine.Animator.CrossFade(switchToHash, 0.2f);
+    }
 }

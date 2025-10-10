@@ -18,6 +18,7 @@ public class CustomPlayerController : CustomController
     [field: SerializeField, TabGroup("Events")] public Action<bool> BlockAction;
     [field: SerializeField, TabGroup("Events")] public Action<bool> AttackAction;
     [field: SerializeField, TabGroup("Events")] public Action<bool> SprintAction;
+    [field: SerializeField, TabGroup("Events")] public Action WeaponSwitchAction;
     
     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] private string _currentStateName { get; set; }
     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public static float CurrentSpeed;
@@ -26,6 +27,17 @@ public class CustomPlayerController : CustomController
     {
         base.Awake();
         Cursor.lockState = CursorMode;
+        foreach (Weapon weapon in stateMachine.Weapons)
+        {
+            if (weapon.Data.WeaponIndex == stateMachine.weaponIndex)
+            {
+                weapon.WeaponMesh.SetActive(true);
+            }
+            else
+            {
+                weapon.WeaponMesh.SetActive(false);
+            }
+        }
     }
 
     public void SetStateMachine(PlayerStateMachine stateMachine)
@@ -34,15 +46,7 @@ public class CustomPlayerController : CustomController
     }
     public void OnWeaponSwitch()
     {
-        if (stateMachine.CurrentWeaponIndex >= stateMachine.Weapons.Length - 1)
-        {
-            stateMachine.weaponIndex = 0;
-        }
-        else
-        {
-            stateMachine.weaponIndex++;
-        }
-        stateMachine.Animator.SetInteger("WeaponIndex", stateMachine.weaponIndex);
+        WeaponSwitchAction?.Invoke();
     }
     public virtual void OnMove(InputValue value)
     {

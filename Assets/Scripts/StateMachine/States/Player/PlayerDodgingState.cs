@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerDodgingState : PlayerBaseState
 {
-    private int _dodgeHash => stateMachine.DodgeHash;
+    private int _dodgeHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].DodgeHash);
     private int _airborneDashHash => stateMachine.AirborneDashHash;
 
     private Vector3 _dashDirection {  get; set; }

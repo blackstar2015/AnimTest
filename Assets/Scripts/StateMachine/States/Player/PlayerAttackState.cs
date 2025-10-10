@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerAttackState : PlayerBaseState
 {
     private int _attackHash { get; set; }
+    private bool _attackStarted = false;
     public PlayerAttackState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
@@ -37,7 +38,7 @@ public class PlayerAttackState : PlayerBaseState
         {
             stateMachine.IsAttacking = false;
             stateMachine.actionIndex = 0;
-            stateMachine.SwitchState(new PlayerIdleState(this.stateMachine));
+            if(!_attackStarted) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine));
         }
         if(stateMachine.IsBlocking)
         {
@@ -54,15 +55,15 @@ public class PlayerAttackState : PlayerBaseState
         WeaponMelee melee = equippedWeapon as WeaponMelee;
         if (melee == null) return; 
         if (stateMachine.actionIndex >= melee?.MeleeData.ComboData.Length) stateMachine.actionIndex = 0;
-        _attackHash = melee.MeleeData.ComboData[stateMachine.actionIndex].AttackHash;
+        _attackHash = Animator.StringToHash(melee.MeleeData.ComboData[stateMachine.actionIndex].AttackHashName);
         float nextAttackTime = stateMachine.LastAttackTime + 1 / melee.MeleeData.AttackRate;
         if (Time.time < nextAttackTime) return;
-
-        Debug.Log(stateMachine.actionIndex + " " +  _attackHash );
-        stateMachine.Animator.CrossFade(_attackHash, .1f);
+        _attackStarted = true;
+        stateMachine.Animator.CrossFade(_attackHash,0.1f);
         melee.TryAttack(stateMachine.transform.position + stateMachine.transform.forward * 5, stateMachine.gameObject, stateMachine.Targetable.Team);
 
         stateMachine.actionIndex++;
         stateMachine.LastAttackTime = Time.time;
+        _attackStarted = false;
     }
 }

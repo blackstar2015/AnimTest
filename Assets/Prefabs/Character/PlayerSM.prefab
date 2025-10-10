@@ -444,6 +444,14 @@ PrefabInstance:
       propertyPath: <Movement>k__BackingField
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 685008403000281846, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: <DodgeHash>k__BackingField
+      value: Dodge
+      objectReference: {fileID: 0}
+    - target: {fileID: 685008403000281846, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: <BlockHashName>k__BackingField
+      value: Block
+      objectReference: {fileID: 0}
     - target: {fileID: 3418558085069861446, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
@@ -451,6 +459,14 @@ PrefabInstance:
     - target: {fileID: 4184142280857105467, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5522024923081904833, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: <DodgeHash>k__BackingField
+      value: 2HandSwordDodge
+      objectReference: {fileID: 0}
+    - target: {fileID: 5522024923081904833, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: <BlockHashName>k__BackingField
+      value: 2HandSwordBlock
       objectReference: {fileID: 0}
     - target: {fileID: 6279022987117095905, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: _range

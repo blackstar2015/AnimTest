@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class PlayerWalkingState : PlayerBaseState
 {
-    private int MovementHash => stateMachine.MovementHash;
+    //private int MovementHash => stateMachine.MovementHash;
+    private int MovementHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].MovementHash);
 
     public PlayerWalkingState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
@@ -11,14 +12,14 @@ public class PlayerWalkingState : PlayerBaseState
 
     public override void Enter()
     {
-        stateMachine.Animator.CrossFade(MovementHash, 0.1f);
         base.Enter();   
         stateMachine.PlayerController.JumpAction += Jump;
         stateMachine.PlayerController.DodgeAction += Dodge;
         stateMachine.PlayerController.BlockAction += Block;
         stateMachine.PlayerController.AttackAction += Attack;
         stateMachine.PlayerController.SprintAction += Sprint;
-
+        stateMachine.PlayerController.WeaponSwitchAction += WeaponSwitch;
+        stateMachine.Animator.CrossFade(MovementHash, 0.1f);
     }
 
     public override void Exit()
@@ -28,6 +29,7 @@ public class PlayerWalkingState : PlayerBaseState
         stateMachine.PlayerController.BlockAction -= Block;
         stateMachine.PlayerController.AttackAction -= Attack;
         stateMachine.PlayerController.SprintAction -= Sprint;
+        stateMachine.PlayerController.WeaponSwitchAction -= WeaponSwitch;
         base .Exit();
     }
 

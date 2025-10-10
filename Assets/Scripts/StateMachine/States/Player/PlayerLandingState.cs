@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class PlayerLandingState : PlayerBaseState
 {
-    private int _airborneFallHash => stateMachine.AirborneFallHash;
-    private int _airborneLandHash => stateMachine.AirborneLandHash;
-    private int _airborneDashHash => stateMachine.AirborneDashHash;
+    // private int _airborneFallHash => stateMachine.AirborneFallHash;
+    // private int _airborneLandHash => stateMachine.AirborneLandHash;
+    // private int _airborneDashHash => stateMachine.AirborneDashHash;
+    
+    private int _airborneFallHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneFallHash);
+    private int _airborneLandHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneLandHash);
+    private int _airborneDashHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneDashHash);
     public PlayerLandingState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.stateMachine =  stateMachine;
@@ -15,6 +19,7 @@ public class PlayerLandingState : PlayerBaseState
         base.Enter();
         stateMachine.PlayerController.JumpAction += Jump;
         stateMachine.PlayerController.DodgeAction += Dodge;
+        Debug.Log(_airborneFallHash + " " + _airborneLandHash + " " + _airborneDashHash);
         stateMachine.Animator.CrossFade(_airborneFallHash, .1f);
     }
     public override void Exit() 

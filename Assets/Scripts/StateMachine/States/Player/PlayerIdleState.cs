@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
 {
-    private int IdleHash => stateMachine.IdleHash;
+    //private int IdleHash => stateMachine.IdleHash;
+    private int IdleHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].IdleHash);
     public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
@@ -16,6 +17,7 @@ public class PlayerIdleState : PlayerBaseState
         stateMachine.PlayerController.BlockAction += Block;
         stateMachine.PlayerController.AttackAction += Attack;
         stateMachine.PlayerController.SprintAction += Sprint;
+        stateMachine.PlayerController.WeaponSwitchAction += WeaponSwitch;
         stateMachine.Animator.CrossFade(IdleHash,.1f);
     }
 
@@ -26,6 +28,7 @@ public class PlayerIdleState : PlayerBaseState
         stateMachine.PlayerController.BlockAction -= Block;
         stateMachine.PlayerController.AttackAction -= Attack;
         stateMachine.PlayerController.SprintAction -= Sprint;
+        stateMachine.PlayerController.WeaponSwitchAction -= WeaponSwitch;
         base .Exit();
     }
 

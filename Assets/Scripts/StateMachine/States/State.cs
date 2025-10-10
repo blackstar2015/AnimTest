@@ -50,6 +50,7 @@ public abstract class State
     }
     protected abstract void Jump();
     protected abstract void Dodge();
+    protected abstract void WeaponSwitch();
     protected abstract void Attack(bool isPressed);
     protected abstract void Block(bool isPressed);
     protected abstract void Sprint(bool isPressed);

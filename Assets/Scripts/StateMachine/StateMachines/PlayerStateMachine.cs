@@ -19,13 +19,13 @@ public class PlayerStateMachine : StateMachine
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float LandingGravity = 10f;
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float AirDashMultiplier = 10f;
 
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Idle = "Idle";
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Movement = "Movement";
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneJump = "AirborneJump";
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneFlip = "AirborneFlip";
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneFall = "AirborneFall";
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneLand = "AirborneLand";
-    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneDash = "AirborneDash";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Idle = "2HandSwordIdle";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Movement = "2HandSwordMovement";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneJump = "2HandSwordAirborneJump";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneFlip = "2HandSwordAirborneFlip";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneFall = "2HandSwordAirborneFall";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneLand = "2HandSwordAirborneLand";
+    [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneDash = "2HandSwordAirborneDash";
     [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Dash = "Dodge";
     [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Block = "Block";
     [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Attack = "Attack";

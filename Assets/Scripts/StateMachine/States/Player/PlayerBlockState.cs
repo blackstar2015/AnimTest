@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerBlockState: PlayerBaseState
 {
-    private int _blockHash => stateMachine.BlockHash;
+    private int _blockHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].BlockHash);
     public PlayerBlockState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
