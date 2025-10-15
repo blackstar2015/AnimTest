@@ -566,7 +566,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Data>k__BackingField: {fileID: 11400000, guid: 2fc9ccc3755e5be4c9686075b09f29c0, type: 2}
   <WeaponMesh>k__BackingField: {fileID: 6156954022994822924}
-  <WeaponColliders>k__BackingField: []
+  <IdleHash>k__BackingField: 
+  <MovementHash>k__BackingField: 
+  <AirborneJumpHash>k__BackingField: 
+  <AirborneFlipHash>k__BackingField: 
+  <AirborneFallHash>k__BackingField: 
+  <AirborneLandHash>k__BackingField: 
+  <AirborneDashHash>k__BackingField: 
+  <BlockHash>k__BackingField: 
+  <DodgeHash>k__BackingField: 
+  <DamageHash>k__BackingField: 
+  <StunnedHash>k__BackingField: 
+  <SwitchToHash>k__BackingField: 
+  <SwitchFromHash>k__BackingField: 
 --- !u!4 &8144500639370651670 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7039256315202561560, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}

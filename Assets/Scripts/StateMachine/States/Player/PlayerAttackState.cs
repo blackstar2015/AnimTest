@@ -4,9 +4,10 @@ public class PlayerAttackState : PlayerBaseState
 {
     private int _attackHash { get; set; }
     private bool _attackStarted = false;
-    public PlayerAttackState(PlayerStateMachine stateMachine) : base(stateMachine)
+    public PlayerAttackState(PlayerStateMachine stateMachine, bool shouldFade) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
+        _shouldFade = shouldFade;
     }
     public override void Enter()
     {
@@ -38,13 +39,13 @@ public class PlayerAttackState : PlayerBaseState
         {
             stateMachine.IsAttacking = false;
             stateMachine.actionIndex = 0;
-            if(!_attackStarted) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine));
+            if(!_attackStarted) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine, true));
         }
         if(stateMachine.IsBlocking)
         {
             stateMachine.IsAttacking = false;
             stateMachine.actionIndex = 0;
-            stateMachine.SwitchState(new PlayerBlockState(this.stateMachine));
+            stateMachine.SwitchState(new PlayerBlockState(this.stateMachine, true));
         }
     }
     

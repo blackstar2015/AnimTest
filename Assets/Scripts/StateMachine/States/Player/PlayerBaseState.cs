@@ -6,15 +6,19 @@ public abstract class PlayerBaseState : State
 {
     public PlayerStateMachine stateMachine;
     private Vector3 _dashDirection;
-
-    public PlayerBaseState(PlayerStateMachine stateMachine)
+    protected bool _shouldFade;
+    protected float _crossfadeDuration = .1f;
+    public PlayerBaseState(PlayerStateMachine stateMachine, bool shouldFade = true)
     {
         this.stateMachine = stateMachine;
+        _shouldFade = shouldFade;
     }
 
     public override void Enter()
     {
         if(stateMachine.debugStateTransitions) Debug.Log("Entering " + stateMachine.CurrentState);
+        if(_shouldFade) stateMachine.CrossFadeDuration = _crossfadeDuration;
+        else stateMachine.CrossFadeDuration = 0f;
     }
     public override void Exit()
     {
@@ -60,7 +64,7 @@ public abstract class PlayerBaseState : State
     protected override void WeaponSwitch()
     {
         int switchFromHash = Animator.StringToHash("SwitchingFrom");
-        stateMachine.Animator.CrossFade(switchFromHash, 0.2f);
+        stateMachine.Animator.CrossFade(switchFromHash, 0.1f);
         if (stateMachine.CurrentWeaponIndex >= stateMachine.Weapons.Length - 1)
         {
             stateMachine.weaponIndex = 0;

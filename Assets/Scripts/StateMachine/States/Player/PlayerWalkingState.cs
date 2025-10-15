@@ -5,9 +5,10 @@ public class PlayerWalkingState : PlayerBaseState
     //private int MovementHash => stateMachine.MovementHash;
     private int MovementHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].MovementHash);
 
-    public PlayerWalkingState(PlayerStateMachine stateMachine) : base(stateMachine)
+    public PlayerWalkingState(PlayerStateMachine stateMachine, bool shouldFade) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
+        _shouldFade = shouldFade;
     }
 
     public override void Enter()
@@ -38,10 +39,10 @@ public class PlayerWalkingState : PlayerBaseState
     {
         base.Tick(deltaTime);
         stateMachine.rb.AddForce(stateMachine.LocalMoveInput * stateMachine.Speed * Time.deltaTime, ForceMode.Impulse);
-        if (stateMachine.IsDashing) stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.LocalMoveInput));
-        if (!stateMachine.IsGrounded) stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine));
-        if (stateMachine.Velocity.magnitude * stateMachine.LocalMoveInput == Vector3.zero) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine));
-        if(stateMachine.IsAttacking) stateMachine.SwitchState(new PlayerAttackState(this.stateMachine));
-        if(stateMachine.IsBlocking) stateMachine.SwitchState(new PlayerBlockState(this.stateMachine));
+        if (stateMachine.IsDashing) stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.LocalMoveInput, false));
+        if (!stateMachine.IsGrounded) stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine, false));
+        if (stateMachine.Velocity.magnitude * stateMachine.LocalMoveInput == Vector3.zero) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine, true));
+        if(stateMachine.IsAttacking) stateMachine.SwitchState(new PlayerAttackState(this.stateMachine, true));
+        if(stateMachine.IsBlocking) stateMachine.SwitchState(new PlayerBlockState(this.stateMachine, false));
     }
 }

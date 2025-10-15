@@ -449,6 +449,10 @@ PrefabInstance:
       value: Dodge
       objectReference: {fileID: 0}
     - target: {fileID: 685008403000281846, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: <SwitchToHash>k__BackingField
+      value: SwitchUnarmed
+      objectReference: {fileID: 0}
+    - target: {fileID: 685008403000281846, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: <BlockHashName>k__BackingField
       value: Block
       objectReference: {fileID: 0}

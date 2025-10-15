@@ -3,14 +3,15 @@ using UnityEngine;
 public class PlayerDodgingState : PlayerBaseState
 {
     private int _dodgeHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].DodgeHash);
-    private int _airborneDashHash => stateMachine.AirborneDashHash;
+    private int _airborneDashHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneDashHash);
 
     private Vector3 _dashDirection {  get; set; }
 
-    public PlayerDodgingState(PlayerStateMachine stateMachine, Vector3 dashDirection) : base(stateMachine)
+    public PlayerDodgingState(PlayerStateMachine stateMachine, Vector3 dashDirection, bool shouldFade) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
         _dashDirection = dashDirection;
+        _shouldFade = shouldFade;
     }
 
     public override void Enter()
@@ -30,7 +31,8 @@ public class PlayerDodgingState : PlayerBaseState
     {
         base.Tick(deltaTime);
         PerformDash();
-        stateMachine.Invoke(nameof(stateMachine.SwitchToMovement), stateMachine.Animator.GetCurrentAnimatorClipInfo(0).Length);
+        
+        stateMachine.Invoke(nameof(stateMachine.SwitchToMovement), 1.33f);
     }
 
     private void PerformDash()

@@ -7,9 +7,10 @@ public class PlayerAirborneState : PlayerBaseState
     private int AirborneJumpHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneJumpHash);
     private int AirborneFlipHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneFlipHash);
 
-    public PlayerAirborneState(PlayerStateMachine stateMachine) : base(stateMachine)
+    public PlayerAirborneState(PlayerStateMachine stateMachine, bool shouldFade) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
+        _shouldFade = shouldFade;
     }
 
     public override void Enter()
@@ -48,8 +49,8 @@ public class PlayerAirborneState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
-        if(stateMachine.IsDashing) stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.transform.forward));
-        if (stateMachine.Velocity.y <=.1f) stateMachine.SwitchState(new PlayerLandingState(this.stateMachine));
+        if(stateMachine.IsDashing) stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.transform.forward, false));
+        if (stateMachine.Velocity.y <=.1f) stateMachine.SwitchState(new PlayerLandingState(this.stateMachine, false));
     }
 
     protected override void Jump()
@@ -61,7 +62,7 @@ public class PlayerAirborneState : PlayerBaseState
             // override current y velocity but maintain x/z velocity
             stateMachine.Velocity = new Vector3(stateMachine.Velocity.x, jumpVelocity, stateMachine.Velocity.z);
             stateMachine.JumpCounter++;
-            stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine));
+            stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine, true));
         }
     }
     

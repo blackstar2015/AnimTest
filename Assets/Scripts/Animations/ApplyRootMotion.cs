@@ -3,12 +3,12 @@ using UnityEngine;
 public class ApplyRootMotion : StateMachineBehaviour
 {
     [SerializeField] private bool _applyRootMotion = false;
-    [SerializeField] private float _rootMotionRotationTime = 0.2f;
-    [SerializeField] private float _meleeResetTime = 0f;
     [SerializeField] private bool _canMove = true;
     [SerializeField] private bool _canShoot = true;
     [SerializeField] private bool _canMelee = true;
-    [SerializeField] private int _visibleWeaponIndex = 0;
+    [SerializeField] private float _rootMotionRotationTime = 0.2f;
+    //[SerializeField] private float _meleeResetTime = 0f;
+    //[SerializeField] private int _visibleWeaponIndex = 0;
 
     private StateMachine _stateMachine;
     // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
@@ -36,11 +36,11 @@ public class ApplyRootMotion : StateMachineBehaviour
     // update
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // reset Melee trigger at start of animation
-        if(_meleeResetTime > 0f && stateInfo.normalizedTime < _meleeResetTime)
-        {
-            animator.ResetTrigger("Unarmed");
-        }
+        // // reset Melee trigger at start of animation
+        // if(_meleeResetTime > 0f && stateInfo.normalizedTime < _meleeResetTime)
+        // {
+        //     animator.ResetTrigger("Unarmed");
+        // }
     }
 
     public override void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -60,7 +60,6 @@ public class ApplyRootMotion : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _stateMachine.LookInCameraDirection = true;
         animator.applyRootMotion = false;
         _stateMachine.CanMove = true;
     }

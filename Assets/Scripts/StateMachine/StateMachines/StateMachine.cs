@@ -191,7 +191,7 @@ public class StateMachine : MonoBehaviour
     public IEnumerator SwitchStateWithDelay(State newState, float delay)
     {
         yield return new WaitForSeconds(delay);
-        SwitchState(newState);
+        SwitchState(newState, delay);
     }
     public virtual void FootstepAnimEvent(AnimationEvent animationEvent)
     {
