@@ -39,7 +39,7 @@ public class StateMachine : MonoBehaviour
     [field: SerializeField, InlineButton(nameof(FindWeapons), "Find"), TabGroup("Weapons")] public Weapon[] Weapons { get; private set; }
     #endregion
     #region Movement
-    [field: SerializeField, TabGroup("Movement","Basic")] public float Speed { get; set; } = 5f;
+    [field: SerializeField, TabGroup("Movement","Basic")] public float BaseSpeed { get; set; } = 5f;
     [field: SerializeField, TabGroup("Movement", "Basic")] public float Acceleration { get; set; } = 10f;
     [field: SerializeField, TabGroup("Movement", "Basic")] public float TurnSpeed { get; set; } = 15f;
     [field: SerializeField, TabGroup("Movement", "Basic")] public bool OnlyTurnWithInput { get; set; } = true;
@@ -61,10 +61,6 @@ public class StateMachine : MonoBehaviour
     [field: TabGroup("Movement", "Airborne"), SerializeField] public float AirControl = .9f;
     [field: TabGroup("Movement", "Airborne"), SerializeField] public int JumpCounter { get; internal set; } = 1;
     [field: TabGroup("Movement", "Airborne"), SerializeField] public int MaxJumps = 2;// character can turn while airborne
-    #endregion
-    #region Size
-    [field: SerializeField, TabGroup("Size")] public float Height { get; set; } = 1.8f;
-    [field: SerializeField, TabGroup("Size")] public float Radius { get; set; } = 0.3f;
     #endregion
     #region Grounding
     [field: SerializeField, TabGroup("Movement","Grounding")] public float GroundCheckOffset { get; set; } = 0.1f;         // height inside character where grounding ray starts
@@ -90,7 +86,7 @@ public class StateMachine : MonoBehaviour
     [TabGroup("Properties")] public bool CanCoyoteJump => LastGroundedDistance < CoyoteMaxJumpDistance;
     [TabGroup("Properties")] public float LastGroundedDistance => Vector3.Distance(transform.position, LastGroundedPosition);
     [TabGroup("Properties")] public Vector3 FlattenedVelocity => new Vector3(Velocity.x, 0f, Velocity.z);
-    [TabGroup("Properties")] public float NormalizedSpeed => FlattenedVelocity.magnitude / Speed;
+    [TabGroup("Properties")] public float NormalizedSpeed => FlattenedVelocity.magnitude / BaseSpeed;
     [TabGroup("Properties")] public Vector3 MoveInput { get; set; }
     [TabGroup("Properties")] public Vector3 LocalMoveInput { get;  set; }
     [TabGroup("Properties")] public Vector3 LookDirection { get;  set; }
@@ -132,6 +128,10 @@ public class StateMachine : MonoBehaviour
 
     public int CurrentWeaponIndex => weaponIndex;
     public int CurrentActionIndex => actionIndex;
+    #endregion
+    #region Size
+    [field: SerializeField, TabGroup("Size")] public float Height { get; set; } = 1.8f;
+    [field: SerializeField, TabGroup("Size")] public float Radius { get; set; } = 0.3f;
     #endregion
     #region SetHeight, Splines and avoidance
     // step height fields
@@ -301,7 +301,7 @@ public class StateMachine : MonoBehaviour
 
                 if (IsClampedToNavMesh)
                 {
-                    Vector3 pathPoint = transform.position + pathDir * Speed * ClampLookAheadTime;
+                    Vector3 pathPoint = transform.position + pathDir * BaseSpeed * ClampLookAheadTime;
                     Vector3 clampedPathPoint = ClampToNavMesh(pathPoint, ClampSearchRadius);
                     pathDir = (clampedPathPoint - transform.position).normalized;
                 }
@@ -357,11 +357,11 @@ public class StateMachine : MonoBehaviour
         }
 
         // vary character speed when using avoidance
-        float speed = Speed;
+        float speed = BaseSpeed;
         if (EnableAvoidance)
         {
             float noise = Mathf.PerlinNoise(Time.time, _variationNoiseOffset) * 2f - 1f;
-            speed = Speed * (1f + noise * SpeedVariation);
+            speed = BaseSpeed * (1f + noise * SpeedVariation);
         }
 
         // calculates desirection movement velocity
@@ -410,7 +410,7 @@ public class StateMachine : MonoBehaviour
 
                 if (IsClampedToNavMesh)
                 {
-                    Vector3 pathPoint = transform.position + pathDir * Speed * ClampLookAheadTime;
+                    Vector3 pathPoint = transform.position + pathDir * BaseSpeed * ClampLookAheadTime;
                     Vector3 clampedPathPoint = ClampToNavMesh(pathPoint, ClampSearchRadius);
                     pathDir = (clampedPathPoint - transform.position).normalized;
                 }
@@ -466,11 +466,11 @@ public class StateMachine : MonoBehaviour
         }
 
         // vary character speed when using avoidance
-        float speed = Speed;
+        float speed = BaseSpeed;
         if (EnableAvoidance)
         {
             float noise = Mathf.PerlinNoise(Time.time, _variationNoiseOffset) * 2f - 1f;
-            speed = Speed * (1f + noise * SpeedVariation);
+            speed = BaseSpeed * (1f + noise * SpeedVariation);
         }
 
         // calculates desirection movement velocity

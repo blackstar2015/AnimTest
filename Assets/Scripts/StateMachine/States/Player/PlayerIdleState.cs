@@ -20,6 +20,7 @@ public class PlayerIdleState : PlayerBaseState
         stateMachine.PlayerController.SprintAction += Sprint;
         stateMachine.PlayerController.WeaponSwitchAction += WeaponSwitch;
         stateMachine.Animator.CrossFade(IdleHash,_crossfadeDuration);
+        stateMachine.MoveSpeedMultiplier = stateMachine.PlayerWalkSpeedMultiplier;
     }
 
     public override void Exit()

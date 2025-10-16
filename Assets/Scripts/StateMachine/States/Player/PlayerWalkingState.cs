@@ -21,6 +21,7 @@ public class PlayerWalkingState : PlayerBaseState
         stateMachine.PlayerController.SprintAction += Sprint;
         stateMachine.PlayerController.WeaponSwitchAction += WeaponSwitch;
         stateMachine.Animator.CrossFade(MovementHash, 0.1f);
+        stateMachine.MoveSpeedMultiplier = stateMachine.PlayerWalkSpeedMultiplier;
     }
 
     public override void Exit()
@@ -38,7 +39,7 @@ public class PlayerWalkingState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
-        stateMachine.rb.AddForce(stateMachine.LocalMoveInput * stateMachine.Speed * Time.deltaTime, ForceMode.Impulse);
+        stateMachine.rb.AddForce(stateMachine.LocalMoveInput * stateMachine.BaseSpeed * Time.deltaTime, ForceMode.Impulse);
         if (stateMachine.IsDashing) stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.LocalMoveInput, false));
         if (!stateMachine.IsGrounded) stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine, false));
         if (stateMachine.Velocity.magnitude * stateMachine.LocalMoveInput == Vector3.zero) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine, true));

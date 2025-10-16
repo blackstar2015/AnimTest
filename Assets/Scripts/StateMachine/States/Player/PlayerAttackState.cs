@@ -16,6 +16,7 @@ public class PlayerAttackState : PlayerBaseState
         stateMachine.PlayerController.DodgeAction += Dodge;
         stateMachine.PlayerController.BlockAction += Block;
         stateMachine.PlayerController.AttackAction += Attack;
+        stateMachine.MoveSpeedMultiplier = stateMachine.PlayerAttackSpeedMultiplier;
         
     }
     public override void Exit()

@@ -632,7 +632,7 @@ Animator:
   m_GameObject: {fileID: 7987039994458121870}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
-  m_Controller: {fileID: 9100000, guid: ab9f27af0e384f841adfcfb11f08cec7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 98c9fa3637949a54790b7b1a6d3ca952, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -805,7 +805,7 @@ MonoBehaviour:
   <Weapons>k__BackingField:
   - {fileID: 7446148988236950410}
   - {fileID: 2483039099777495997}
-  <Speed>k__BackingField: 5
+  <BaseSpeed>k__BackingField: 5
   <Acceleration>k__BackingField: 10
   <TurnSpeed>k__BackingField: 15
   <OnlyTurnWithInput>k__BackingField: 1
@@ -848,8 +848,6 @@ MonoBehaviour:
   AirControl: 0.9
   <JumpCounter>k__BackingField: 1
   MaxJumps: 2
-  <Height>k__BackingField: 1.8
-  <Radius>k__BackingField: 0.3
   <GroundCheckOffset>k__BackingField: 0.1
   <GroundCheckDistance>k__BackingField: 0.4
   <MaxSlopeAngle>k__BackingField: 40
@@ -871,6 +869,8 @@ MonoBehaviour:
   <CanMelee>k__BackingField: 1
   LastAttackTime: -Infinity
   <IsAttacking>k__BackingField: 0
+  <Height>k__BackingField: 1.8
+  <Radius>k__BackingField: 0.3
   <StepHeight>k__BackingField: 0.3
   <StepHeightAllowance>k__BackingField: 0.1
   <StepHeightForwardOffset>k__BackingField: 0.05
@@ -888,10 +888,13 @@ MonoBehaviour:
   <EnableSplineConstraint>k__BackingField: 0
   <SplineContainer>k__BackingField: {fileID: 0}
   <SplineGravitation>k__BackingField: 20
-  PlayerMaxWalkSpeed: 5
-  <CursorMode>k__BackingField: 1
+  CursorMode: 1
   LastDashTime: -Infinity
   debugStateTransitions: 0
+  PlayerWalkSpeedMultiplier: 1
+  PlayerAttackSpeedMultiplier: 0.1
+  PlayerBlockSpeedMultiplier: 0.1
+  CrossFadeDuration: 0.1
   DashSpeed: 1000
   DashDirection: {x: 0, y: 0, z: 0}
   LandingGravity: 25

@@ -34,7 +34,7 @@ public class CustomCharacterAnimations : MonoBehaviour
         Vector3 velocity = _stateMachine.Velocity;
         _velocityY =  velocity.y;
         Vector3 flattenedVelocity = new Vector3(velocity.x, 0f, velocity.z);
-        _speed = Mathf.Min(_stateMachine.LocalMoveInput.magnitude, flattenedVelocity.magnitude / _stateMachine.Speed);
+        _speed = Mathf.Min(_stateMachine.LocalMoveInput.magnitude, flattenedVelocity.magnitude / _stateMachine.BaseSpeed);
         _isMoving = _speed > 0 ? true : false;
         velocity = transform.InverseTransformDirection(velocity);
         _velocityX =  velocity.x * Mathf.Abs(_stateMachine.LocalMoveInput.x);

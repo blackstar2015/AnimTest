@@ -1,45 +1,25 @@
 using Sirenix.OdinInspector;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CustomPlayerController))]
 public class PlayerStateMachine : StateMachine
 {
-    [field: SerializeField, TabGroup("Properties")] public float PlayerMaxWalkSpeed = 5f;
-
     [field: SerializeField, TabGroup("Properties")] public CustomPlayerController PlayerController => Controller as CustomPlayerController;
     [field: SerializeField, TabGroup("Properties")] protected CursorLockMode CursorMode = CursorLockMode.Locked;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public float LastDashTime = Mathf.NegativeInfinity;
     [field: SerializeField, TabGroup("Properties")] public bool debugStateTransitions;
-
+    [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerWalkSpeedMultiplier = 1f;
+    [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerAttackSpeedMultiplier = .5f;
+    [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerBlockSpeedMultiplier = .1f;
+    [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerDashSpeedMultiplier = .1f;
+    [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerAirSpeedMultiplier = 1f;
+    [ShowInInspector, TabGroup("Movement", "Basic")] public float CrossFadeDuration = 0f;
     [ShowInInspector, TabGroup("Movement","Dashing")] public float DashSpeed = 1000f;
     [ShowInInspector, TabGroup("Movement","Dashing")] public float DashCooldown { get;  set; } = 2f;
-    public float CrossFadeDuration = 0f;
-
     [ShowInInspector, TabGroup("Movement","Dashing")] public Vector3 DashDirection;
-
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float LandingGravity = 10f;
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float AirDashMultiplier = 10f;
-
-    // [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Idle = "2HandSwordIdle";
-    // [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Movement = "2HandSwordMovement";
-    // [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneJump = "2HandSwordAirborneJump";
-    // [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneFlip = "2HandSwordAirborneFlip";
-    // [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneFall = "2HandSwordAirborneFall";
-    // [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneLand = "2HandSwordAirborneLand";
-    // [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string AirborneDash = "2HandSwordAirborneDash";
-    // [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Dash = "Dodge";
-    // [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Block = "Block";
-    // [ShowInInspector, TabGroup("Movement", "AnimHashes")] public static string Attack = "Attack";
-    // [TabGroup("Movement", "AnimHashes")] public readonly int IdleHash = Animator.StringToHash(Idle);
-    // [TabGroup("Movement", "AnimHashes")] public readonly int MovementHash = Animator.StringToHash(Movement);
-    // [TabGroup("Movement", "AnimHashes")] public readonly int AirborneJumpHash = Animator.StringToHash(AirborneJump);
-    // [TabGroup("Movement", "AnimHashes")] public readonly int AirborneFlipHash = Animator.StringToHash(AirborneFlip);
-    // [TabGroup("Movement", "AnimHashes")] public readonly int AirborneFallHash = Animator.StringToHash(AirborneFall);
-    // [TabGroup("Movement", "AnimHashes")] public readonly int AirborneLandHash = Animator.StringToHash(AirborneLand);
-    // [TabGroup("Movement", "AnimHashes")] public readonly int AirborneDashHash = Animator.StringToHash(AirborneDash);
-    // [TabGroup("Movement", "AnimHashes")] public readonly int DodgeHash = Animator.StringToHash(Dash);
-    // [TabGroup("Movement", "AnimHashes")] public readonly int BlockHash = Animator.StringToHash(Block);
-    // [TabGroup("Movement", "AnimHashes")] public readonly int AttackHash = Animator.StringToHash(Attack);
 
     public override void Awake()
     {
@@ -85,14 +65,18 @@ public class PlayerStateMachine : StateMachine
     {
         if (rb.linearVelocity.magnitude >= .1f)
         {
-            SwitchState(new PlayerWalkingState(this, shouldFade));
+            SwitchState(new PlayerWalkingState(this, true));
         }
         else
         {
-            SwitchState(new PlayerIdleState(this, shouldFade));
+            SwitchState(new PlayerIdleState(this, true));
         }
     }
-
+    public IEnumerator SwitchToMovementWithDelay(bool shouldFade, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SwitchToMovement(shouldFade);
+    }
     public void ContinueAttack()
     {
         SwitchState(new PlayerAttackState(this, true));
