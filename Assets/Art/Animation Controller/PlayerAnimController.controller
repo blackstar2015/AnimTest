@@ -22,6 +22,32 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!1102 &-8774559160644270385
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unarmed-Idle
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 94c75858633b4e04f9e28db3b52b2bba, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &-8494029103648507972
 AnimatorState:
   serializedVersion: 6
@@ -123,37 +149,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!206 &-8419603242688610007
-BlendTree:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Blend Tree
-  m_Childs:
-  - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 94c75858633b4e04f9e28db3b52b2bba, type: 3}
-    m_Threshold: 0
-    m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: Idle
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 8043696a9af6e2947bf6bcbd25ecf2d9, type: 3}
-    m_Threshold: 1
-    m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: Idle
-    m_Mirror: 0
-  m_BlendParameter: Idle
-  m_BlendParameterY: Idle
-  m_MinThreshold: 0
-  m_MaxThreshold: 1
-  m_UseAutomaticThresholds: 1
-  m_NormalizedBlendValues: 0
-  m_BlendType: 0
 --- !u!1101 &-8352192805864999465
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1959,9 +1954,6 @@ AnimatorStateMachine:
     m_State: {fileID: -8221704742476733135}
     m_Position: {x: 730, y: -330, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 4810423782421960008}
-    m_Position: {x: 300, y: 100, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 4901602070527423562}
     m_Position: {x: 300, y: 200, z: 0}
   - serializedVersion: 1
@@ -1979,6 +1971,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -3950092437559689478}
     m_Position: {x: 500, y: 100, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -8774559160644270385}
+    m_Position: {x: 300, y: 100, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 2886587057244265281}
@@ -2016,7 +2011,7 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 70, y: 170, z: 0}
   m_ExitPosition: {x: 70, y: 140, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 4810423782421960008}
+  m_DefaultState: {fileID: -8774559160644270385}
 --- !u!1102 &1829700084119833865
 AnimatorState:
   serializedVersion: 6
@@ -2492,7 +2487,7 @@ MonoBehaviour:
   _canMove: 0
   _canShoot: 0
   _canMelee: 0
-  _rootMotionRotationTime: 0.2
+  _rootMotionRotationTime: 0
 --- !u!206 &4266375067078483496
 BlendTree:
   m_ObjectHideFlags: 1
@@ -2742,32 +2737,6 @@ AnimatorTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 1
---- !u!1102 &4810423782421960008
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Idle
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 228, y: 24, z: 0}
-  m_IKOnFeet: 1
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: -8419603242688610007}
-  m_Tag: 
-  m_SpeedParameter: AnimationSpeed
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &4864532820749531588
 AnimatorState:
   serializedVersion: 6
