@@ -63,13 +63,13 @@ public class PlayerStateMachine : StateMachine
 
     public void SwitchToMovement(bool shouldFade)
     {
-        if (rb.linearVelocity.magnitude >= .1f)
+        if (HasMoveInput)
         {
-            SwitchState(new PlayerWalkingState(this, true));
+            SwitchState(new PlayerWalkingState(this, shouldFade));
         }
         else
         {
-            SwitchState(new PlayerIdleState(this, true));
+            SwitchState(new PlayerIdleState(this, shouldFade));
         }
     }
     public IEnumerator SwitchToMovementWithDelay(bool shouldFade, float delay)

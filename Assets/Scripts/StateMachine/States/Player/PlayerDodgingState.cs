@@ -35,7 +35,7 @@ public class PlayerDodgingState : PlayerBaseState
         PerformDash();
 
         if (!stateMachine.IsDashing) stateMachine.StartCoroutine(stateMachine.SwitchToMovementWithDelay(false, 1f));
-        //if(!stateMachine.IsDashing) stateMachine.SwitchToMovement(false);
+        //if(!stateMachine.IsDashing) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine, true));
     }
 
     private void PerformDash()
@@ -48,6 +48,6 @@ public class PlayerDodgingState : PlayerBaseState
 
     private void EndDash()
     {
-        stateMachine.SwitchToMovement(true);       
+        stateMachine.SwitchToMovement(true);
     }
 }

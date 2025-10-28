@@ -445,6 +445,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 685008403000281846, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: <IdleHash>k__BackingField
+      value: Unarmed-Idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 685008403000281846, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: <DodgeHash>k__BackingField
       value: Dodge
       objectReference: {fileID: 0}
@@ -894,8 +898,10 @@ MonoBehaviour:
   PlayerWalkSpeedMultiplier: 1
   PlayerAttackSpeedMultiplier: 0.1
   PlayerBlockSpeedMultiplier: 0.1
+  PlayerDashSpeedMultiplier: 0.1
+  PlayerAirSpeedMultiplier: 1
   CrossFadeDuration: 0.1
-  DashSpeed: 1000
+  DashSpeed: 100
   DashDirection: {x: 0, y: 0, z: 0}
   LandingGravity: 25
   AirDashMultiplier: 10
