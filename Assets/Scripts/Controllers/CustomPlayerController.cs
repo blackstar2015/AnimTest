@@ -19,7 +19,8 @@ public class CustomPlayerController : CustomController
     [field: SerializeField, TabGroup("Events")] public Action<bool> AttackAction;
     [field: SerializeField, TabGroup("Events")] public Action<bool> SprintAction;
     [field: SerializeField, TabGroup("Events")] public Action WeaponSwitchAction;
-    
+    [field: SerializeField, TabGroup("Events")] public Action TargetLockAction;
+
     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] private string _currentStateName { get; set; }
     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public static float CurrentSpeed;
     [SerializeField] public StringEventAsset PlayerSpeed;
@@ -74,7 +75,19 @@ public class CustomPlayerController : CustomController
     {
         AttackAction?.Invoke(value.isPressed);
     }
-
+    public void OnTargetLock(InputValue value)
+    {
+        TargetLockAction?.Invoke();
+        
+        if(value.Get<Vector2>().x > 0)
+        {
+            stateMachine.IncrementVisibleTarget();
+        }
+        else if(value.Get<Vector2>().x < 0)
+        {
+            stateMachine.DecrementVisibleTarget();
+        }
+    }
     public virtual void OnBlock(InputValue value)
     {
         BlockAction?.Invoke(value.isPressed);
@@ -84,8 +97,9 @@ public class CustomPlayerController : CustomController
     {
         SprintAction?.Invoke(value.isPressed);
     }
-    protected virtual void Update()
+    public override void Update()
     {
+        base.Update();  
         _currentStateName = stateMachine.CurrentState.ToString();
         CurrentSpeed = Mathf.Ceil(stateMachine.rb.linearVelocity.magnitude);
         //PlayerSpeed.Invoke(CurrentSpeed.ToString());

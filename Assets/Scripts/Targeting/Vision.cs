@@ -7,7 +7,7 @@ public class Vision : MonoBehaviour
     [SerializeField] private float _FOV = 120f;             // field of view
     [SerializeField] private LayerMask _visibilityMask;     // layer(s) for visible objects
     [SerializeField] private LayerMask _occlusionMask;      // layer(s) that block vision (usually walls)
-
+    public int CurrentVisibleIndex = 0;
     public Vector3 LookPosition => transform.position + Vector3.up;
     public Vector3 LookDirection => transform.forward;
 
@@ -61,7 +61,7 @@ public class Vision : MonoBehaviour
     {
         List<Targetable> targets = GetVisibleTargets(team);
         if (targets.Count == 0) return null;
-        return targets[0];
+        return targets[CurrentVisibleIndex];
     
         // more sophisticated AI could score and rank targets to pick the best approach
         // ex: distance to, flanking, health %, damage vulnerabilities, threat

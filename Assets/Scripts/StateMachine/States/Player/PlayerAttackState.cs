@@ -61,7 +61,7 @@ public class PlayerAttackState : PlayerBaseState
         float nextAttackTime = stateMachine.LastAttackTime + 1 / melee.MeleeData.AttackRate;
         if (Time.time < nextAttackTime) return;
         _attackStarted = true;
-        stateMachine.Animator.CrossFade(_attackHash,0.1f);
+        stateMachine.Animator.CrossFade(_attackHash,stateMachine.CrossFadeDuration);
         melee.TryAttack(stateMachine.transform.position + stateMachine.transform.forward * 5, stateMachine.gameObject, stateMachine.Targetable.Team);
 
         stateMachine.actionIndex++;

@@ -901,7 +901,7 @@ MonoBehaviour:
   PlayerDashSpeedMultiplier: 0.1
   PlayerAirSpeedMultiplier: 1
   CrossFadeDuration: 0.1
-  DashSpeed: 100
+  DashSpeed: 66
   DashDirection: {x: 0, y: 0, z: 0}
   LandingGravity: 25
   AirDashMultiplier: 10

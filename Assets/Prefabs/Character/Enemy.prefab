@@ -326,6 +326,7 @@ MonoBehaviour:
   _occlusionMask:
     serializedVersion: 2
     m_Bits: 0
+  CurrentVisibleIndex: 0
 --- !u!114 &2940756895232771322
 MonoBehaviour:
   m_ObjectHideFlags: 0

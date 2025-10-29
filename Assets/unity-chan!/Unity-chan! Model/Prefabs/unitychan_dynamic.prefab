@@ -9031,6 +9031,7 @@ MonoBehaviour:
   _occlusionMask:
     serializedVersion: 2
     m_Bits: 0
+  CurrentVisibleIndex: 0
 --- !u!114 &9168587843957717560
 MonoBehaviour:
   m_ObjectHideFlags: 0

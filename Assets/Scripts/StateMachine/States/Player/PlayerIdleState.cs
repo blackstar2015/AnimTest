@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
@@ -19,7 +20,8 @@ public class PlayerIdleState : PlayerBaseState
         stateMachine.PlayerController.AttackAction += Attack;
         stateMachine.PlayerController.SprintAction += Sprint;
         stateMachine.PlayerController.WeaponSwitchAction += WeaponSwitch;
-        stateMachine.Animator.CrossFade(IdleHash,_crossfadeDuration);
+        stateMachine.PlayerController.TargetLockAction += TargetLock;
+        stateMachine.Animator.CrossFade(IdleHash,stateMachine.CrossFadeDuration);
         stateMachine.MoveSpeedMultiplier = stateMachine.PlayerWalkSpeedMultiplier;
     }
 

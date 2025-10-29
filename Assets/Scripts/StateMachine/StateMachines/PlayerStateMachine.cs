@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CustomPlayerController))]
@@ -80,5 +81,27 @@ public class PlayerStateMachine : StateMachine
     public void ContinueAttack()
     {
         SwitchState(new PlayerAttackState(this, true));
+    }
+
+    public void IncrementVisibleTarget()
+    {
+        Debug.Log("++");
+        List<Targetable> targets = Vision.GetVisibleTargets(0);
+        if (Vision.CurrentVisibleIndex == targets.Count - 1)
+        {
+            Vision.CurrentVisibleIndex = 0;
+        }
+        else Vision.CurrentVisibleIndex++;
+    }
+
+    public void DecrementVisibleTarget()
+    {
+        Debug.Log("--");
+        List<Targetable> targets = Vision.GetVisibleTargets(0);
+        if (Vision.CurrentVisibleIndex == 0)
+        {
+            Vision.CurrentVisibleIndex = targets.Count -1;
+        }
+        else Vision.CurrentVisibleIndex--;
     }
 }

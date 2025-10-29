@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class PlayerBaseState : State
 {
     public PlayerStateMachine stateMachine;
-    private Vector3 _dashDirection;
     protected bool _shouldFade;
     protected float _crossfadeDuration = .1f;
     public PlayerBaseState(PlayerStateMachine stateMachine, bool shouldFade = true)
@@ -87,4 +88,13 @@ public abstract class PlayerBaseState : State
         int switchToHash = Animator.StringToHash("SwitchingTo");
         stateMachine.Animator.CrossFade(switchToHash, 0.2f);
     }
+
+
+    protected void TargetLock()
+    {
+        List<Targetable> possibleTargets = new List<Targetable>();
+        possibleTargets =  stateMachine.Vision.GetVisibleTargets(0);
+
+    }
+
 }

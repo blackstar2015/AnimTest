@@ -113,6 +113,15 @@
                     "processors": "",
                     "interactions": "Press(pressPoint=0.1,behavior=2)",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TargetLock",
+                    "type": "Value",
+                    "id": "555e3ace-ad79-4fe4-b39c-33d394cd5ce6",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -487,6 +496,17 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17c3f3f1-b556-455f-bfd6-771b11b8ab6c",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "TargetLock",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
