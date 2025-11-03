@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Properties;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -90,11 +91,25 @@ public abstract class PlayerBaseState : State
     }
 
 
-    protected void TargetLock()
+    protected virtual void TargetLock()
     {
-        List<Targetable> possibleTargets = new List<Targetable>();
-        possibleTargets =  stateMachine.Vision.GetVisibleTargets(0);
-
+        if(stateMachine.CurrentTarget == null)
+        {
+            List<Targetable> possibleTargets = new List<Targetable>();
+            possibleTargets =  stateMachine.Vision.GetVisibleTargets(0);
+            stateMachine.CurrentTarget = possibleTargets[stateMachine.Vision.CurrentVisibleIndex];
+            if(stateMachine.CurrentTarget != null)
+            {
+                stateMachine.IsTargeting = true;
+                stateMachine.PlayerController.TargetLockCam.Priority = 2; 
+            }
+        }
+        else
+        {
+            stateMachine.PlayerController.TargetLockCam.Priority = 0;
+            stateMachine.IsTargeting = false;
+            stateMachine.CurrentTarget = null;
+        }
     }
 
 }

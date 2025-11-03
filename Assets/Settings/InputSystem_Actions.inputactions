@@ -115,13 +115,22 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "TargetLock",
+                    "name": "TargetLockScroll",
                     "type": "Value",
                     "id": "555e3ace-ad79-4fe4-b39c-33d394cd5ce6",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TargetLock",
+                    "type": "Button",
+                    "id": "b786b3d1-0c03-4a8d-b589-a15d6fac829f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -503,6 +512,17 @@
                     "name": "",
                     "id": "17c3f3f1-b556-455f-bfd6-771b11b8ab6c",
                     "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "TargetLockScroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8221f17b-972e-4572-94bb-3c4ee63d0de3",
+                    "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",

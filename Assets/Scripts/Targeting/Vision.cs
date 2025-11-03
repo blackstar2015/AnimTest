@@ -52,8 +52,7 @@ public class Vision : MonoBehaviour
     
             // all tests passed, add target to list
             targets.Add(targetable);
-        }
-    
+        }    
         return targets;
     }
     

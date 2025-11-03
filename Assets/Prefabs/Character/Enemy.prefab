@@ -305,7 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Team>k__BackingField: 1
   <IsTargetable>k__BackingField: 1
-  <ViewPosition>k__BackingField: {fileID: 0}
+  <ViewPosition>k__BackingField: {fileID: 5618944474893368568}
 --- !u!114 &3220486211538726260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -973,6 +973,11 @@ Transform:
 --- !u!4 &5618944474893368540 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400032, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
+  m_PrefabInstance: {fileID: 5618944474893756028}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5618944474893368568 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400004, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
   m_PrefabInstance: {fileID: 5618944474893756028}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &5618944474893656238 stripped

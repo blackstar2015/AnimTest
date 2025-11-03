@@ -20,7 +20,6 @@ public class PlayerLandingState : PlayerBaseState
         base.Enter();
         stateMachine.PlayerController.JumpAction += Jump;
         stateMachine.PlayerController.DodgeAction += Dodge;
-        Debug.Log(_airborneFallHash + " " + _airborneLandHash + " " + _airborneDashHash);
         stateMachine.Animator.CrossFade(_airborneFallHash, stateMachine.CrossFadeDuration);
     }
     public override void Exit() 

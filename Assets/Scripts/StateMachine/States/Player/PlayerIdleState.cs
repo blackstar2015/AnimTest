@@ -33,7 +33,9 @@ public class PlayerIdleState : PlayerBaseState
         stateMachine.PlayerController.AttackAction -= Attack;
         stateMachine.PlayerController.SprintAction -= Sprint;
         stateMachine.PlayerController.WeaponSwitchAction -= WeaponSwitch;
-        base .Exit();
+        stateMachine.PlayerController.TargetLockAction -= TargetLock;
+
+        base.Exit();
     }
 
     public override void Tick(float deltaTime)

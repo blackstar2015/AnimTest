@@ -9,6 +9,7 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField, TabGroup("Properties")] public CustomPlayerController PlayerController => Controller as CustomPlayerController;
     [field: SerializeField, TabGroup("Properties")] protected CursorLockMode CursorMode = CursorLockMode.Locked;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public float LastDashTime = Mathf.NegativeInfinity;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public float LastScrollTime = Mathf.NegativeInfinity;
     [field: SerializeField, TabGroup("Properties")] public bool debugStateTransitions;
     [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerWalkSpeedMultiplier = 1f;
     [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerAttackSpeedMultiplier = .5f;
@@ -18,6 +19,9 @@ public class PlayerStateMachine : StateMachine
     [ShowInInspector, TabGroup("Movement", "Basic")] public float CrossFadeDuration = 0f;
     [ShowInInspector, TabGroup("Movement","Dashing")] public float DashSpeed = 1000f;
     [ShowInInspector, TabGroup("Movement","Dashing")] public float DashCooldown { get;  set; } = 2f;
+    public Targetable CurrentTarget { get;  set; }
+    public bool IsTargeting;
+
     [ShowInInspector, TabGroup("Movement","Dashing")] public Vector3 DashDirection;
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float LandingGravity = 10f;
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float AirDashMultiplier = 10f;
@@ -56,8 +60,16 @@ public class PlayerStateMachine : StateMachine
         MoveInput = moveInput;
         SetMoveInput(moveInput);
         SetLookDirection(moveInput);
-        if (LookInCameraDirection) SetLookDirection(Camera.main.transform.forward);
-        transform.rotation = Quaternion.LookRotation(LookDirection);
+        if (LookInCameraDirection)
+        {
+            if(CurrentTarget != null && !IsTargeting)
+            SetLookDirection(Camera.main.transform.forward);
+            else
+            {
+                SetLookPosition(CurrentTarget.transform.position);
+            }
+        }
+            transform.rotation = Quaternion.LookRotation(LookDirection);
         _currentState?.Tick(Time.deltaTime);
     }
 
@@ -87,7 +99,7 @@ public class PlayerStateMachine : StateMachine
     {
         Debug.Log("++");
         List<Targetable> targets = Vision.GetVisibleTargets(0);
-        if (Vision.CurrentVisibleIndex == targets.Count - 1)
+        if (Vision.CurrentVisibleIndex == targets.Count)
         {
             Vision.CurrentVisibleIndex = 0;
         }
@@ -100,7 +112,7 @@ public class PlayerStateMachine : StateMachine
         List<Targetable> targets = Vision.GetVisibleTargets(0);
         if (Vision.CurrentVisibleIndex == 0)
         {
-            Vision.CurrentVisibleIndex = targets.Count -1;
+            Vision.CurrentVisibleIndex = targets.Count;
         }
         else Vision.CurrentVisibleIndex--;
     }

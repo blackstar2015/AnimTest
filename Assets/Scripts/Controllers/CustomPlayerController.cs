@@ -1,8 +1,10 @@
+using GameEvents;
 using Sirenix.OdinInspector;
 using System;
-using GameEvents;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 [RequireComponent(typeof(PlayerInput))]
 public class CustomPlayerController : CustomController
@@ -23,7 +25,8 @@ public class CustomPlayerController : CustomController
 
     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] private string _currentStateName { get; set; }
     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public static float CurrentSpeed;
-    [SerializeField] public StringEventAsset PlayerSpeed;
+
+    [SerializeField,TabGroup("Cameras")] public CinemachineCamera TargetLockCam; 
     public override void Awake()
     {
         base.Awake();
@@ -53,6 +56,17 @@ public class CustomPlayerController : CustomController
     {
         MoveInput = value.Get<Vector2>();
         if(!stateMachine.CanMove) MoveInput = Vector2.zero;
+        if(stateMachine.CurrentTarget != null)
+        {
+            Vector3 targetDir = (stateMachine.CurrentTarget.transform.position - transform.position).normalized;
+            targetDir.y = 0f;
+
+            Quaternion targetRot = Quaternion.LookRotation(targetDir);
+            Vector3 inputDir = new Vector3(MoveInput.x, 0, MoveInput.y);
+            inputDir = targetRot * inputDir; 
+
+            MoveInput = new Vector2(inputDir.x, inputDir.z);
+        }
     }
 
     public virtual void OnJump(InputValue value)
@@ -75,18 +89,27 @@ public class CustomPlayerController : CustomController
     {
         AttackAction?.Invoke(value.isPressed);
     }
-    public void OnTargetLock(InputValue value)
+    public void OnTargetLockScroll(InputValue value)
+    {
+        float lastScrollTime = stateMachine.LastScrollTime + .5f;
+        if (Time.time > lastScrollTime)
+        {
+            Debug.Log(value.Get<Vector2>().y);
+            if(value.Get<Vector2>().y >= .1f)
+            {
+                //stateMachine.IncrementVisibleTarget();
+            }
+            else if(value.Get<Vector2>().y < -.1f)
+            {
+                //stateMachine.DecrementVisibleTarget();
+            }
+            stateMachine.LastScrollTime = Time.time;
+            //TargetLockAction?.Invoke();
+        }
+    }
+    public void OnTargetLock()
     {
         TargetLockAction?.Invoke();
-        
-        if(value.Get<Vector2>().x > 0)
-        {
-            stateMachine.IncrementVisibleTarget();
-        }
-        else if(value.Get<Vector2>().x < 0)
-        {
-            stateMachine.DecrementVisibleTarget();
-        }
     }
     public virtual void OnBlock(InputValue value)
     {
