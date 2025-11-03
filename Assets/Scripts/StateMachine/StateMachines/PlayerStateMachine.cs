@@ -56,20 +56,30 @@ public class PlayerStateMachine : StateMachine
         Vector3 up = Vector3.up;
         Vector3 right = Camera.main.transform.right;
         Vector3 forward = Vector3.Cross(right, up);
-        Vector3 moveInput = forward * PlayerController.MoveInput.y + right * PlayerController.MoveInput.x;
+        Vector3 moveInput = (forward * PlayerController.MoveInput.y + right * PlayerController.MoveInput.x).normalized;
         MoveInput = moveInput;
         SetMoveInput(moveInput);
         SetLookDirection(moveInput);
         if (LookInCameraDirection)
         {
-            if(CurrentTarget != null && !IsTargeting)
-            SetLookDirection(Camera.main.transform.forward);
+            if(CurrentTarget == null || !IsTargeting)
+            {
+                SetLookDirection(Camera.main.transform.forward);
+            }
             else
             {
+                Vector3 targetDir = (CurrentTarget.transform.position - transform.position).normalized;
+                targetDir.y = 0f;
+
+                Quaternion targetRot = Quaternion.LookRotation(targetDir);
+                Vector3 inputDir = new Vector3(MoveInput.x, 0, MoveInput.y);
+                inputDir = targetRot * inputDir;
+
+                MoveInput = new Vector2(inputDir.x, inputDir.z);
                 SetLookPosition(CurrentTarget.transform.position);
             }
         }
-            transform.rotation = Quaternion.LookRotation(LookDirection);
+        transform.rotation = Quaternion.LookRotation(LookDirection);
         _currentState?.Tick(Time.deltaTime);
     }
 

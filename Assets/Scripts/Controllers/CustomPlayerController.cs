@@ -27,6 +27,7 @@ public class CustomPlayerController : CustomController
     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public static float CurrentSpeed;
 
     [SerializeField,TabGroup("Cameras")] public CinemachineCamera TargetLockCam; 
+    [SerializeField,TabGroup("Cameras")] public CinemachineCamera FreeLookCam;
     public override void Awake()
     {
         base.Awake();
@@ -55,18 +56,7 @@ public class CustomPlayerController : CustomController
     public virtual void OnMove(InputValue value)
     {
         MoveInput = value.Get<Vector2>();
-        if(!stateMachine.CanMove) MoveInput = Vector2.zero;
-        if(stateMachine.CurrentTarget != null)
-        {
-            Vector3 targetDir = (stateMachine.CurrentTarget.transform.position - transform.position).normalized;
-            targetDir.y = 0f;
-
-            Quaternion targetRot = Quaternion.LookRotation(targetDir);
-            Vector3 inputDir = new Vector3(MoveInput.x, 0, MoveInput.y);
-            inputDir = targetRot * inputDir; 
-
-            MoveInput = new Vector2(inputDir.x, inputDir.z);
-        }
+        if(!stateMachine.CanMove) MoveInput = Vector2.zero;        
     }
 
     public virtual void OnJump(InputValue value)

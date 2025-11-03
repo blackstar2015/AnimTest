@@ -101,7 +101,7 @@ public abstract class PlayerBaseState : State
             if(stateMachine.CurrentTarget != null)
             {
                 stateMachine.IsTargeting = true;
-                stateMachine.PlayerController.TargetLockCam.Priority = 2; 
+                stateMachine.PlayerController.TargetLockCam.Priority = 2;
             }
         }
         else
