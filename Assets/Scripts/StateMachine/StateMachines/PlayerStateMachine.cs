@@ -62,20 +62,21 @@ public class PlayerStateMachine : StateMachine
         SetLookDirection(moveInput);
         if (LookInCameraDirection)
         {
-            if(CurrentTarget == null || !IsTargeting)
+            if(CurrentTarget == null || !IsTargeting || IsDashing)
             {
                 SetLookDirection(Camera.main.transform.forward);
             }
             else
             {
-                //LocalMoveInput = transform.InverseTransformDirection(MoveInput);
+                LocalMoveInput = transform.InverseTransformDirection(MoveInput).normalized;
                 Vector3 targetDir = (CurrentTarget.transform.position - transform.position).normalized;
                 targetDir.y = 0f;
 
                 Quaternion targetRot = Quaternion.LookRotation(targetDir);
-                Vector3 inputDir = new Vector3(MoveInput.x, 0, MoveInput.y);
+                Vector3 inputDir = new Vector3(LocalMoveInput.x, 0, LocalMoveInput.z);
                 inputDir = targetRot * inputDir;
                 inputDir.y = 0;
+                inputDir.Normalize();
                 MoveInput = new Vector3(inputDir.x,0, inputDir.z);
 
                 SetLookPosition(CurrentTarget.transform.position);

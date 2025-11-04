@@ -17,6 +17,7 @@ public class PlayerDodgingState : PlayerBaseState
     public override void Enter()
     {        
         base.Enter();
+        
         stateMachine.LookInCameraDirection = false;
         stateMachine.SetLookDirection(_dashDirection);
         stateMachine.Animator.CrossFade(_dodgeHash, stateMachine.CrossFadeDuration);
