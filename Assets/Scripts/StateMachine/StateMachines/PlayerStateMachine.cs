@@ -68,14 +68,16 @@ public class PlayerStateMachine : StateMachine
             }
             else
             {
+                //LocalMoveInput = transform.InverseTransformDirection(MoveInput);
                 Vector3 targetDir = (CurrentTarget.transform.position - transform.position).normalized;
                 targetDir.y = 0f;
 
                 Quaternion targetRot = Quaternion.LookRotation(targetDir);
                 Vector3 inputDir = new Vector3(MoveInput.x, 0, MoveInput.y);
                 inputDir = targetRot * inputDir;
+                inputDir.y = 0;
+                MoveInput = new Vector3(inputDir.x,0, inputDir.z);
 
-                MoveInput = new Vector2(inputDir.x, inputDir.z);
                 SetLookPosition(CurrentTarget.transform.position);
             }
         }

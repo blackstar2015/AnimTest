@@ -8914,7 +8914,8 @@ MonoBehaviour:
   _lastAttackTime: -Infinity
   <MoveInput>k__BackingField: {x: 0, y: 0}
   <_currentStateName>k__BackingField: 
-  PlayerSpeed: {fileID: 0}
+  TargetLockCam: {fileID: 0}
+  FreeLookCam: {fileID: 0}
 --- !u!114 &1549061530283916620
 MonoBehaviour:
   m_ObjectHideFlags: 0

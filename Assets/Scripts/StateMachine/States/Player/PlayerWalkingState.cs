@@ -46,10 +46,5 @@ public class PlayerWalkingState : PlayerBaseState
         if(stateMachine.IsAttacking) stateMachine.SwitchState(new PlayerAttackState(this.stateMachine, true));
         if(stateMachine.IsBlocking) stateMachine.SwitchState(new PlayerBlockState(this.stateMachine, false));
 
-        //if (stateMachine.IsTargeting)
-        //{
-        //    stateMachine.SetLookPosition(stateMachine.CurrentTarget.transform.position);
-        //}
-
     }
 }
