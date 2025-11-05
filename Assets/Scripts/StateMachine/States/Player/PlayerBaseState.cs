@@ -102,6 +102,9 @@ public abstract class PlayerBaseState : State
             {
                 stateMachine.IsTargeting = true;
                 stateMachine.PlayerController.TargetLockCam.Priority = 2;
+                stateMachine.PlayerController.TargetGroup.Targets[1].Object = stateMachine.CurrentTarget.transform;
+                //stateMachine.PlayerController.TargetGroup.Targets[1].Radius = 1;
+                //stateMachine.PlayerController.TargetGroup.Targets[1].Weight = .1f;
             }
         }
         else
@@ -109,6 +112,7 @@ public abstract class PlayerBaseState : State
             stateMachine.PlayerController.TargetLockCam.Priority = 0;
             stateMachine.IsTargeting = false;
             stateMachine.CurrentTarget = null;
+            //stateMachine.PlayerController.TargetGroup.Targets[1] = null;
         }
     }
 

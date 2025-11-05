@@ -60,7 +60,7 @@ public class CustomPlayerController : CustomController
     public virtual void OnMove(InputValue value)
     {
         MoveInput = value.Get<Vector2>();
-        if(!stateMachine.CanMove) MoveInput = Vector2.zero;
+        if(!stateMachine.CanMove || stateMachine.IsDashing) MoveInput = Vector2.zero;
     }
 
     public virtual void OnJump(InputValue value)

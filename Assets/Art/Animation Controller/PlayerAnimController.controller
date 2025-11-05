@@ -394,7 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f9538351b4ae440b3edc3001567709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _applyRootMotion: 1
+  _applyRootMotion: 0
   _canMove: 0
   _canShoot: 0
   _canMelee: 0

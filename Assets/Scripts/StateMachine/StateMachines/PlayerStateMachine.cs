@@ -12,18 +12,23 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public float LastDashTime = Mathf.NegativeInfinity;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public float LastScrollTime = Mathf.NegativeInfinity;
     [field: SerializeField, TabGroup("Properties")] public bool debugStateTransitions;
+    [field: SerializeField, TabGroup("Properties")] public Targetable CurrentTarget { get;  set; }
+    [field: SerializeField, TabGroup("Properties")] public bool IsTargeting;
+    [field: SerializeField, TabGroup("Properties")] public float CrossFadeDuration = 0f;
+
     [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerWalkSpeedMultiplier = 1f;
     [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerAttackSpeedMultiplier = .5f;
     [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerBlockSpeedMultiplier = .1f;
     [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerDashSpeedMultiplier = .1f;
     [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerAirSpeedMultiplier = 1f;
-    [ShowInInspector, TabGroup("Movement", "Basic")] public float CrossFadeDuration = 0f;
-    [ShowInInspector, TabGroup("Movement","Dashing")] public float DashSpeed = 1000f;
-    [ShowInInspector, TabGroup("Movement","Dashing")] public float DashCooldown { get;  set; } = 2f;
-    public Targetable CurrentTarget { get;  set; }
-    public bool IsTargeting;
 
+    //[ShowInInspector, TabGroup("Movement","Dashing")] public float DashSpeed = 1000f;
+    [ShowInInspector, TabGroup("Movement","Dashing")] public float DashCooldown { get;  set; } = 2f;
+    [ShowInInspector, TabGroup("Movement", "Dashing")] public float DashDistance;
+    [ShowInInspector, TabGroup("Movement", "Dashing")] public float DashDuration;
     [ShowInInspector, TabGroup("Movement","Dashing")] public Vector3 DashDirection;
+    [ShowInInspector, TabGroup("Movement", "Dashing")] public float LockDashArc = 30f;
+
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float LandingGravity = 10f;
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float AirDashMultiplier = 10f;
 

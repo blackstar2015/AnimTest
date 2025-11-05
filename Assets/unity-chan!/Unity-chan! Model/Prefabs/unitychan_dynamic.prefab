@@ -8883,15 +8883,18 @@ MonoBehaviour:
   LastDashTime: -Infinity
   LastScrollTime: -Infinity
   debugStateTransitions: 0
+  <CurrentTarget>k__BackingField: {fileID: 0}
+  IsTargeting: 0
+  CrossFadeDuration: 0.1
   PlayerWalkSpeedMultiplier: 1
   PlayerAttackSpeedMultiplier: 0.1
   PlayerBlockSpeedMultiplier: 0.1
   PlayerDashSpeedMultiplier: 0.1
   PlayerAirSpeedMultiplier: 1
-  CrossFadeDuration: 0.1
-  DashSpeed: 66
-  IsTargeting: 0
+  DashDistance: 2
+  DashDuration: 0.4
   DashDirection: {x: 0, y: 0, z: 0}
+  LockDashArc: 30
   LandingGravity: 25
   AirDashMultiplier: 10
 --- !u!114 &2722397050744638415
