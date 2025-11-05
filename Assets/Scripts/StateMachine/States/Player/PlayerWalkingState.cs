@@ -40,7 +40,17 @@ public class PlayerWalkingState : PlayerBaseState
     {
         base.Tick(deltaTime);
         stateMachine.rb.AddForce(stateMachine.LocalMoveInput * stateMachine.BaseSpeed * Time.deltaTime, ForceMode.Impulse);
-        if (stateMachine.IsDashing) stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.MoveInput, false));
+        if (stateMachine.IsDashing)
+        {
+            if(stateMachine.IsTargeting)
+            {
+                stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.transform.right * stateMachine.MoveInput.x, false));
+            }
+            else
+            {
+                stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.MoveInput, false));
+            }
+        }
         if (!stateMachine.IsGrounded) stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine, false));
         if (stateMachine.Velocity.magnitude * stateMachine.LocalMoveInput == Vector3.zero) stateMachine.SwitchState(new PlayerIdleState(this.stateMachine, true));
         if(stateMachine.IsAttacking) stateMachine.SwitchState(new PlayerAttackState(this.stateMachine, true));

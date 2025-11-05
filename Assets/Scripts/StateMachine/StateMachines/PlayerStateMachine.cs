@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 
 [RequireComponent(typeof(CustomPlayerController))]
 public class PlayerStateMachine : StateMachine
@@ -41,7 +42,7 @@ public class PlayerStateMachine : StateMachine
         // disable NavMeshAgent movement
         NavAgent.updatePosition = false;
         NavAgent.updateRotation = false;
-
+        
         // match-look direction to current facing
         LookDirection = transform.forward;
         PlayerController.SetStateMachine(this);
@@ -62,12 +63,12 @@ public class PlayerStateMachine : StateMachine
         SetLookDirection(moveInput);
         if (LookInCameraDirection)
         {
-            if(CurrentTarget == null || !IsTargeting || IsDashing)
+            if(CurrentTarget == null || !IsTargeting )
             {
                 SetLookDirection(Camera.main.transform.forward);
             }
             else
-            {
+            {             
                 LocalMoveInput = transform.InverseTransformDirection(MoveInput).normalized;
                 Vector3 targetDir = (CurrentTarget.transform.position - transform.position).normalized;
                 targetDir.y = 0f;

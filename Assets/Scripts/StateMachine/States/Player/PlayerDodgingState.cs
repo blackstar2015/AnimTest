@@ -19,8 +19,15 @@ public class PlayerDodgingState : PlayerBaseState
         base.Enter();
         
         stateMachine.LookInCameraDirection = false;
-        stateMachine.SetLookDirection(_dashDirection);
-        stateMachine.Animator.CrossFade(_dodgeHash, stateMachine.CrossFadeDuration);
+        if(!stateMachine.IsTargeting)
+        {
+            stateMachine.SetLookDirection(_dashDirection);
+        }
+        else
+        {
+            stateMachine.SetLookDirection(stateMachine.PlayerController.FreeLookCam.transform.right * stateMachine.LocalMoveInput.z);
+        }
+            stateMachine.Animator.CrossFade(_dodgeHash, stateMachine.CrossFadeDuration);
         stateMachine.PlayerController.DodgeAction += Dodge;
     }
     public override void Exit()
@@ -35,6 +42,7 @@ public class PlayerDodgingState : PlayerBaseState
         base.Tick(deltaTime);
 
         if (!stateMachine.IsDashing) stateMachine.StartCoroutine(stateMachine.SwitchToMovementWithDelay(false, stateMachine.Animator.GetCurrentAnimatorStateInfo(0).length));
+
         PerformDash();
     }
 
@@ -43,8 +51,6 @@ public class PlayerDodgingState : PlayerBaseState
         if(!stateMachine.IsDashing) return;
         stateMachine.rb.linearVelocity = Vector3.zero;
         stateMachine.CanMove = false;
-        //stateMachine.rb.AddForce(_dashDirection * stateMachine.DashSpeed, ForceMode.Impulse);
-        Debug.DrawRay(stateMachine.transform.position + Vector3.up, _dashDirection * stateMachine.DashSpeed, Color.red, 5);
         stateMachine.IsDashing = false;
     }
 

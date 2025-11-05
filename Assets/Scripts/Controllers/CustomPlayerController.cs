@@ -119,17 +119,7 @@ public class CustomPlayerController : CustomController
         base.Update();  
         _currentStateName = stateMachine.CurrentState.ToString();
         CurrentSpeed = Mathf.Ceil(stateMachine.rb.linearVelocity.magnitude);
-        if (stateMachine.CurrentTarget != null)
-        {
-            CinemachineTargetGroup.Target target = new CinemachineTargetGroup.Target();
-            
-            Transform targetTransform = stateMachine.CurrentTarget.transform;
-            //targetTransform.position = targetTransform.position + Vector3.up;
-            target.Object = targetTransform;
-            target.Radius = 1f;
-            target.Weight = .1f;
-            TargetGroup.Targets[1] = target;
-        }
+        
         //PlayerSpeed.Invoke(CurrentSpeed.ToString());
     }
    
