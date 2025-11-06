@@ -30,7 +30,7 @@ public class PlayerDodgingState : PlayerBaseState
         
         if (stateMachine.IsTargeting || stateMachine.CurrentTarget != null)
         {
-            stateMachine.PlayerController.TargetLockCam.LookAt = stateMachine.CurrentTarget.transform;
+            //stateMachine.PlayerController.TargetLockCam.LookAt = stateMachine.CurrentTarget.transform;
             stateMachine.SetLookPosition(stateMachine.CurrentTarget.transform.position);
         }
         else if(!stateMachine.IsTargeting)
@@ -45,9 +45,9 @@ public class PlayerDodgingState : PlayerBaseState
         stateMachine.LookInCameraDirection = true;
         stateMachine.CanMove = true;
         stateMachine.PlayerController.DodgeAction -= Dodge;
-        if (stateMachine.IsTargeting)
+        if (stateMachine.IsTargeting || stateMachine.CurrentTarget != null)
         {
-            stateMachine.PlayerController.TargetLockCam.LookAt = stateMachine.transform;
+            //stateMachine.PlayerController.TargetLockCam.LookAt = stateMachine.transform;
             stateMachine.SetLookPosition(stateMachine.CurrentTarget.transform.position);
         }
         base.Exit();
@@ -56,8 +56,8 @@ public class PlayerDodgingState : PlayerBaseState
     {
         base.Tick(deltaTime);
 
-        if (!stateMachine.IsDashing && ! stateMachine.IsTargeting) stateMachine.StartCoroutine(stateMachine.SwitchToMovementWithDelay(false, stateMachine.Animator.GetCurrentAnimatorStateInfo(0).length));
-        else if (!stateMachine.IsDashing && stateMachine.IsTargeting) stateMachine.StartCoroutine(stateMachine.SwitchToMovementWithDelay(false, 0));
+        if (!stateMachine.IsDashing && ! stateMachine.IsTargeting) stateMachine.StartCoroutine(stateMachine.SwitchToMovementWithDelay(false, stateMachine.Animator.GetCurrentAnimatorStateInfo(0).length - .5f));
+        else if (!stateMachine.IsDashing && stateMachine.IsTargeting) stateMachine.StartCoroutine(stateMachine.SwitchToMovementWithDelay(true, .1f));
 
         PerformDash();
     }
