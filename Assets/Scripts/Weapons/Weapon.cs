@@ -22,9 +22,9 @@ public abstract class Weapon : MonoBehaviour
     [field: SerializeField, TabGroup("AnimHashes")] public string StunnedHash { get; set; }
     [field: SerializeField, TabGroup("AnimHashes")] public string SwitchToHash { get; set; }
     [field: SerializeField, TabGroup("AnimHashes")] public string SwitchFromHash { get; set; }
+    [field: SerializeField, TabGroup("AnimHashes")] public string LockedDodgeHash { get; set; }
     private float _lastAttackTime = -100000f;
     private Animator _animator;
-    
 
     private void Start()
     {

@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerDodgingState : PlayerBaseState
 {
     private int _dodgeHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].DodgeHash);
+    private int _lockedDodgeHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].LockedDodgeHash);
     private int _airborneDashHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneDashHash);
 
     private Vector3 _dashDirection {  get; set; }
@@ -13,7 +15,11 @@ public class PlayerDodgingState : PlayerBaseState
     public PlayerDodgingState(PlayerStateMachine stateMachine, Vector3 dashDirection, bool shouldFade) : base(stateMachine)
     {
         this.stateMachine = stateMachine;
-        _dashDirection = dashDirection.normalized;
+        if(stateMachine.IsTargeting)
+        {
+            _dashDirection = (stateMachine.CurrentTarget.transform.position - stateMachine.transform.position).normalized;
+        }
+        else _dashDirection = dashDirection.normalized;
         _shouldFade = shouldFade;
         _moveInput = -stateMachine.LocalMoveInput;
     }
@@ -22,15 +28,15 @@ public class PlayerDodgingState : PlayerBaseState
     {        
         base.Enter();
         
-        stateMachine.LookInCameraDirection = false;
-        if(!stateMachine.IsTargeting)
+        if (stateMachine.IsTargeting || stateMachine.CurrentTarget != null)
         {
-            stateMachine.SetLookDirection(_dashDirection);
+            stateMachine.PlayerController.TargetLockCam.LookAt = stateMachine.CurrentTarget.transform;
+            stateMachine.SetLookPosition(stateMachine.CurrentTarget.transform.position);
         }
-        else
+        else if(!stateMachine.IsTargeting)
         {
-            stateMachine.SetLookDirection(stateMachine.PlayerController.FreeLookCam.transform.right * stateMachine.LocalMoveInput.z);
-            if (stateMachine.IsTargeting) stateMachine.PlayerController.TargetLockCam.LookAt = stateMachine.CurrentTarget.transform;
+            stateMachine.LookInCameraDirection = false;
+            stateMachine.SetLookDirection(_dashDirection);
         }
         stateMachine.PlayerController.DodgeAction += Dodge;
     }
@@ -39,14 +45,19 @@ public class PlayerDodgingState : PlayerBaseState
         stateMachine.LookInCameraDirection = true;
         stateMachine.CanMove = true;
         stateMachine.PlayerController.DodgeAction -= Dodge;
-        if(stateMachine.IsTargeting) stateMachine.PlayerController.TargetLockCam.LookAt = stateMachine.transform;
+        if (stateMachine.IsTargeting)
+        {
+            stateMachine.PlayerController.TargetLockCam.LookAt = stateMachine.transform;
+            stateMachine.SetLookPosition(stateMachine.CurrentTarget.transform.position);
+        }
         base.Exit();
     }
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
 
-        if (!stateMachine.IsDashing) stateMachine.StartCoroutine(stateMachine.SwitchToMovementWithDelay(false, stateMachine.Animator.GetCurrentAnimatorStateInfo(0).length));
+        if (!stateMachine.IsDashing && ! stateMachine.IsTargeting) stateMachine.StartCoroutine(stateMachine.SwitchToMovementWithDelay(false, stateMachine.Animator.GetCurrentAnimatorStateInfo(0).length));
+        else if (!stateMachine.IsDashing && stateMachine.IsTargeting) stateMachine.StartCoroutine(stateMachine.SwitchToMovementWithDelay(false, 0));
 
         PerformDash();
     }
@@ -65,17 +76,17 @@ public class PlayerDodgingState : PlayerBaseState
     {
         float direction = _moveInput.x >= 0 ? 1f : -1f;
         stateMachine.IsDashing = true;
-        stateMachine.Animator.CrossFade(_dodgeHash, stateMachine.CrossFadeDuration);
+        stateMachine.Animator.CrossFade(_lockedDodgeHash, stateMachine.CrossFadeDuration);
 
         float elapsedTime = 0f;
 
-        // Common values
         Transform player = stateMachine.transform;
-        float dashDuration = stateMachine.DashDuration;
+        float dashDuration = stateMachine.DashDuration/2;
 
 
         if (stateMachine.IsTargeting && stateMachine.CurrentTarget != null)
         {
+            stateMachine.SetLookPosition(stateMachine.CurrentTarget.transform.position);
             Transform target = stateMachine.CurrentTarget.transform;
             Vector3 toPlayer = player.position - target.position;
             float radius = toPlayer.magnitude;
@@ -90,16 +101,13 @@ public class PlayerDodgingState : PlayerBaseState
                 float t = elapsedTime / dashDuration;
                 float angle = totalDegrees * t;
 
-                // Rotate the original vector around the target
                 Vector3 rotated = Quaternion.AngleAxis(angle, Vector3.up) * toPlayer;
 
-                // Keep the same distance from target
                 Vector3 newPos = target.position + rotated.normalized * radius;
 
                 player.position = Vector3.Lerp(player.position, newPos, Time.deltaTime * dashSpeed);
 
                 elapsedTime += Time.deltaTime;
-                stateMachine.SetLookPosition(stateMachine.CurrentTarget.transform.position);
                 yield return null;
             }
         }

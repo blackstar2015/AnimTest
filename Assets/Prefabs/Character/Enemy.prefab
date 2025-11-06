@@ -580,6 +580,7 @@ MonoBehaviour:
   <StunnedHash>k__BackingField: 
   <SwitchToHash>k__BackingField: 
   <SwitchFromHash>k__BackingField: 
+  <LockedDodgeHash>k__BackingField: 
 --- !u!4 &8144500639370651670 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7039256315202561560, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
