@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class EnemyStateMachine : StateMachine
 {
-    [field: SerializeField, TabGroup("Properties")] public CustomEnemyController EnemyController=> Controller as CustomEnemyController;
-    [field: SerializeField, TabGroup("Properties")] public bool DebugStateTransitions;
-    public Vector3 PatrolPoint;
-    [field: SerializeField, TabGroup("Movement", "Speed")] public float EnemyAttackSpeedMultiplier = .5f;
-    [field: SerializeField, TabGroup("Movement", "Speed")] public float EnemyWalkSpeedMultiplier = 1f;
+    [SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Properties")] public CustomEnemyController EnemyController=> Controller as CustomEnemyController;
+    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Properties")] public bool DebugStateTransitions;
+    
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Basic")] public float EnemyAttackSpeedMultiplier = .5f;
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Basic")] public float EnemyWalkSpeedMultiplier = 1f;
+
+    [FoldoutGroup("States"), TabGroup("States/Tabs","Patrol")] public Vector3 PatrolPoint;
 
     public override void Awake()
     {

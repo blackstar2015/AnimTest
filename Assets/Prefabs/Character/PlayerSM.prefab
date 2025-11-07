@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5682914713618042527}
   - component: {fileID: 6681283384879490700}
   - component: {fileID: 2307960948676653173}
+  - component: {fileID: 2944962328260993751}
   m_Layer: 6
   m_Name: Target Lock Camera
   m_TagString: Untagged
@@ -26,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 687361410212327218}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.07116403, y: -0.103296585, z: 0.0074097323, w: 0.9920739}
-  m_LocalPosition: {x: 0.77, y: 1.55, z: -0.95000076}
+  m_LocalRotation: {x: 0.039915625, y: -0.031643417, z: 0.0012647095, w: 0.9987011}
+  m_LocalPosition: {x: 0.34, y: 1.57, z: -1.1100006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Priority:
     Enabled: 1
-    m_Value: 2
+    m_Value: 0
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -55,7 +56,7 @@ MonoBehaviour:
   Target:
     TrackingTarget: {fileID: 7987039994458159796}
     LookAtTarget: {fileID: 6577984921502266960}
-    CustomLookAtTarget: 1
+    CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
     OrthographicSize: 5
@@ -75,7 +76,7 @@ MonoBehaviour:
       Curvature: {x: 2, y: 11}
       BarrelClipping: 0.25
       Anamorphism: 0
-  BlendHint: 14
+  BlendHint: 8
 --- !u!114 &2307960948676653173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +95,20 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 0, y: 0, z: 0}
     QuaternionDamping: 1
-  FollowOffset: {x: 0.77, y: 1.55, z: -0.95}
+  FollowOffset: {x: 0.34, y: 1.57, z: -1.11}
+--- !u!114 &2944962328260993751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687361410212327218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LookAtOffset: {x: 0, y: 1.14, z: 4.25}
 --- !u!1 &1600860235423061483
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,8 +229,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5760539682218880239}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.17479683, y: -0.44955757, z: -0.09018571, w: 0.871327}
-  m_LocalPosition: {x: 1.0855716, y: 0.5931369, z: -0.77197266}
+  m_LocalRotation: {x: -0.19913486, y: -0.52920735, z: -0.129371, w: 0.8145846}
+  m_LocalPosition: {x: 1.1421165, y: 0.5, z: -0.50800705}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -264,7 +278,7 @@ MonoBehaviour:
       Curvature: {x: 2, y: 11}
       BarrelClipping: 0.25
       Anamorphism: 0
-  BlendHint: 0
+  BlendHint: 8
 --- !u!114 &3828102927456173019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,7 +313,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
-    Value: -54.58251
+    Value: -66.02082
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -309,7 +323,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: -5.110492
+    Value: -10
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -592,19 +606,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5522024923081904833, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
-      propertyPath: <LockedDodgeHash>k__BackingField
-      value: LockedDodge
-      objectReference: {fileID: 0}
-    - target: {fileID: 6581559129690418106, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - target: {fileID: 4678409019931915664, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: FreeLookCam
       value: 
       objectReference: {fileID: 5212102315302228801}
-    - target: {fileID: 6581559129690418106, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - target: {fileID: 4678409019931915664, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: TargetGroup
       value: 
       objectReference: {fileID: 1527271036971246698}
-    - target: {fileID: 6581559129690418106, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+    - target: {fileID: 4678409019931915664, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: TargetLockCam
       value: 
       objectReference: {fileID: 6681283384879490700}

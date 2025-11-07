@@ -102,7 +102,7 @@ public abstract class PlayerBaseState : State
         {
             List<Targetable> possibleTargets = new List<Targetable>();
             possibleTargets =  stateMachine.Vision.GetVisibleTargets(0);
-            stateMachine.CurrentTarget = possibleTargets[stateMachine.Vision.CurrentVisibleIndex];
+            stateMachine.CurrentTarget = possibleTargets[stateMachine.CurrentVisibleIndex];
             if(stateMachine.CurrentTarget != null)
             {
                 stateMachine.IsTargeting = true;

@@ -11,10 +11,8 @@ using UnityEngine.Windows;
 public class CustomPlayerController : CustomController
 {
     private PlayerStateMachine stateMachine;
-    [field: SerializeField, TabGroup("Properties")] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
-     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastDashTime = Mathf.NegativeInfinity;
-     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastAttackTime = Mathf.NegativeInfinity;
-     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public Vector2 MoveInput { get; set; }
+    protected CursorLockMode CursorMode => stateMachine.CursorMode;
+    [field: SerializeField, HideInEditorMode, ReadOnly] public Vector2 MoveInput { get; set; }
 
     [field: SerializeField, TabGroup("Events")] public Action JumpAction;
     [field: SerializeField, TabGroup("Events")] public Action DodgeAction;
@@ -24,12 +22,13 @@ public class CustomPlayerController : CustomController
     [field: SerializeField, TabGroup("Events")] public Action WeaponSwitchAction;
     [field: SerializeField, TabGroup("Events")] public Action TargetLockAction;
 
-    [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] private string _currentStateName { get; set; }
-    [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] public static float CurrentSpeed;
+    [ReadOnly, HideInEditorMode, SerializeField] private string _currentStateName { get; set; }
+    [ReadOnly, HideInEditorMode, SerializeField] public static float CurrentSpeed;
 
-    [SerializeField,TabGroup("Cameras")] public CinemachineCamera TargetLockCam; 
-    [SerializeField,TabGroup("Cameras")] public CinemachineCamera FreeLookCam;
-    [SerializeField,TabGroup("Cameras")] public CinemachineTargetGroup TargetGroup;
+    public CinemachineCamera TargetLockCam => stateMachine.TargetLockCam; 
+    public CinemachineCamera FreeLookCam => stateMachine.FreeLookCam;
+    public CinemachineTargetGroup TargetGroup => stateMachine.TargetGroup;
+
     public override void Awake()
     {
         base.Awake();

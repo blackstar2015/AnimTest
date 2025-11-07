@@ -1,37 +1,43 @@
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
 
 [RequireComponent(typeof(CustomPlayerController))]
 public class PlayerStateMachine : StateMachine
 {
-    [field: SerializeField, TabGroup("Properties")] public CustomPlayerController PlayerController => Controller as CustomPlayerController;
-    [field: SerializeField, TabGroup("Properties")] protected CursorLockMode CursorMode = CursorLockMode.Locked;
-    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public float LastDashTime = Mathf.NegativeInfinity;
-    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public float LastScrollTime = Mathf.NegativeInfinity;
-    [field: SerializeField, TabGroup("Properties")] public bool debugStateTransitions;
-    [field: SerializeField, TabGroup("Properties")] public Targetable CurrentTarget { get;  set; }
-    [field: SerializeField, TabGroup("Properties")] public bool IsTargeting;
 
-    [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerWalkSpeedMultiplier = 1f;
-    [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerAttackSpeedMultiplier = .5f;
-    [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerBlockSpeedMultiplier = .1f;
-    [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerDashSpeedMultiplier = .1f;
-    [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerAirSpeedMultiplier = 1f;
+    [SerializeField] public CustomPlayerController PlayerController => Controller as CustomPlayerController;
 
-    //[ShowInInspector, TabGroup("Movement","Dashing")] public float DashSpeed = 1000f;
-    [ShowInInspector, TabGroup("Movement","Dashing")] public float DashCooldown { get;  set; } = 2f;
-    [ShowInInspector, TabGroup("Movement", "Dashing")] public float DashDistance;
-    [ShowInInspector, TabGroup("Movement", "Dashing")] public float DashDuration;
-    [ShowInInspector, TabGroup("Movement","Dashing")] public Vector3 DashDirection;
-    [ShowInInspector, TabGroup("Movement", "Dashing")] public float LockDashArc = 30f;
-    [ShowInInspector, TabGroup("Movement", "Dashing")] public bool IsDashing { get; set; } = false;
+    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Properties")] public CursorLockMode CursorMode = CursorLockMode.Locked;
+    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Properties"), HideInEditorMode, ReadOnly] public float LastDashTime = Mathf.NegativeInfinity;
+    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Properties"), HideInEditorMode, ReadOnly] public float LastScrollTime = Mathf.NegativeInfinity;
+    
+    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Debug")] public bool debugStateTransitions;
+    
+    
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Basic")] public float PlayerWalkSpeedMultiplier = 1f;
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Basic")] public float PlayerAttackSpeedMultiplier = .5f;
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Basic")] public float PlayerBlockSpeedMultiplier = .1f;
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Basic")] public float PlayerDashSpeedMultiplier = .1f;
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Basic")] public float PlayerAirSpeedMultiplier = 1f;
+    
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Dash")] public float DashCooldown { get;  set; } = 2f;
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Dash")] public float DashDistance;
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Dash")] public float DashDuration;
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Dash")] public Vector3 DashDirection;
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Dash")] public float LockDashArc = 30f;
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Dash")] public bool IsDashing { get; set; } = false;
+    
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Airborne")] public float LandingGravity = 10f;
+    [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Airborne")] public float AirDashMultiplier = 10f;
 
-    [ShowInInspector, TabGroup("Movement", "Airborne")] public float LandingGravity = 10f;
-    [ShowInInspector, TabGroup("Movement", "Airborne")] public float AirDashMultiplier = 10f;
-
+    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs","Camera")] public CinemachineCamera TargetLockCam;
+    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs","Camera")] public CinemachineCamera FreeLookCam;
+    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Camera")] public CinemachineTargetGroup TargetGroup;
+    
     public override void Awake()
     {
         base.Awake();
@@ -118,21 +124,21 @@ public class PlayerStateMachine : StateMachine
     {
         Debug.Log("++");
         List<Targetable> targets = Vision.GetVisibleTargets(0);
-        if (Vision.CurrentVisibleIndex == targets.Count)
+        if (CurrentVisibleIndex == targets.Count)
         {
-            Vision.CurrentVisibleIndex = 0;
+            CurrentVisibleIndex = 0;
         }
-        else Vision.CurrentVisibleIndex++;
+        else CurrentVisibleIndex++;
     }
 
     public void DecrementVisibleTarget()
     {
         Debug.Log("--");
         List<Targetable> targets = Vision.GetVisibleTargets(0);
-        if (Vision.CurrentVisibleIndex == 0)
+        if (CurrentVisibleIndex == 0)
         {
-            Vision.CurrentVisibleIndex = targets.Count;
+            CurrentVisibleIndex = targets.Count;
         }
-        else Vision.CurrentVisibleIndex--;
+        else CurrentVisibleIndex--;
     }
 }
