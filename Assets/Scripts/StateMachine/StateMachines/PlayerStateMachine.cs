@@ -43,6 +43,8 @@ public class PlayerStateMachine : StateMachine
         base.Awake();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        TargetGroup.Targets.Capacity = 2;
+
         // assign frictionless physic material
 #if UNITY_6000_0_OR_NEWER
         Collider.material = new PhysicsMaterial("NoFriction") { staticFriction = 0f, dynamicFriction = 0f, frictionCombine = PhysicsMaterialCombine.Minimum };

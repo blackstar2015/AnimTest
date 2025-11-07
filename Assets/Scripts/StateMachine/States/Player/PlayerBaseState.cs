@@ -35,9 +35,8 @@ public abstract class PlayerBaseState : State
     {
         if(stateMachine.JumpCounter < stateMachine.MaxJumps)
         {
-            // calculate jump velocity from jump height and gravity
             float jumpVelocity = Mathf.Sqrt(2f * -stateMachine.Gravity * stateMachine.JumpHeight);
-            // override current y velocity but maintain x/z velocity
+         
             stateMachine.Velocity = new Vector3(stateMachine.Velocity.x, jumpVelocity, stateMachine.Velocity.z);
             stateMachine.JumpCounter++;
         }
@@ -101,23 +100,20 @@ public abstract class PlayerBaseState : State
         if(stateMachine.CurrentTarget == null)
         {
             List<Targetable> possibleTargets = new List<Targetable>();
-            possibleTargets =  stateMachine.Vision.GetVisibleTargets(0);
+            possibleTargets =  stateMachine.Vision.GetVisibleTargets(stateMachine.Team);
             stateMachine.CurrentTarget = possibleTargets[stateMachine.CurrentVisibleIndex];
             if(stateMachine.CurrentTarget != null)
             {
                 stateMachine.IsTargeting = true;
-                stateMachine.PlayerController.TargetLockCam.Priority = 2;
-                stateMachine.PlayerController.TargetGroup.Targets[1].Object = stateMachine.CurrentTarget.transform;
-                //stateMachine.PlayerController.TargetGroup.Targets[1].Radius = 1;
-                //stateMachine.PlayerController.TargetGroup.Targets[1].Weight = .1f;
+                stateMachine.TargetLockCam.Priority = 2;
+                stateMachine.TargetGroup.Targets[1].Object = stateMachine.CurrentTarget.transform;
             }
         }
         else
         {
-            stateMachine.PlayerController.TargetLockCam.Priority = 0;
+            stateMachine.TargetLockCam.Priority = 0;
             stateMachine.IsTargeting = false;
             stateMachine.CurrentTarget = null;
-            //stateMachine.PlayerController.TargetGroup.Targets[1] = null;
         }
     }
 

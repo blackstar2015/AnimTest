@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
 {
-    //private int IdleHash => stateMachine.IdleHash;
     private int IdleHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].IdleHash);
     public PlayerIdleState(PlayerStateMachine stateMachine, bool shouldFade) : base(stateMachine)
     {

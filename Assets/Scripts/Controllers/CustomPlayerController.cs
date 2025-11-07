@@ -25,9 +25,9 @@ public class CustomPlayerController : CustomController
     [ReadOnly, HideInEditorMode, SerializeField] private string _currentStateName { get; set; }
     [ReadOnly, HideInEditorMode, SerializeField] public static float CurrentSpeed;
 
-    public CinemachineCamera TargetLockCam => stateMachine.TargetLockCam; 
-    public CinemachineCamera FreeLookCam => stateMachine.FreeLookCam;
-    public CinemachineTargetGroup TargetGroup => stateMachine.TargetGroup;
+    //public CinemachineCamera TargetLockCam => stateMachine.TargetLockCam; 
+    //public CinemachineCamera FreeLookCam => stateMachine.FreeLookCam;
+    //public CinemachineTargetGroup TargetGroup => stateMachine.TargetGroup;
 
     public override void Awake()
     {
@@ -44,8 +44,6 @@ public class CustomPlayerController : CustomController
                 weapon.WeaponMesh.SetActive(false);
             }
         }
-
-        TargetGroup.Targets.Capacity = 2;
     }
 
     public void SetStateMachine(PlayerStateMachine stateMachine)

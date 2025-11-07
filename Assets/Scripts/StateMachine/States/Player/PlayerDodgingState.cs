@@ -7,8 +7,7 @@ public class PlayerDodgingState : PlayerBaseState
 {
     private int _dodgeHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].DodgeHash);
     private int _lockedDodgeHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].LockedDodgeHash);
-    private int _airborneDashHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneDashHash);
-
+   
     private Vector3 _dashDirection {  get; set; }
     private Vector3 _moveInput { get; set; }
 
@@ -30,7 +29,6 @@ public class PlayerDodgingState : PlayerBaseState
         
         if (stateMachine.IsTargeting || stateMachine.CurrentTarget != null)
         {
-            //stateMachine.PlayerController.TargetLockCam.LookAt = stateMachine.CurrentTarget.transform;
             stateMachine.SetLookPosition(stateMachine.CurrentTarget.transform.position);
         }
         else if(!stateMachine.IsTargeting)
@@ -47,7 +45,6 @@ public class PlayerDodgingState : PlayerBaseState
         stateMachine.PlayerController.DodgeAction -= Dodge;
         if (stateMachine.IsTargeting || stateMachine.CurrentTarget != null)
         {
-            //stateMachine.PlayerController.TargetLockCam.LookAt = stateMachine.transform;
             stateMachine.SetLookPosition(stateMachine.CurrentTarget.transform.position);
         }
         base.Exit();
@@ -67,9 +64,6 @@ public class PlayerDodgingState : PlayerBaseState
         if(!stateMachine.IsDashing) return;
         if(!stateMachine.IsTargeting) stateMachine.StartCoroutine(DashCoroutine());
         else stateMachine.StartCoroutine(TargetLockDashCoroutine());
-        //stateMachine.rb.linearVelocity = Vector3.zero;
-        //stateMachine.CanMove = false;
-        //stateMachine.IsDashing = false;
     }
 
     private IEnumerator TargetLockDashCoroutine()
@@ -130,31 +124,10 @@ public class PlayerDodgingState : PlayerBaseState
         {
             stateMachine.Animator.CrossFade(_dodgeHash, stateMachine.CrossFadeDuration);
             float t = elapsedTime / stateMachine.DashDuration;
-            //stateMachine.rb.MovePosition(endPos);
             stateMachine.transform.position = Vector3.Lerp(startPos, endPos, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        //transform.position = endPos;
         stateMachine.IsDashing = false;
-    }
-
-    private Vector3 GetDashDirection()
-    {
-        RaycastHit hit;
-        Vector3 forward = stateMachine.transform.forward;
-
-        // Check if the player is on a slope
-        if (Physics.Raycast(stateMachine.transform.position, Vector3.down, out hit, 1.0f))
-        {
-            // Project forward vector onto the slope normal
-            forward = Vector3.ProjectOnPlane(forward, hit.normal).normalized;
-        }
-
-        return forward;
-    }
-    private void EndDash()
-    {
-        stateMachine.SwitchToMovement(true);
     }
 }

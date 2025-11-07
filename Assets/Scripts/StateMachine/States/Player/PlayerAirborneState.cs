@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class PlayerAirborneState : PlayerBaseState
 {
-    //private int AirborneJumpHash => stateMachine.AirborneJumpHash;
-    //private int AirborneFlipHash => stateMachine.AirborneFlipHash;
     private int AirborneJumpHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneJumpHash);
     private int AirborneFlipHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneFlipHash);
 
@@ -26,25 +24,13 @@ public class PlayerAirborneState : PlayerBaseState
             stateMachine.Animator.CrossFade(AirborneFlipHash, .1f);
         }
         stateMachine.PlayerController.BlockAction += Block;
-        //stateMachine.PlayerController.AttackAction += Attack;
         base.Enter();
     }
     public override void Exit()
     {
         stateMachine.PlayerController.JumpAction -= Jump;
-        //stateMachine.PlayerController.DodgeAction -= Dodge;
-        //stateMachine.PlayerController.BlockAction -= Block;
-        //stateMachine.PlayerController.AttackAction -= Attack;
         base .Exit();
     }
-    //public bool CheckWallRun()
-    //{
-    //    if (!stateMachine.IsGrounded) return false;
-
-    //    bool hit = Physics.SphereCast(stateMachine.transform.position, stateMachine.WallRunCheckRadius, stateMachine.LookDirection, out RaycastHit hitInfo, stateMachine.WallRunCheckDistance, stateMachine.WallRunLayer);
-
-    //    return hit;
-    //}
 
     public override void Tick(float deltaTime)
     {
@@ -57,9 +43,7 @@ public class PlayerAirborneState : PlayerBaseState
     {
         if (stateMachine.JumpCounter < stateMachine.MaxJumps)
         {
-            // calculate jump velocity from jump height and gravity
-            float jumpVelocity = Mathf.Sqrt(2f * -stateMachine.Gravity * stateMachine.JumpHeight);
-            // override current y velocity but maintain x/z velocity
+            float jumpVelocity = Mathf.Sqrt(2f * -stateMachine.Gravity * stateMachine.JumpHeight);         
             stateMachine.Velocity = new Vector3(stateMachine.Velocity.x, jumpVelocity, stateMachine.Velocity.z);
             stateMachine.JumpCounter++;
             stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine, true));

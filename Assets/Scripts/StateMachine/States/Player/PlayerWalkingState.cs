@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerWalkingState : PlayerBaseState
 {
-    //private int MovementHash => stateMachine.MovementHash;
     private int MovementHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].MovementHash);
 
     public PlayerWalkingState(PlayerStateMachine stateMachine, bool shouldFade) : base(stateMachine)
@@ -20,6 +19,7 @@ public class PlayerWalkingState : PlayerBaseState
         stateMachine.PlayerController.AttackAction += Attack;
         stateMachine.PlayerController.SprintAction += Sprint;
         stateMachine.PlayerController.WeaponSwitchAction += WeaponSwitch;
+        stateMachine.PlayerController.TargetLockAction += TargetLock;
         stateMachine.Animator.CrossFade(MovementHash, stateMachine.CrossFadeDuration);
         stateMachine.MoveSpeedMultiplier = stateMachine.PlayerWalkSpeedMultiplier;
     }
@@ -31,6 +31,7 @@ public class PlayerWalkingState : PlayerBaseState
         stateMachine.PlayerController.BlockAction -= Block;
         stateMachine.PlayerController.AttackAction -= Attack;
         stateMachine.PlayerController.SprintAction -= Sprint;
+        stateMachine.PlayerController.TargetLockAction -= TargetLock;
         stateMachine.PlayerController.WeaponSwitchAction -= WeaponSwitch;
         base .Exit();
     }

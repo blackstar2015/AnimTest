@@ -28,7 +28,7 @@ public class EnemyChaseState: EnemyBaseState
         }
         else
         {
-            stateMachine.SwitchStateWithDelay(new EnemyAttackState(this.stateMachine),1);
+            stateMachine.SwitchState(new EnemyAttackState(this.stateMachine),1);
         }
     }
 }
