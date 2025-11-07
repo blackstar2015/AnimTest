@@ -15,11 +15,16 @@ public class CustomEnemyController : CustomController
     {
         base.Awake();
     }
+    private void Start()
+    {
+        if(_spawnTransform == null) _spawnTransform = transform;
+    }
     public override void Update()
     {
         base.Update();
         _currentStateName = stateMachine.CurrentState.ToString();
-        if(stateMachine.CurrentTarget != null ) Target = stateMachine.CurrentTarget;
+        if(stateMachine.Vision.GetVisibleTargets(stateMachine.Team) != null) stateMachine. CurrentTarget = stateMachine.Vision.GetFirstVisibleTarget(stateMachine.Team);
+
     }
     private void RemoveAttackTicket(DamageInfo damageInfo)
     {

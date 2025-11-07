@@ -278,7 +278,6 @@ public class StateMachine : MonoBehaviour
     public virtual void Update()
     {
         IsGrounded = CheckGrounded();
-        if(Vision.GetVisibleTargets(Team) != null) CurrentTarget = Vision.GetFirstVisibleTarget(Team);
         // rotates character towards movement direction
         if (ControlRotation && (HasTurnInput || !OnlyTurnWithInput) && (IsGrounded || AirTurning))
         {
