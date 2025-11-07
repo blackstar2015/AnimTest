@@ -69,7 +69,6 @@ public class StateMachine : MonoBehaviour
     [field: SerializeField, TabGroup("Movement","Grounding")] public float CoyoteMaxJumpDistance { get; set; } = 0.5f;     // max distance allowed after leaving ground when doing a coyote jump
     [field: SerializeField, TabGroup("Movement","Grounding")] public LayerMask GroundMask { get; set; } = 1 << 0;          // mask for layers considered the ground
     [field: SerializeField, TabGroup("Movement", "Grounding")] public float MinGroundedVelocity { get; set; } = 5f;
-    [ShowInInspector, TabGroup("Movement", "Dashing")] public bool IsDashing { get; set; } = false;
     #endregion
     #region Events
     [TabGroup("Events")] public UnityEvent<GameObject> OnGrounded;
@@ -83,6 +82,7 @@ public class StateMachine : MonoBehaviour
         [ShowInInspector, TabGroup("Properties")] public override Vector3 Velocity { get => Rigidbody.velocity; protected set => Rigidbody.velocity = value; }
 #endif
     [TabGroup("Properties")] public float MoveSpeedMultiplier { get; set; } = 1f;
+    [TabGroup("Properties")] public float CrossFadeDuration = 0f;
     [TabGroup("Properties")] public bool CanCoyoteJump => LastGroundedDistance < CoyoteMaxJumpDistance;
     [TabGroup("Properties")] public float LastGroundedDistance => Vector3.Distance(transform.position, LastGroundedPosition);
     [TabGroup("Properties")] public Vector3 FlattenedVelocity => new Vector3(Velocity.x, 0f, Velocity.z);
@@ -130,8 +130,10 @@ public class StateMachine : MonoBehaviour
     public int CurrentActionIndex => actionIndex;
     #endregion
     #region Size
+
     [field: SerializeField, TabGroup("Size")] public float Height { get; set; } = 1.8f;
     [field: SerializeField, TabGroup("Size")] public float Radius { get; set; } = 0.3f;
+
     #endregion
     #region SetHeight, Splines and avoidance
     // step height fields
@@ -611,7 +613,7 @@ public class StateMachine : MonoBehaviour
         }
     }
 
-    protected virtual void OnDrawGizmosSelected()
+    public virtual void OnDrawGizmosSelected()
     {
         Gizmos.color = IsGrounded ? Color.green : Color.red;
         Gizmos.DrawRay(GroundCheckStart, -transform.up * GroundCheckDistance);

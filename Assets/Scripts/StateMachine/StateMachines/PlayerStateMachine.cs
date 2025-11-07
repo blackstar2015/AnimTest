@@ -14,7 +14,6 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField, TabGroup("Properties")] public bool debugStateTransitions;
     [field: SerializeField, TabGroup("Properties")] public Targetable CurrentTarget { get;  set; }
     [field: SerializeField, TabGroup("Properties")] public bool IsTargeting;
-    [field: SerializeField, TabGroup("Properties")] public float CrossFadeDuration = 0f;
 
     [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerWalkSpeedMultiplier = 1f;
     [field: SerializeField, TabGroup("Movement", "Speed")] public float PlayerAttackSpeedMultiplier = .5f;
@@ -28,6 +27,7 @@ public class PlayerStateMachine : StateMachine
     [ShowInInspector, TabGroup("Movement", "Dashing")] public float DashDuration;
     [ShowInInspector, TabGroup("Movement","Dashing")] public Vector3 DashDirection;
     [ShowInInspector, TabGroup("Movement", "Dashing")] public float LockDashArc = 30f;
+    [ShowInInspector, TabGroup("Movement", "Dashing")] public bool IsDashing { get; set; } = false;
 
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float LandingGravity = 10f;
     [ShowInInspector, TabGroup("Movement", "Airborne")] public float AirDashMultiplier = 10f;

@@ -11,6 +11,8 @@ public class Vision : MonoBehaviour
     public Vector3 LookPosition => transform.position + Vector3.up;
     public Vector3 LookDirection => transform.forward;
 
+    public float Range => _range;
+
     public bool TestVisibility(Vector3 point)
     {
         // we're using early returns and stopping if any test fails

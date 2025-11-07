@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 3745489563627581120}
   - component: {fileID: 8086187363828266634}
   - component: {fileID: 5050577568094463462}
-  - component: {fileID: 5724002578159896901}
   - component: {fileID: 8089329468702881073}
   - component: {fileID: 6849809075481193866}
   - component: {fileID: 2014271128733828441}
   - component: {fileID: 7097943158623928176}
   - component: {fileID: 3220486211538726260}
   - component: {fileID: 2940756895232771322}
+  - component: {fileID: 8247142744129520917}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Player
@@ -172,68 +172,6 @@ MonoBehaviour:
   OnUpdateStamina:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5724002578159896901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2981525915324084267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da64530894149d5418d37d489aefd4de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 5
-  <Acceleration>k__BackingField: 10
-  <TurnSpeed>k__BackingField: 15
-  <OnlyTurnWithInput>k__BackingField: 1
-  <StoppingDistance>k__BackingField: 0.25
-  <LookInMoveDirection>k__BackingField: 1
-  <ControlRotation>k__BackingField: 1
-  <Fix3DSpriteRotation>k__BackingField: 0
-  <ParentToSurface>k__BackingField: 0
-  <Gravity>k__BackingField: -20
-  <JumpHeight>k__BackingField: 2.25
-  <AirControl>k__BackingField: 0.1
-  <AirTurning>k__BackingField: 1
-  <Height>k__BackingField: 2.6
-  <Radius>k__BackingField: 0.5
-  <GroundCheckOffset>k__BackingField: 0.1
-  <GroundCheckDistance>k__BackingField: 0.4
-  <MaxSlopeAngle>k__BackingField: 40
-  <CoyoteMaxJumpDistance>k__BackingField: 0.5
-  <GroundMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 513
-  <MinGroundedVelocity>k__BackingField: 5
-  OnGrounded:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFootstep:
-    m_PersistentCalls:
-      m_Calls: []
-  <StepHeight>k__BackingField: 0.3
-  <StepHeightAllowance>k__BackingField: 0.1
-  <StepHeightForwardOffset>k__BackingField: 0.05
-  <SpeedVariation>k__BackingField: 0.5
-  <EnableAvoidance>k__BackingField: 0
-  <NeighborDistance>k__BackingField: 3
-  <CornerNeighborDistance>k__BackingField: 1
-  <NeighborMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 0
-  <MaxNeighbors>k__BackingField: 8
-  <IsClampedToNavMesh>k__BackingField: 1
-  <ClampLookAheadTime>k__BackingField: 0.25
-  <ClampSearchRadius>k__BackingField: 1
-  <EnableSplineConstraint>k__BackingField: 0
-  <SplineContainer>k__BackingField: {fileID: 0}
-  <SplineGravitation>k__BackingField: 20
-  <Rigidbody>k__BackingField: {fileID: 3150228506701591383}
-  <NavMeshAgent>k__BackingField: {fileID: 8086187363828266634}
-  <CapsuleCollider>k__BackingField: {fileID: 3745489563627581120}
-  _dashSpeed: 1000
 --- !u!114 &8089329468702881073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +185,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
+  _spawnTransform: {fileID: 0}
+  stateMachine: {fileID: 0}
+  <_currentStateName>k__BackingField: 
   _stopDistance: 5
   CanAttackPlayer: 0
 --- !u!114 &6849809075481193866
@@ -261,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 128d7bc463e4cde4a9093f624da9062c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateMachine: {fileID: 0}
+  _stateMachine: {fileID: 8247142744129520917}
   <Animator>k__BackingField: {fileID: 2014271128733828441}
   <_speed>k__BackingField: 0
   <_isMoving>k__BackingField: 0
@@ -279,7 +220,7 @@ Animator:
   m_GameObject: {fileID: 2981525915324084267}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
-  m_Controller: {fileID: 22100000, guid: d32cec7d758ba814c8e3d6b7a6506431, type: 2}
+  m_Controller: {fileID: 9100000, guid: 98c9fa3637949a54790b7b1a6d3ca952, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -318,8 +259,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d55062f2a7bf54da30aec898b7a60f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 5
-  _FOV: 120
+  _range: 30
+  _FOV: 60
   _visibilityMask:
     serializedVersion: 2
     m_Bits: 65
@@ -373,6 +314,98 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8247142744129520917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2981525915324084267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5456ebbe09428b41b04b00b2e256b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Controller>k__BackingField: {fileID: 0}
+  <Animator>k__BackingField: {fileID: 0}
+  <Health>k__BackingField: {fileID: 0}
+  <Targetable>k__BackingField: {fileID: 0}
+  <Vision>k__BackingField: {fileID: 0}
+  <rb>k__BackingField: {fileID: 0}
+  <Collider>k__BackingField: {fileID: 0}
+  <NavAgent>k__BackingField: {fileID: 0}
+  <Weapons>k__BackingField:
+  - {fileID: 270963974981190449}
+  <BaseSpeed>k__BackingField: 5
+  <Acceleration>k__BackingField: 10
+  <TurnSpeed>k__BackingField: 15
+  <OnlyTurnWithInput>k__BackingField: 1
+  <StoppingDistance>k__BackingField: 2
+  <LookInMoveDirection>k__BackingField: 1
+  <ControlRotation>k__BackingField: 1
+  <Fix3DSpriteRotation>k__BackingField: 0
+  <ParentToSurface>k__BackingField: 0
+  IdleSpeedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  WalkDeccelerationFactor: 1
+  <Gravity>k__BackingField: -20
+  <JumpHeight>k__BackingField: 2.25
+  <AirTurning>k__BackingField: 1
+  <IsJumping>k__BackingField: 0
+  JumpForce: 10
+  DoubleJumpForce: 5
+  AirControl: 0.9
+  <JumpCounter>k__BackingField: 1
+  MaxJumps: 2
+  <GroundCheckOffset>k__BackingField: 0.1
+  <GroundCheckDistance>k__BackingField: 0.4
+  <MaxSlopeAngle>k__BackingField: 40
+  <CoyoteMaxJumpDistance>k__BackingField: 0.5
+  <GroundMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 1
+  <MinGroundedVelocity>k__BackingField: 5
+  OnGrounded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFootstep:
+    m_PersistentCalls:
+      m_Calls: []
+  CrossFadeDuration: 0
+  <LookInCameraDirection>k__BackingField: 0
+  actionIndex: 1
+  weaponIndex: 0
+  <CanShoot>k__BackingField: 1
+  <CanMelee>k__BackingField: 1
+  LastAttackTime: -Infinity
+  <IsAttacking>k__BackingField: 0
+  <Height>k__BackingField: 1.8
+  <Radius>k__BackingField: 0.3
+  <StepHeight>k__BackingField: 0.3
+  <StepHeightAllowance>k__BackingField: 0.1
+  <StepHeightForwardOffset>k__BackingField: 0.05
+  <SpeedVariation>k__BackingField: 0.5
+  <EnableAvoidance>k__BackingField: 0
+  <NeighborDistance>k__BackingField: 3
+  <CornerNeighborDistance>k__BackingField: 1
+  <NeighborMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 0
+  <MaxNeighbors>k__BackingField: 8
+  <IsClampedToNavMesh>k__BackingField: 1
+  <ClampLookAheadTime>k__BackingField: 0.25
+  <ClampSearchRadius>k__BackingField: 1
+  <EnableSplineConstraint>k__BackingField: 0
+  <SplineContainer>k__BackingField: {fileID: 0}
+  <SplineGravitation>k__BackingField: 20
+  DebugStateTransitions: 1
+  PatrolPoint: {x: 0, y: 0, z: 0}
+  EnemyAttackSpeedMultiplier: 0.5
+  EnemyWalkSpeedMultiplier: 1
 --- !u!1001 &205064324025955348
 PrefabInstance:
   m_ObjectHideFlags: 0

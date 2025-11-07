@@ -20,7 +20,6 @@ public class CustomCharacterAnimations : MonoBehaviour
     [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _isBlocking => _stateMachine.IsBlocking;
     [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _canBlock => _stateMachine.CanBlock;
     [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _isBlockedAttack => _stateMachine.IsBlockedAttack;
-    [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _isDashing => _stateMachine.IsDashing;
     [ShowInInspector, TabGroup("Properties"), ReadOnly]private int _jumpCounter => _stateMachine.JumpCounter;
 
     protected virtual void OnValidate()
@@ -51,6 +50,5 @@ public class CustomCharacterAnimations : MonoBehaviour
         Animator.SetBool("IsBlocking", _isBlocking);
         Animator.SetBool("CanBlock", _canBlock);
         Animator.SetBool("BlockedAttack", _isBlockedAttack);
-        Animator.SetBool("Dashing",_isDashing);
     }
 }

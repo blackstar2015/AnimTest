@@ -88,7 +88,6 @@ public class CustomPlayerController : CustomController
         float lastScrollTime = stateMachine.LastScrollTime + .5f;
         if (Time.time > lastScrollTime)
         {
-            Debug.Log(value.Get<Vector2>().y);
             if(value.Get<Vector2>().y >= .1f)
             {
                 //stateMachine.IncrementVisibleTarget();

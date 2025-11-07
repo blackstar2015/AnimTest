@@ -6,19 +6,40 @@ using UnityEngine;
 public class CustomEnemyController : CustomController
 {
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private Transform _target;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private Transform _spawnTransform;
+    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private EnemyStateMachine stateMachine;
+    [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] private string _currentStateName { get; set; }
     [SerializeField] private float _stopDistance = 1f;
     public bool CanAttackPlayer = false;
-    
+
     public override void Awake()
     {
         base.Awake();
-    }
 
+    }
+    public override void Update()
+    {
+        base.Update();
+        _currentStateName = stateMachine.CurrentState.ToString();
+    }
     private void RemoveAttackTicket(DamageInfo damageInfo)
     {
         CanAttackPlayer = false;
     }
+    public void SetStateMachine(EnemyStateMachine stateMachine)
+    {
+        this.stateMachine = stateMachine;
+    }
 
+    public void SetSpawnTransform(Transform spawnTransform)
+    {
+        _spawnTransform = spawnTransform;
+    }
+
+    public Transform GetSpawnTransform()
+    {
+        return _spawnTransform;
+    }
     // protected override void NotUpdate()
     // {
     //     base.Update();

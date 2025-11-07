@@ -43,17 +43,8 @@ public abstract class State
         // finds movement input as local direction rather than world direction
         machine.LocalMoveInput = machine.transform.InverseTransformDirection(machine.MoveInput);
     }
-    protected virtual void TryJump()
-    {
-        if (!machine.CanMove || !machine.CanCoyoteJump) return;
-        Jump();
-    }
-    protected abstract void Jump();
-    protected abstract void Dodge();
-    protected abstract void WeaponSwitch();
-    protected abstract void Attack(bool isPressed);
-    protected abstract void Block(bool isPressed);
-    protected abstract void Sprint(bool isPressed);
+    
+
     protected virtual void MoveTo(Vector3 destination)
     {
         if (!machine.NavAgent.isActiveAndEnabled || !machine.NavAgent.isOnNavMesh) return;

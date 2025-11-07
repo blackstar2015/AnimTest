@@ -31,7 +31,7 @@ public abstract class PlayerBaseState : State
         if (stateMachine.debugStateTransitions) Debug.Log("Current State " + stateMachine.CurrentState);
     }
 
-    protected override void Jump()
+    protected virtual void Jump()
     {
         if(stateMachine.JumpCounter < stateMachine.MaxJumps)
         {
@@ -42,28 +42,33 @@ public abstract class PlayerBaseState : State
             stateMachine.JumpCounter++;
         }
     }
+    protected virtual void TryJump()
+    {
+        if (!machine.CanMove || !machine.CanCoyoteJump) return;
+        Jump();
+    }
 
-    protected override void Dodge()
+    protected  void Dodge()
     {
         stateMachine.IsDashing = true;
     }
     
-    protected override void Attack(bool isPressed)
+    protected void Attack(bool isPressed)
     {
         stateMachine.IsAttacking = isPressed;
     }
 
-    protected override void Block(bool isPressed)
+    protected void Block(bool isPressed)
     {
         stateMachine.isBlocking = stateMachine.CanBlock && isPressed;
     }
 
-    protected override void Sprint(bool isPressed)
+    protected void Sprint(bool isPressed)
     {
         stateMachine.MoveSpeedMultiplier = isPressed ? 2 : 1;
     }
 
-    protected override void WeaponSwitch()
+    protected void WeaponSwitch()
     {
         int switchFromHash = Animator.StringToHash("SwitchingFrom");
         stateMachine.Animator.CrossFade(switchFromHash, 0.1f);
