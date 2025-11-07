@@ -23,6 +23,7 @@ public class EnemyIdleState: EnemyBaseState
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
-        stateMachine.SwitchState(new EnemyPatrolState(this.stateMachine));
+        if (stateMachine.EnemyController.Target != null) stateMachine.SwitchState(new EnemyChaseState(this.stateMachine));
+        else stateMachine.SwitchState(new EnemyPatrolState(this.stateMachine));
     }
 }

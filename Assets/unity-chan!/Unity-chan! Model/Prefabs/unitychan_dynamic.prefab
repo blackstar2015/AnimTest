@@ -8853,6 +8853,7 @@ MonoBehaviour:
   OnFootstep:
     m_PersistentCalls:
       m_Calls: []
+  CrossFadeDuration: 0.1
   <LookInCameraDirection>k__BackingField: 1
   actionIndex: 0
   weaponIndex: 0
@@ -8885,7 +8886,6 @@ MonoBehaviour:
   debugStateTransitions: 0
   <CurrentTarget>k__BackingField: {fileID: 0}
   IsTargeting: 0
-  CrossFadeDuration: 0.1
   PlayerWalkSpeedMultiplier: 1
   PlayerAttackSpeedMultiplier: 0.1
   PlayerBlockSpeedMultiplier: 0.1
@@ -9055,6 +9055,7 @@ MonoBehaviour:
   <StunnedHash>k__BackingField: 
   <SwitchToHash>k__BackingField: 
   <SwitchFromHash>k__BackingField: 
+  <LockedDodgeHash>k__BackingField: 
 --- !u!1001 &7144945808238732804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9115,54 +9116,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7684919802435022066, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
+      propertyPath: <WeaponMesh>k__BackingField
+      value: 
+      objectReference: {fileID: 6620052710620931291}
     m_RemovedComponents:
     - {fileID: 8325795545453890686, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
     - {fileID: 7399479199633980545, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
     - {fileID: 6290343235093446983, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1282651382489328603, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 685008403000281846}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
 --- !u!4 &186763087270805532 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7039256315202561560, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
   m_PrefabInstance: {fileID: 7144945808238732804}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8280737600978603487 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1282651382489328603, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
+--- !u!114 &685008403000281846 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7684919802435022066, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
   m_PrefabInstance: {fileID: 7144945808238732804}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &685008403000281846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8280737600978603487}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e07c4ad31f9d3b640966b98df947fcf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Data>k__BackingField: {fileID: 11400000, guid: c6e5a705e0a59f747b427a99eb1fd5e4, type: 2}
-  <WeaponMesh>k__BackingField: {fileID: 6620052710620931291}
-  <IdleHash>k__BackingField: Unarmed-Idle
-  <MovementHash>k__BackingField: Movement
-  <AirborneJumpHash>k__BackingField: AirborneJump
-  <AirborneFlipHash>k__BackingField: AirborneFlip
-  <AirborneFallHash>k__BackingField: AirborneFall
-  <AirborneLandHash>k__BackingField: AirborneLand
-  <AirborneDashHash>k__BackingField: AirborneDash
-  <BlockHash>k__BackingField: Block
-  <DodgeHash>k__BackingField: Dodge
-  <DamageHash>k__BackingField: Damage
-  <StunnedHash>k__BackingField: Stunned
-  <SwitchToHash>k__BackingField: SwitchUnarmed
-  <SwitchFromHash>k__BackingField: SwitchFrom
 --- !u!1001 &8099237604694587623
 PrefabInstance:
   m_ObjectHideFlags: 0

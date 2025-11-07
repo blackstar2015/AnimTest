@@ -61,8 +61,8 @@ public class Vision : MonoBehaviour
     public Targetable GetFirstVisibleTarget(int team)
     {
         List<Targetable> targets = GetVisibleTargets(team);
-        if (targets.Count == 0) return null;
-        return targets[CurrentVisibleIndex];
+        if (targets.Count == 0) return null;        
+        return targets[CurrentVisibleIndex]; 
     
         // more sophisticated AI could score and rank targets to pick the best approach
         // ex: distance to, flanking, health %, damage vulnerabilities, threat
