@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CustomEnemyController : CustomController
 {
-    [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public Targetable Target => stateMachine.CurrentTarget;
+    [SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] public Targetable Target => stateMachine.CurrentTarget;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private Transform _spawnTransform;
     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private EnemyStateMachine stateMachine;
     [field: FoldoutGroup("Properties"), ReadOnly, HideInEditorMode, SerializeField] private string _currentStateName { get; set; }
@@ -23,10 +23,7 @@ public class CustomEnemyController : CustomController
     {
         base.Update();
         _currentStateName = stateMachine.CurrentState.ToString();
-        if (stateMachine.Vision.GetVisibleTargets(stateMachine.Team) != null)
-        {
-            stateMachine.CurrentTarget = stateMachine.Vision.GetFirstVisibleTarget(stateMachine.Team);
-        }
+        
     }
     private void RemoveAttackTicket(DamageInfo damageInfo)
     {

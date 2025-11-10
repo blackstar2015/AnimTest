@@ -22,6 +22,10 @@ public class EnemyStateMachine : StateMachine
     {
         base.Update();
         _currentState?.Tick(Time.deltaTime);
+        if (Vision.GetVisibleTargets(Team) != null)
+        {
+            CurrentTarget = Vision.GetFirstVisibleTarget(Team);
+        }
     }
 
     public Vector3 GetPatrolPoint()

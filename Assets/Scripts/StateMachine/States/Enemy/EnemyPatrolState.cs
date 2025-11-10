@@ -14,7 +14,7 @@ public class EnemyPatrolState: EnemyBaseState
     {
         base.Enter();
         _patrolPoint = stateMachine.GetPatrolPoint();
-        stateMachine.Animator.CrossFade(MoveHash, stateMachine.CrossFadeDuration);
+        stateMachine.Animator.CrossFade(MoveHash, 0);
     }
     public override void Exit()
     {
@@ -34,7 +34,7 @@ public class EnemyPatrolState: EnemyBaseState
         stateMachine.MoveTo(_patrolPoint);
         if (Vector3.Distance(stateMachine.transform.position, _patrolPoint) <= stateMachine.StoppingDistance)
         {
-            //stateMachine.Stop();
+            stateMachine.Stop();
             Debug.Log(Vector3.Distance(stateMachine.transform.position, _patrolPoint));
             stateMachine.SwitchState(new EnemyPatrolState(this.stateMachine));
         }
