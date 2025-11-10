@@ -22,9 +22,9 @@ public class EnemyChaseState: EnemyBaseState
     {
         base.Tick(deltaTime);
 
-        if(Vector3.Distance(stateMachine.transform.position, stateMachine.EnemyController.Target.transform.position) >= stateMachine.StoppingDistance)
+        if(Vector3.Distance(stateMachine.transform.position, stateMachine.CurrentTarget.transform.position) > stateMachine.StoppingDistance)
         {
-            stateMachine.MoveTo(stateMachine.EnemyController.Target.transform.position);
+            stateMachine.MoveTo(stateMachine.CurrentTarget.transform.position);
         }
         else
         {

@@ -10,7 +10,7 @@ public class EnemyStateMachine : StateMachine
     [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Basic")] public float EnemyAttackSpeedMultiplier = .5f;
     [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Basic")] public float EnemyWalkSpeedMultiplier = 1f;
 
-    [FoldoutGroup("States"), TabGroup("States/Tabs","Patrol")] public Vector3 PatrolPoint;
+    [FoldoutGroup("States"), TabGroup("States/Tabs","Patrol")] public Vector3 PatrolPoint = Vector3.positiveInfinity;
 
     public override void Awake()
     {
@@ -26,8 +26,18 @@ public class EnemyStateMachine : StateMachine
 
     public Vector3 GetPatrolPoint()
     {
-        PatrolPoint = (EnemyController.GetSpawnTransform().position + Random.insideUnitSphere * 15);
-        PatrolPoint.y = .1f;
+        bool validPatrolPoint = false;
+        Vector3 oldPatrolPoint = PatrolPoint;
+        while(!validPatrolPoint)
+        {
+            PatrolPoint = (EnemyController.GetSpawnTransform().position + Random.insideUnitSphere * 15);
+            //Magic number to get the ground height
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, Mathf.Infinity, GroundMask))
+            {
+                PatrolPoint.y = hit.point.y;
+            }
+            if (Vector3.Distance(oldPatrolPoint, PatrolPoint) >= 3f) validPatrolPoint = true;
+        }
         return PatrolPoint;
     }
 

@@ -157,7 +157,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2981525915324084267}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 1
   m_Acceleration: 200
   avoidancePriority: 50
@@ -182,7 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de236cecf93d814c849b48097708908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
   _spawnTransform: {fileID: 0}
   stateMachine: {fileID: 0}
   <_currentStateName>k__BackingField: 
@@ -378,7 +377,7 @@ MonoBehaviour:
   <CoyoteMaxJumpDistance>k__BackingField: 0.5
   <GroundMask>k__BackingField:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 513
   <MinGroundedVelocity>k__BackingField: 5
   OnGrounded:
     m_PersistentCalls:
@@ -400,7 +399,7 @@ MonoBehaviour:
   <StepHeightAllowance>k__BackingField: 0.1
   <StepHeightForwardOffset>k__BackingField: 0.05
   <SpeedVariation>k__BackingField: 0.5
-  <EnableAvoidance>k__BackingField: 0
+  <EnableAvoidance>k__BackingField: 1
   <NeighborDistance>k__BackingField: 3
   <CornerNeighborDistance>k__BackingField: 1
   <NeighborMask>k__BackingField:
