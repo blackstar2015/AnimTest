@@ -53,8 +53,9 @@ public class Health : MonoBehaviour, IDamageable
     private IEnumerator HitReactRoutine(DamageInfo damageInfo)
     {
         if (!IsAlive) yield break;
-        Animator animator = damageInfo.Victim.gameObject.GetComponent<Animator>();
-        NavMeshAgent agent =  damageInfo.Victim.gameObject.GetComponent<NavMeshAgent>();
+        StateMachine stateMachine = damageInfo.Victim.gameObject.GetComponent<StateMachine>();
+        Animator animator = stateMachine.Animator;
+        NavMeshAgent agent = stateMachine.NavAgent;
         IsHitReacting = true;
         agent.enabled = false;
         animator.applyRootMotion = false;
@@ -71,7 +72,7 @@ public class Health : MonoBehaviour, IDamageable
         if (!IsAlive || _isInvincible) return;                       
         if (damageInfo.Amount < 1f) return;
         GameObject victomGO = damageInfo.Victim.gameObject;
-        if(victomGO.GetComponent<CustomController>().IsBlocking)
+        if(victomGO.GetComponent<StateMachine>().IsBlocking)
         {
             HandleBlock(damageInfo);
             return;
@@ -80,7 +81,7 @@ public class Health : MonoBehaviour, IDamageable
         // reduce health current value
         _currentHealth -= damageInfo.Amount;
         _currentHealth = Mathf.Clamp(_currentHealth, 0f, _maxHealth);
-
+        Debug.Log("asd");
         // invoke the damage event
         OnDamage.Invoke(damageInfo);
                                                    

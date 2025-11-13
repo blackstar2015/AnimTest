@@ -57,6 +57,7 @@ MonoBehaviour:
   _player: {fileID: 0}
   _spawnTranforms: []
   _enemies: []
+  _lastAttackingEnemy: {fileID: 0}
   _shouldSpawn: 1
   _spawnDelay: 2
   <_numberOfEnemies>k__BackingField: 0

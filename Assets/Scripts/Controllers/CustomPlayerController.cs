@@ -1,95 +1,122 @@
+using GameEvents;
 using Sirenix.OdinInspector;
+using System;
+using System.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
+[RequireComponent(typeof(PlayerInput))]
 public class CustomPlayerController : CustomController
 {
-    [field: SerializeField, TabGroup("Properties")] protected CursorLockMode CursorMode { get; set; } = CursorLockMode.Locked;
-     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastDashTime = Mathf.NegativeInfinity;
-     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private float _lastAttackTime = Mathf.NegativeInfinity;
-     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] private bool _isAttacking = false;
-     [field: SerializeField, TabGroup("Properties"), HideInEditorMode, ReadOnly] protected Vector2 MoveInput { get; set; }
-    
-    protected override void Awake()
+    private PlayerStateMachine stateMachine;
+    protected CursorLockMode CursorMode => stateMachine.CursorMode;
+    [field: SerializeField, HideInEditorMode, ReadOnly] public Vector2 MoveInput { get; set; }
+
+    [field: SerializeField, TabGroup("Events")] public Action JumpAction;
+    [field: SerializeField, TabGroup("Events")] public Action DodgeAction;
+    [field: SerializeField, TabGroup("Events")] public Action<bool> BlockAction;
+    [field: SerializeField, TabGroup("Events")] public Action<bool> AttackAction;
+    [field: SerializeField, TabGroup("Events")] public Action<bool> SprintAction;
+    [field: SerializeField, TabGroup("Events")] public Action WeaponSwitchAction;
+    [field: SerializeField, TabGroup("Events")] public Action TargetLockAction;
+
+    [ReadOnly, HideInEditorMode, SerializeField] private string _currentStateName { get; set; }
+    [ReadOnly, HideInEditorMode, SerializeField] public static float CurrentSpeed;
+
+    //public CinemachineCamera TargetLockCam => stateMachine.TargetLockCam; 
+    //public CinemachineCamera FreeLookCam => stateMachine.FreeLookCam;
+    //public CinemachineTargetGroup TargetGroup => stateMachine.TargetGroup;
+
+    public override void Awake()
     {
         base.Awake();
         Cursor.lockState = CursorMode;
+        foreach (Weapon weapon in stateMachine.Weapons)
+        {
+            if (weapon.Data.WeaponIndex == stateMachine.weaponIndex)
+            {
+                weapon.WeaponMesh.SetActive(true);
+            }
+            else
+            {
+                weapon.WeaponMesh.SetActive(false);
+            }
+        }
     }
 
+    public void SetStateMachine(PlayerStateMachine stateMachine)
+    {
+        this.stateMachine = stateMachine;
+    }
     public void OnWeaponSwitch()
     {
-        if (weaponIndex >= Weapons.Length - 1)
-        {
-            weaponIndex = 0;
-        }
-        else
-        {
-            weaponIndex++;
-        }
-        Animator.SetInteger("WeaponIndex", weaponIndex);
+        WeaponSwitchAction?.Invoke();
     }
     public virtual void OnMove(InputValue value)
     {
         MoveInput = value.Get<Vector2>();
+        if(!stateMachine.CanMove || stateMachine.IsDashing) MoveInput = Vector2.zero;
     }
 
     public virtual void OnJump(InputValue value)
     {
-        Movement?.TryJump();
+        JumpAction?.Invoke();
     }
 
     public virtual void OnDash(InputValue value)
     {
-        if(!Movement.CanMove) return;
-        float nextDashTime = _lastDashTime + Movement.DashCooldown;
+        if (!stateMachine.CanMove) return;
+        float nextDashTime = stateMachine.LastDashTime + stateMachine.DashCooldown;
+
         if (Time.time > nextDashTime)
         {
-            Movement?.Dash(Animator.GetCurrentAnimatorStateInfo(0).length);
-            Animator?.SetTrigger("Dash");
-            _lastDashTime = Time.time;
+            DodgeAction?.Invoke();
+            stateMachine.LastDashTime = Time.time;
         }
     }
     public virtual void OnAttack(InputValue value)
     {
-        _isAttacking = value.isPressed;
+        AttackAction?.Invoke(value.isPressed);
     }
-
+    public void OnTargetLockScroll(InputValue value)
+    {
+        float lastScrollTime = stateMachine.LastScrollTime + .5f;
+        if (Time.time > lastScrollTime)
+        {
+            if(value.Get<Vector2>().y >= .1f)
+            {
+                //stateMachine.IncrementVisibleTarget();
+            }
+            else if(value.Get<Vector2>().y < -.1f)
+            {
+                //stateMachine.DecrementVisibleTarget();
+            }
+            stateMachine.LastScrollTime = Time.time;
+            //TargetLockAction?.Invoke();
+        }
+    }
+    public void OnTargetLock()
+    {
+        TargetLockAction?.Invoke();
+    }
     public virtual void OnBlock(InputValue value)
     {
-        isBlocking = CanBlock && value.isPressed;
+        BlockAction?.Invoke(value.isPressed);
     }
-    protected virtual void Update()
-    {
-        base.Update();
-        if (Movement == null) return;
-        // find correct right/forward directions based on main camera rotation
-        Vector3 up = Vector3.up;
-        Vector3 right = Camera.main.transform.right;
-        Vector3 forward = Vector3.Cross(right, up);
-        Vector3 moveInput = forward * MoveInput.y + right * MoveInput.x;
 
-        // send player input to character movement
-        Movement.SetMoveInput(moveInput);
-        Movement.SetLookDirection(moveInput);
-        HandleAttack();
-        LookInCameraDirection = !Movement.IsDashing;
-        if (LookInCameraDirection) Movement.SetLookDirection(Camera.main.transform.forward);
-    }
-    private void HandleAttack()
+    public virtual void OnSprint(InputValue value)
     {
-        if (!_isAttacking) return;
-        Weapon equippedWeapon = Weapons[weaponIndex];
-        float nextAttackTime = _lastAttackTime + 1/equippedWeapon.Data.AttackRate;
-        
-        if (Time.time < nextAttackTime) return;
-        
-        equippedWeapon.TryAttack(transform.position + transform.forward * 5,gameObject,Targetable.Team);
-        Animator.SetTrigger(equippedWeapon.Data.AttackAnimName);
-        Animator.SetInteger("Action", actionIndex);
-        WeaponMelee melee = equippedWeapon as WeaponMelee;
-        if (melee == null)  return;
-        actionIndex++;
-        if (actionIndex > melee?.MeleeData.ComboData.Length-1) actionIndex = 0;
-        _lastAttackTime =  Time.time;
+        SprintAction?.Invoke(value.isPressed);
     }
+    public override void Update()
+    {
+        base.Update();  
+        _currentStateName = stateMachine.CurrentState.ToString();
+        CurrentSpeed = Mathf.Ceil(stateMachine.rb.linearVelocity.magnitude);
+        
+        //PlayerSpeed.Invoke(CurrentSpeed.ToString());
+    }
+   
 }

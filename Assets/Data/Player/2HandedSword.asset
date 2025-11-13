@@ -27,57 +27,68 @@ MonoBehaviour:
     m_Bits: 65
   <KnockbackForce>k__BackingField: 275
   <ComboData>k__BackingField:
-  - <Damage>k__BackingField: 40
+  - <AttackHashName>k__BackingField: 2Sword1
+    <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
-  - <Damage>k__BackingField: 40
+  - <AttackHashName>k__BackingField: 2Sword2
+    <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
+  - <AttackHashName>k__BackingField: 2Sword3
+    <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
+  - <AttackHashName>k__BackingField: 2Sword4
+    <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
+  - <AttackHashName>k__BackingField: 2Sword5
+    <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: 1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
+  - <AttackHashName>k__BackingField: 2Sword6
+    <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
+  - <AttackHashName>k__BackingField: 2Sword7
+    <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
+  - <AttackHashName>k__BackingField: 2Sword8
+    <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: -1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
+  - <AttackHashName>k__BackingField: 2Sword9
+    <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: 1, y: 0, z: 0}
-  - <Damage>k__BackingField: 40
+  - <AttackHashName>k__BackingField: 2Sword10
+    <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
-  - <Damage>k__BackingField: 40
+  - <AttackHashName>k__BackingField: 2Sword11
+    <Damage>k__BackingField: 40
     <Angle>k__BackingField: 359
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1

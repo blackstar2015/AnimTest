@@ -3,13 +3,26 @@ using UnityEngine;
 
 public class Vision : MonoBehaviour
 {
-    [SerializeField] private float _range = 5f;
-    [SerializeField] private float _FOV = 120f;             // field of view
-    [SerializeField] private LayerMask _visibilityMask;     // layer(s) for visible objects
-    [SerializeField] private LayerMask _occlusionMask;      // layer(s) that block vision (usually walls)
-
+    private float _range = 5f;
+    private float _FOV = 120f;             // field of view
+    private LayerMask _visibilityMask;     // layer(s) for visible objects
+    private LayerMask _occlusionMask;      // layer(s) that block vision (usually walls)
+    private int CurrentVisibleIndex;
     public Vector3 LookPosition => transform.position + Vector3.up;
     public Vector3 LookDirection => transform.forward;
+
+    private void Awake()
+    {
+        if(gameObject.TryGetComponent(out StateMachine stateMachine))
+        {
+            _range = stateMachine.Range;
+            _FOV = stateMachine.FOV;
+            _visibilityMask = stateMachine.VisibilityMask;
+            _occlusionMask = stateMachine.OcclusionMask;
+            CurrentVisibleIndex = stateMachine.CurrentVisibleIndex;
+        }
+    }
+
 
     public bool TestVisibility(Vector3 point)
     {
@@ -52,8 +65,7 @@ public class Vision : MonoBehaviour
     
             // all tests passed, add target to list
             targets.Add(targetable);
-        }
-    
+        }    
         return targets;
     }
     
@@ -61,7 +73,7 @@ public class Vision : MonoBehaviour
     {
         List<Targetable> targets = GetVisibleTargets(team);
         if (targets.Count == 0) return null;
-        return targets[0];
+        return targets[CurrentVisibleIndex];
     
         // more sophisticated AI could score and rank targets to pick the best approach
         // ex: distance to, flanking, health %, damage vulnerabilities, threat
@@ -69,10 +81,10 @@ public class Vision : MonoBehaviour
     
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(LookPosition, _range);
-        // slick one-liners look cool but your team will hate you
-        Gizmos.DrawRay(LookPosition, transform.rotation * Quaternion.Euler(0f, _FOV * 0.5f, 0f) * Vector3.forward * _range);
-        Gizmos.DrawRay(LookPosition, transform.rotation * Quaternion.Euler(0f, -_FOV * 0.5f, 0f) * Vector3.forward * _range);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(LookPosition, _range);
+        //slick one-liners look cool but your team will hate you
+        //Gizmos.DrawRay(LookPosition, transform.rotation * Quaternion.Euler(0f, _FOV * 0.5f, 0f) * Vector3.forward * _range);
+        //Gizmos.DrawRay(LookPosition, transform.rotation * Quaternion.Euler(0f, -_FOV * 0.5f, 0f) * Vector3.forward * _range);
     }
 }

@@ -6,82 +6,49 @@ using UnityEngine.Events;
 public class CustomCharacterAnimations : MonoBehaviour
 {
     // damping time smooths rapidly changing values sent to animator
-    [field: SerializeField] protected float DampTime { get; set; } = 0.1f;
+    [field: SerializeField, TabGroup("Components"), ReadOnly] private StateMachine _stateMachine;
+    [field: SerializeField, TabGroup("Components"), ReadOnly] protected Animator Animator { get; set; }
+    [field: SerializeField, TabGroup("Parameters"), ReadOnly] private float _speed { get; set; }
+    [field: SerializeField, TabGroup("Parameters"), ReadOnly] private bool _isMoving { get; set; }
+    [field: SerializeField, TabGroup("Parameters"), ReadOnly] private float _velocityX { get; set; }
+    [field: SerializeField, TabGroup("Parameters"), ReadOnly] private float _velocityY { get; set; }
+    [field: SerializeField, TabGroup("Parameters"), ReadOnly] private float _velocityZ { get; set; }
+    [field: SerializeField, TabGroup("Properties"), ReadOnly] protected float DampTime { get; set; } = 0.1f;
+    [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _isGrounded =>_stateMachine.IsGrounded;
+    [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _isAlive =>_stateMachine.IsAlive;        
+    [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _isHitReacting => _stateMachine.IsHitReacting;
+    [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _isBlocking => _stateMachine.IsBlocking;
+    [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _canBlock => _stateMachine.CanBlock;
+    [ShowInInspector, TabGroup("Properties"), ReadOnly]private bool _isBlockedAttack => _stateMachine.IsBlockedAttack;
+    [ShowInInspector, TabGroup("Properties"), ReadOnly]private int _jumpCounter => _stateMachine.JumpCounter;
 
-    [field: SerializeField, TabGroup("Components")] protected Animator Animator { get; set; }
-    [field: SerializeField, TabGroup("Components")] protected CustomController _controller { get; set; }
-    [field: SerializeField, TabGroup("Components")] protected CustomCharacterMovementBase CharacterMovement { get; set; }
-
-    [TabGroup("Events")]public UnityEvent OnFootR = new UnityEvent();
-    [TabGroup("Events")]public UnityEvent OnFootL = new UnityEvent();
-    [TabGroup("Events")]public UnityEvent OnLand = new UnityEvent();
-    [TabGroup("Events")]public UnityEvent OnShoot = new UnityEvent();
-    [TabGroup("Events")]public UnityEvent OnHit = new UnityEvent();
-    
-    
     protected virtual void OnValidate()
     {
         if (Animator == null) Animator = GetComponent<Animator>();
-        if (CharacterMovement == null) CharacterMovement = GetComponent<CustomCharacterMovementBase>();
-        if(_controller == null) _controller = GetComponent<CustomController>();
+        if(_stateMachine == null) _stateMachine = GetComponent<StateMachine>();
     }
 
     protected virtual void Update()
     {
-        Vector3 velocity = CharacterMovement.Velocity;
+        Vector3 velocity = _stateMachine.Velocity;
+        _velocityY =  velocity.y;
         Vector3 flattenedVelocity = new Vector3(velocity.x, 0f, velocity.z);
-        float speed = Mathf.Min(CharacterMovement.MoveInput.magnitude, flattenedVelocity.magnitude / CharacterMovement.Speed);
-        bool isMoving = speed > 0 ? true : false;
+        _speed = Mathf.Min(_stateMachine.LocalMoveInput.magnitude, flattenedVelocity.magnitude / _stateMachine.BaseSpeed);
+        _isMoving = _speed > 0 ? true : false;
         velocity = transform.InverseTransformDirection(velocity);
-        float velocityX =  velocity.x * Mathf.Abs(CharacterMovement.MoveInput.x);
-        float velocityZ =  velocity.z *  Mathf.Abs(CharacterMovement.MoveInput.z);
-        
-        Animator.SetFloat("Speed", speed, DampTime, Time.deltaTime);
-        Animator.SetBool("Moving",isMoving);
-        Animator.SetBool("IsGrounded", CharacterMovement.IsGrounded);
-        Animator.SetFloat("VerticalVelocity", velocity.y);
-        Animator.SetFloat("VelocityX", velocityX);
-        Animator.SetFloat("VelocityZ", velocityZ);
-        Animator.SetBool("IsAlive", _controller.IsAlive);
-        Animator.SetBool("HitReact", _controller.IsHitReacting);
-        Animator.SetBool("IsBlocking", _controller.IsBlocking);
-        Animator.SetBool("CanBlock", _controller.CanBlock);
-        Animator.SetBool("BlockedAttack", _controller.IsBlockedAttack);
-        
+        _velocityX =  velocity.x * Mathf.Abs(_stateMachine.LocalMoveInput.x);
+        _velocityZ =  velocity.z *  Mathf.Abs(_stateMachine.LocalMoveInput.z);
+        Animator.SetFloat("Speed", _speed, DampTime, Time.deltaTime);
+        Animator.SetBool("Moving",_isMoving);
+        Animator.SetBool("IsGrounded", _isGrounded);
+        Animator.SetFloat("VerticalVelocity", _velocityY);
+        Animator.SetFloat("VelocityX", _velocityX);
+        Animator.SetFloat("VelocityZ", _velocityZ);
+        Animator.SetInteger("JumpCounter", _jumpCounter);
+        Animator.SetBool("IsAlive", _isAlive);
+        Animator.SetBool("HitReact", _isHitReacting);
+        Animator.SetBool("IsBlocking", _isBlocking);
+        Animator.SetBool("CanBlock", _canBlock);
+        Animator.SetBool("BlockedAttack", _isBlockedAttack);
     }
-    #region AnimationEvents
-    public void Sheath(int index)
-    {
-        GameObject weaponMesh = _controller.Weapons[index].WeaponMesh;
-        weaponMesh.SetActive(false);
-    }
-
-    public void UnSheath(int index)
-    {
-        GameObject weaponMesh = _controller.Weapons[index].WeaponMesh;
-        weaponMesh.SetActive(true);
-    }
-
-    public void DisableTrigger(int index)
-    {
-        foreach (Collider collider in _controller.Weapons[index].WeaponColliders)
-        {
-            collider.enabled = false;
-        }
-    }
-
-    public void EnableTrigger(int index)
-    {
-        foreach (Collider collider in _controller.Weapons[index].WeaponColliders)
-        {
-            Debug.Log(collider.gameObject, collider.gameObject);
-            collider.enabled = true;
-        }
-    }
-    #endregion
-    public void FootR() => OnFootR.Invoke();
-    public void FootL() => OnFootL.Invoke();
-    public void Land() => OnLand.Invoke();
-    public void Hit() => OnHit.Invoke();
-    public void Shoot() => OnShoot.Invoke();
 }

@@ -395,8 +395,8 @@ ModelImporter:
       name: Unarmed-DiveRoll-Forward1
       takeName: Take 001
       internalID: 7400000
-      firstFrame: 4
-      lastFrame: 40
+      firstFrame: 5
+      lastFrame: 35
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

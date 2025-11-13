@@ -55,7 +55,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "f1ba0d36-48eb-4cd5-b651-1c94a6531f70",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -80,12 +80,12 @@
                 },
                 {
                     "name": "Sprint",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "641cd816-40e6-41b4-8c3d-04687c349290",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Dash",
@@ -113,6 +113,24 @@
                     "processors": "",
                     "interactions": "Press(pressPoint=0.1,behavior=2)",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TargetLockScroll",
+                    "type": "Value",
+                    "id": "555e3ace-ad79-4fe4-b39c-33d394cd5ce6",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "TargetLock",
+                    "type": "Button",
+                    "id": "b786b3d1-0c03-4a8d-b589-a15d6fac829f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -487,6 +505,28 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17c3f3f1-b556-455f-bfd6-771b11b8ab6c",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "TargetLockScroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8221f17b-972e-4572-94bb-3c4ee63d0de3",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "TargetLock",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

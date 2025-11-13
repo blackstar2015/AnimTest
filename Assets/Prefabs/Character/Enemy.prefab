@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1235966229311841031
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7998714070989492649}
+  m_Layer: 6
+  m_Name: ViewPOS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7998714070989492649
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235966229311841031}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.36, z: 0.213}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5618944474893368526}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2981525915324084267
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,17 +40,17 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 530687325284996672}
+  - component: {fileID: 2014271128733828441}
   - component: {fileID: 3150228506701591383}
   - component: {fileID: 3745489563627581120}
   - component: {fileID: 8086187363828266634}
-  - component: {fileID: 5050577568094463462}
-  - component: {fileID: 5724002578159896901}
   - component: {fileID: 8089329468702881073}
-  - component: {fileID: 6849809075481193866}
-  - component: {fileID: 2014271128733828441}
   - component: {fileID: 7097943158623928176}
   - component: {fileID: 3220486211538726260}
   - component: {fileID: 2940756895232771322}
+  - component: {fileID: 6849809075481193866}
+  - component: {fileID: 5050577568094463462}
+  - component: {fileID: 8247142744129520917}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Player
@@ -45,6 +76,28 @@ Transform:
   - {fileID: 4807630611547354965}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2014271128733828441
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2981525915324084267}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
+  m_Controller: {fileID: 9100000, guid: 98c9fa3637949a54790b7b1a6d3ca952, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!54 &3150228506701591383
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -104,7 +157,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2981525915324084267}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1
   m_Speed: 1
   m_Acceleration: 200
   avoidancePriority: 50
@@ -117,123 +170,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
---- !u!114 &5050577568094463462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2981525915324084267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2bb40f32588b174382d593435f42740, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <_currentHealth>k__BackingField: 100
-  <_currentStamina>k__BackingField: 100
-  <_maxHealth>k__BackingField: 100
-  <_maxStamina>k__BackingField: 100
-  <_staminaRegenDuration>k__BackingField: 5
-  _deathLayer: Corpse
-  _isInvincible: 0
-  OnDamage:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5050577568094463462}
-        m_TargetAssemblyTypeName: Health, Assembly-CSharp
-        m_MethodName: Death
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnBlock:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2014271128733828441}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: BlockedAttack
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnUpdateStamina:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &5724002578159896901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2981525915324084267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da64530894149d5418d37d489aefd4de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 5
-  <Acceleration>k__BackingField: 10
-  <TurnSpeed>k__BackingField: 15
-  <OnlyTurnWithInput>k__BackingField: 1
-  <StoppingDistance>k__BackingField: 0.25
-  <LookInMoveDirection>k__BackingField: 1
-  <ControlRotation>k__BackingField: 1
-  <Fix3DSpriteRotation>k__BackingField: 0
-  <ParentToSurface>k__BackingField: 0
-  <Gravity>k__BackingField: -20
-  <JumpHeight>k__BackingField: 2.25
-  <AirControl>k__BackingField: 0.1
-  <AirTurning>k__BackingField: 1
-  <Height>k__BackingField: 2.6
-  <Radius>k__BackingField: 0.5
-  <GroundCheckOffset>k__BackingField: 0.1
-  <GroundCheckDistance>k__BackingField: 0.4
-  <MaxSlopeAngle>k__BackingField: 40
-  <CoyoteMaxJumpDistance>k__BackingField: 0.5
-  <GroundMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 513
-  <MinGroundedVelocity>k__BackingField: 5
-  OnGrounded:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFootstep:
-    m_PersistentCalls:
-      m_Calls: []
-  <StepHeight>k__BackingField: 0.3
-  <StepHeightAllowance>k__BackingField: 0.1
-  <StepHeightForwardOffset>k__BackingField: 0.05
-  <SpeedVariation>k__BackingField: 0.5
-  <EnableAvoidance>k__BackingField: 0
-  <NeighborDistance>k__BackingField: 3
-  <CornerNeighborDistance>k__BackingField: 1
-  <NeighborMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 0
-  <MaxNeighbors>k__BackingField: 8
-  <IsClampedToNavMesh>k__BackingField: 1
-  <ClampLookAheadTime>k__BackingField: 0.25
-  <ClampSearchRadius>k__BackingField: 1
-  <EnableSplineConstraint>k__BackingField: 0
-  <SplineContainer>k__BackingField: {fileID: 0}
-  <SplineGravitation>k__BackingField: 20
-  <Rigidbody>k__BackingField: {fileID: 3150228506701591383}
-  <NavMeshAgent>k__BackingField: {fileID: 8086187363828266634}
-  <CapsuleCollider>k__BackingField: {fileID: 3745489563627581120}
-  _dashSpeed: 1000
 --- !u!114 &8089329468702881073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,74 +182,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de236cecf93d814c849b48097708908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Movement>k__BackingField: {fileID: 5724002578159896901}
-  <Animator>k__BackingField: {fileID: 2014271128733828441}
-  <Health>k__BackingField: {fileID: 0}
-  <Targetable>k__BackingField: {fileID: 7097943158623928176}
-  <Vision>k__BackingField: {fileID: 3220486211538726260}
-  <Weapons>k__BackingField:
-  - {fileID: 270963974981190449}
-  <LookInCameraDirection>k__BackingField: 0
-  actionIndex: 1
-  weaponIndex: 0
-  <CanShoot>k__BackingField: 1
-  <CanMelee>k__BackingField: 1
-  _target: {fileID: 0}
-  _stopDistance: 5
+  _spawnTransform: {fileID: 0}
+  stateMachine: {fileID: 0}
+  <_currentStateName>k__BackingField: 
   CanAttackPlayer: 0
---- !u!114 &6849809075481193866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2981525915324084267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 128d7bc463e4cde4a9093f624da9062c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <DampTime>k__BackingField: 0.1
-  <Animator>k__BackingField: {fileID: 2014271128733828441}
-  <_controller>k__BackingField: {fileID: 8089329468702881073}
-  <CharacterMovement>k__BackingField: {fileID: 5724002578159896901}
-  OnFootR:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFootL:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLand:
-    m_PersistentCalls:
-      m_Calls: []
-  OnShoot:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHit:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!95 &2014271128733828441
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2981525915324084267}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
-  m_Controller: {fileID: 22100000, guid: d32cec7d758ba814c8e3d6b7a6506431, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7097943158623928176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,9 +198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04164883cb5fe92498475fbc07974791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Team>k__BackingField: 1
-  <IsTargetable>k__BackingField: 1
-  <ViewPosition>k__BackingField: {fileID: 0}
 --- !u!114 &3220486211538726260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,14 +210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d55062f2a7bf54da30aec898b7a60f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 5
-  _FOV: 120
-  _visibilityMask:
-    serializedVersion: 2
-    m_Bits: 65
-  _occlusionMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &2940756895232771322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,6 +256,195 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6849809075481193866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2981525915324084267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 128d7bc463e4cde4a9093f624da9062c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateMachine: {fileID: 8247142744129520917}
+  <Animator>k__BackingField: {fileID: 2014271128733828441}
+  <_speed>k__BackingField: 0
+  <_isMoving>k__BackingField: 0
+  <_velocityX>k__BackingField: 0
+  <_velocityY>k__BackingField: 0
+  <_velocityZ>k__BackingField: 0
+  <DampTime>k__BackingField: 0.1
+--- !u!114 &5050577568094463462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2981525915324084267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2bb40f32588b174382d593435f42740, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <_currentHealth>k__BackingField: 100
+  <_currentStamina>k__BackingField: 100
+  <_maxHealth>k__BackingField: 100
+  <_maxStamina>k__BackingField: 100
+  <_staminaRegenDuration>k__BackingField: 5
+  _deathLayer: Corpse
+  _isInvincible: 0
+  OnDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5050577568094463462}
+        m_TargetAssemblyTypeName: Health, Assembly-CSharp
+        m_MethodName: Death
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2981525915324084267}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnBlock:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2014271128733828441}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: BlockedAttack
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnUpdateStamina:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &8247142744129520917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2981525915324084267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5456ebbe09428b41b04b00b2e256b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Controller>k__BackingField: {fileID: 0}
+  <Animator>k__BackingField: {fileID: 0}
+  <Health>k__BackingField: {fileID: 0}
+  <Targetable>k__BackingField: {fileID: 0}
+  <Vision>k__BackingField: {fileID: 0}
+  <rb>k__BackingField: {fileID: 0}
+  <Collider>k__BackingField: {fileID: 0}
+  <NavAgent>k__BackingField: {fileID: 0}
+  <Weapons>k__BackingField:
+  - {fileID: 8795868329579569916}
+  <BaseSpeed>k__BackingField: 5
+  <Acceleration>k__BackingField: 10
+  <TurnSpeed>k__BackingField: 15
+  <OnlyTurnWithInput>k__BackingField: 1
+  <StoppingDistance>k__BackingField: 2
+  <LookInMoveDirection>k__BackingField: 1
+  <ControlRotation>k__BackingField: 1
+  <Fix3DSpriteRotation>k__BackingField: 0
+  <ParentToSurface>k__BackingField: 0
+  <Gravity>k__BackingField: -20
+  <JumpHeight>k__BackingField: 2.25
+  <AirTurning>k__BackingField: 1
+  <IsJumping>k__BackingField: 0
+  JumpForce: 10
+  DoubleJumpForce: 5
+  AirControl: 0.9
+  <JumpCounter>k__BackingField: 1
+  MaxJumps: 2
+  <GroundCheckOffset>k__BackingField: 0.1
+  <GroundCheckDistance>k__BackingField: 0.4
+  <MaxSlopeAngle>k__BackingField: 40
+  <CoyoteMaxJumpDistance>k__BackingField: 0.5
+  <GroundMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 513
+  <MinGroundedVelocity>k__BackingField: 5
+  OnGrounded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFootstep:
+    m_PersistentCalls:
+      m_Calls: []
+  CrossFadeDuration: 0
+  <LookInCameraDirection>k__BackingField: 0
+  actionIndex: 1
+  weaponIndex: 0
+  <CanShoot>k__BackingField: 1
+  <CanMelee>k__BackingField: 1
+  LastAttackTime: -Infinity
+  <IsAttacking>k__BackingField: 0
+  <Height>k__BackingField: 1.8
+  <Radius>k__BackingField: 0.3
+  <StepHeight>k__BackingField: 0.3
+  <StepHeightAllowance>k__BackingField: 0.1
+  <StepHeightForwardOffset>k__BackingField: 0.05
+  <SpeedVariation>k__BackingField: 0.5
+  <EnableAvoidance>k__BackingField: 1
+  <NeighborDistance>k__BackingField: 3
+  <CornerNeighborDistance>k__BackingField: 1
+  <NeighborMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 0
+  <MaxNeighbors>k__BackingField: 8
+  <IsClampedToNavMesh>k__BackingField: 1
+  <ClampLookAheadTime>k__BackingField: 0.25
+  <ClampSearchRadius>k__BackingField: 1
+  <EnableSplineConstraint>k__BackingField: 0
+  <SplineContainer>k__BackingField: {fileID: 0}
+  <SplineGravitation>k__BackingField: 20
+  <CurrentTarget>k__BackingField: {fileID: 0}
+  <PreviousTarget>k__BackingField: {fileID: 0}
+  IsTargeting: 0
+  Team: 1
+  <IsTargetable>k__BackingField: 1
+  <ViewPosition>k__BackingField: {fileID: 7998714070989492649}
+  Range: 5
+  FOV: 120
+  VisibilityMask:
+    serializedVersion: 2
+    m_Bits: 65
+  OcclusionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  CurrentVisibleIndex: 0
+  DebugStateTransitions: 0
+  EnemyAttackSpeedMultiplier: 0.5
+  EnemyWalkSpeedMultiplier: 1
+  PatrolPoint: {x: 0, y: 0, z: 0}
+  MaxChaseDistance: 10
+  ChaseStoppingDistance: 2
 --- !u!1001 &205064324025955348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -565,36 +615,24 @@ PrefabInstance:
     - {fileID: 6290343235093446983, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1282651382489328603, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 270963974981190449}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
---- !u!1 &106827305753732565 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1282651382489328603, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
-  m_PrefabInstance: {fileID: 1204539712949440014}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &270963974981190449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 106827305753732565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e07c4ad31f9d3b640966b98df947fcf5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Data>k__BackingField: {fileID: 11400000, guid: 2fc9ccc3755e5be4c9686075b09f29c0, type: 2}
-  <WeaponMesh>k__BackingField: {fileID: 6156954022994822924}
-  <WeaponColliders>k__BackingField: []
 --- !u!4 &8144500639370651670 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7039256315202561560, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
   m_PrefabInstance: {fileID: 1204539712949440014}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8795868329579569916 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7684919802435022066, guid: e7e2753b750dcad4eab4c69b18ae2fdd, type: 3}
+  m_PrefabInstance: {fileID: 1204539712949440014}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e07c4ad31f9d3b640966b98df947fcf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4363559923651721068
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -962,6 +1000,9 @@ PrefabInstance:
     - {fileID: 9500000, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 400050, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7998714070989492649}
     - targetCorrespondingSourceObject: {fileID: 400032, guid: e57e9b8cd5e115f4f8d7736473e5c7fd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1408356732454090498}

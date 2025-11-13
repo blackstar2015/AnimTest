@@ -12,6 +12,7 @@ public class WeaponMeleeData : WeaponData
 [System.Serializable]
 public class MeleeComboData
 {
+    [field: SerializeField] public string AttackHashName { get; set; }
     [field: SerializeField, Tooltip("Overrides base weapon damage")] public float Damage { get; private set; } = 40f;
     [field: SerializeField] public float Angle { get; private set; } = 120f;
     [field: SerializeField] public float Range { get; private set; } = 1.5f;
