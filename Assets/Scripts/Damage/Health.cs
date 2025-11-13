@@ -53,8 +53,9 @@ public class Health : MonoBehaviour, IDamageable
     private IEnumerator HitReactRoutine(DamageInfo damageInfo)
     {
         if (!IsAlive) yield break;
-        Animator animator = damageInfo.Victim.gameObject.GetComponent<Animator>();
-        NavMeshAgent agent =  damageInfo.Victim.gameObject.GetComponent<NavMeshAgent>();
+        StateMachine stateMachine = damageInfo.Victim.gameObject.GetComponent<StateMachine>();
+        Animator animator = stateMachine.Animator;
+        NavMeshAgent agent = stateMachine.NavAgent;
         IsHitReacting = true;
         agent.enabled = false;
         animator.applyRootMotion = false;

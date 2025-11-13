@@ -498,9 +498,9 @@ public class StateMachine : MonoBehaviour
 
     private IEnumerator KnockbackRoutine(DamageInfo damageInfo)
     {
-        CustomCharacterMovement movement = damageInfo.Victim.GetComponent<CustomCharacterMovement>();
-        Rigidbody rb = movement.Rigidbody;
-        NavMeshAgent agent = movement.NavMeshAgent;
+        StateMachine stateMachine = damageInfo.Victim.GetComponent<StateMachine>();
+        Rigidbody rb = stateMachine.rb;
+        NavMeshAgent agent = stateMachine.NavAgent;
         Animator.applyRootMotion = false;
         agent.enabled = false;
         rb.linearVelocity = Vector3.zero;
