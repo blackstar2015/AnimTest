@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 687361410212327218}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.039915625, y: -0.031643417, z: 0.0012647095, w: 0.9987011}
-  m_LocalPosition: {x: 0.34, y: 1.57, z: -1.1100006}
+  m_LocalRotation: {x: 0.039915625, y: -0.03164342, z: 0.0012647097, w: 0.9987011}
+  m_LocalPosition: {x: 0.34, y: 1.57, z: -1.1099997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -229,8 +229,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5760539682218880239}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.19913486, y: -0.52920735, z: -0.129371, w: 0.8145846}
-  m_LocalPosition: {x: 1.1421165, y: 0.5, z: -0.50800705}
+  m_LocalRotation: {x: 0.26060796, y: 0.2482275, z: -0.06952979, w: 0.9303936}
+  m_LocalPosition: {x: -0.6610756, y: 1.9567466, z: -1.1507177}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -313,7 +313,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
-    Value: -66.02082
+    Value: 29.876919
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -323,7 +323,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: -10
+    Value: 40.438267
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -409,7 +409,7 @@ MonoBehaviour:
         LegacyInput: 
         LegacyGain: 1
         CancelDeltaTime: 0
-      InputValue: 0
+      InputValue: -0
       Driver:
         AccelTime: 0.2
         DecelTime: 0.2
@@ -422,7 +422,7 @@ MonoBehaviour:
         LegacyInput: 
         LegacyGain: 1
         CancelDeltaTime: 0
-      InputValue: 0
+      InputValue: -0
       Driver:
         AccelTime: 0
         DecelTime: 0
@@ -618,6 +618,10 @@ PrefabInstance:
       propertyPath: TargetLockCam
       value: 
       objectReference: {fileID: 6681283384879490700}
+    - target: {fileID: 4678409019931915664, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: <MaxSlopeAngle>k__BackingField
+      value: 75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
