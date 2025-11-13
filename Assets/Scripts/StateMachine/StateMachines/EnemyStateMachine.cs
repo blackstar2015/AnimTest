@@ -5,12 +5,17 @@ using UnityEngine;
 public class EnemyStateMachine : StateMachine
 {
     [SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Properties")] public CustomEnemyController EnemyController=> Controller as CustomEnemyController;
+
+
     [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Properties")] public bool DebugStateTransitions;
     
     [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Basic")] public float EnemyAttackSpeedMultiplier = .5f;
     [field: SerializeField, FoldoutGroup("States"), TabGroup("States/Tabs", "Basic")] public float EnemyWalkSpeedMultiplier = 1f;
 
     [FoldoutGroup("States"), TabGroup("States/Tabs","Patrol")] public Vector3 PatrolPoint = Vector3.positiveInfinity;
+    [FoldoutGroup("States"), TabGroup("States/Tabs", "Chase")] public float MaxChaseDistance = 5f;
+    [FoldoutGroup("States"), TabGroup("States/Tabs", "Chase")] public float ChaseStoppingDistance = 3f;
+
 
     public override void Awake()
     {
@@ -18,13 +23,32 @@ public class EnemyStateMachine : StateMachine
         EnemyController.SetStateMachine(this);
         SwitchState(new EnemyIdleState(this, true));
     }
+    private void OnDisable()
+    {
+        Health.OnDamage.RemoveListener(AddCurrentTarget);
+    }
+    private void AddCurrentTarget(DamageInfo damageInfo)
+    {
+        if (damageInfo.Instigator.TryGetComponent(out Targetable targetable))
+        {
+            CurrentTarget = targetable;
+        }
+     }
+
     public override void Update()
     {
         base.Update();
         _currentState?.Tick(Time.deltaTime);
-        if (Vision.GetVisibleTargets(Team) != null)
+        Targetable currentTarget;
+        if (Vision.GetVisibleTargets(Team) != null && CurrentTarget == null)
         {
-            CurrentTarget = Vision.GetFirstVisibleTarget(Team);
+            currentTarget = Vision.GetFirstVisibleTarget(Team);
+            CurrentTarget = currentTarget;
+            PreviousTarget = currentTarget;
+        }
+        else if(Vision.GetVisibleTargets(Team) == null && CurrentTarget != null)
+        {
+            CurrentTarget = PreviousTarget;
         }
     }
 
@@ -47,8 +71,25 @@ public class EnemyStateMachine : StateMachine
 
     public override void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
+        //Patrol Points
+        Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position + Vector3.up, PatrolPoint + Vector3.up);
         Gizmos.DrawSphere(PatrolPoint, 1f);
+
+        //What can the enemy see
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(LookPosition, Range);
+        Gizmos.DrawRay(LookPosition, transform.rotation * Quaternion.Euler(0f, FOV * 0.5f, 0f) * Vector3.forward * Range);
+        Gizmos.DrawRay(LookPosition, transform.rotation * Quaternion.Euler(0f, -FOV * 0.5f, 0f) * Vector3.forward * Range);
+
+        //when the player is in range of the enemy
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(LookPosition, ChaseStoppingDistance);
+
+        //when the player has escaped from the enemy
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(LookPosition, MaxChaseDistance);
     }
+
+
 }

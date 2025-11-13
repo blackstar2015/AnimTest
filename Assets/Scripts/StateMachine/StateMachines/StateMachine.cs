@@ -155,7 +155,8 @@ public class StateMachine : MonoBehaviour
     #endregion
 
     #region Targeting
-    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Targeting")] public Targetable CurrentTarget { get; set; }
+    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Targeting")] public Targetable CurrentTarget { get; set; } = null;
+    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Targeting")] public Targetable PreviousTarget { get; set; } = null;
     [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Targeting")] public bool IsTargeting;
     [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Targeting")] public int Team = 0;
     [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Targeting")] public bool IsTargetable { get; set; } = true;

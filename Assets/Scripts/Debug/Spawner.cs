@@ -140,6 +140,7 @@ public class Spawner : MonoBehaviour
         CustomEnemyController enemy = Instantiate(_enemyPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
         _enemies.Add(enemy);
         enemy.GetComponent<Health>().OnDeath.AddListener(RemoveEnemy);
+        //enemy.GetComponent<Health>().OnDamage.AddListener();
         enemy.SetSpawnTransform(spawnPoint.transform);
         yield return new WaitForSeconds(_spawnDelay);
     }

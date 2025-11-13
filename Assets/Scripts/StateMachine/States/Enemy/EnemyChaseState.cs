@@ -22,13 +22,22 @@ public class EnemyChaseState: EnemyBaseState
     {
         base.Tick(deltaTime);
 
-        if(Vector3.Distance(stateMachine.transform.position, stateMachine.CurrentTarget.transform.position) > stateMachine.StoppingDistance)
+        if (Vector3.Distance(stateMachine.transform.position, stateMachine.CurrentTarget.transform.position) > stateMachine.ChaseStoppingDistance && stateMachine.CurrentTarget != null && Vector3.Distance(stateMachine.transform.position, stateMachine.CurrentTarget.transform.position) < stateMachine.MaxChaseDistance)
         {
             stateMachine.MoveTo(stateMachine.CurrentTarget.transform.position);
         }
         else
         {
-            stateMachine.SwitchState(new EnemyAttackState(this.stateMachine),1);
+            if (stateMachine.CurrentTarget == null || Vector3.Distance(stateMachine.transform.position, stateMachine.CurrentTarget.transform.position) >= stateMachine.MaxChaseDistance)
+            {
+                stateMachine.Stop();
+                stateMachine.SwitchState(new EnemyPatrolState(this.stateMachine), 1);
+            }
+            else
+            {
+                stateMachine.IsAttacking = true;
+                stateMachine.SwitchState(new EnemyAttackState(this.stateMachine), 1);
+            }
         }
     }
 }

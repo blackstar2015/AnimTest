@@ -80,7 +80,7 @@ public class Health : MonoBehaviour, IDamageable
         // reduce health current value
         _currentHealth -= damageInfo.Amount;
         _currentHealth = Mathf.Clamp(_currentHealth, 0f, _maxHealth);
-
+        Debug.Log("asd");
         // invoke the damage event
         OnDamage.Invoke(damageInfo);
                                                    

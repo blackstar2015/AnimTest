@@ -73,7 +73,7 @@ public class Vision : MonoBehaviour
     {
         List<Targetable> targets = GetVisibleTargets(team);
         if (targets.Count == 0) return null;
-        return targets[CurrentVisibleIndex]; 
+        return targets[CurrentVisibleIndex];
     
         // more sophisticated AI could score and rank targets to pick the best approach
         // ex: distance to, flanking, health %, damage vulnerabilities, threat
@@ -81,10 +81,10 @@ public class Vision : MonoBehaviour
     
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(LookPosition, _range);
-        // slick one-liners look cool but your team will hate you
-        Gizmos.DrawRay(LookPosition, transform.rotation * Quaternion.Euler(0f, _FOV * 0.5f, 0f) * Vector3.forward * _range);
-        Gizmos.DrawRay(LookPosition, transform.rotation * Quaternion.Euler(0f, -_FOV * 0.5f, 0f) * Vector3.forward * _range);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(LookPosition, _range);
+        //slick one-liners look cool but your team will hate you
+        //Gizmos.DrawRay(LookPosition, transform.rotation * Quaternion.Euler(0f, _FOV * 0.5f, 0f) * Vector3.forward * _range);
+        //Gizmos.DrawRay(LookPosition, transform.rotation * Quaternion.Euler(0f, -_FOV * 0.5f, 0f) * Vector3.forward * _range);
     }
 }
