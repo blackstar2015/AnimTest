@@ -26,11 +26,11 @@ public class EnemyAttackState: EnemyBaseState
 
         if (stateMachine.Vision.TestVisibility(stateMachine.CurrentTarget.transform.position) &&
             stateMachine.IsAttacking && 
-            Vector3.Distance(stateMachine.transform.position, stateMachine.CurrentTarget.transform.position) <= stateMachine.StoppingDistance )
+            Vector3.Distance(stateMachine.transform.position, stateMachine.CurrentTarget.transform.position) <= stateMachine.ChaseStoppingDistance)
         {
             HandleAttack();
         }
-        else if(!stateMachine.IsAttacking || Vector3.Distance(stateMachine.transform.position, stateMachine.CurrentTarget.transform.position) > stateMachine.StoppingDistance)
+        else if(!stateMachine.IsAttacking || Vector3.Distance(stateMachine.transform.position, stateMachine.CurrentTarget.transform.position) > stateMachine.ChaseStoppingDistance)
         {
             stateMachine.actionIndex = 0;
             if (!_attackStarted) stateMachine.SwitchState(new EnemyChaseState(this.stateMachine));

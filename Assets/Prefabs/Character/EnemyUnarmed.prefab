@@ -52,7 +52,7 @@ GameObject:
   - component: {fileID: 5050577568094463462}
   - component: {fileID: 8247142744129520917}
   m_Layer: 6
-  m_Name: Enemy
+  m_Name: EnemyUnarmed
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -313,18 +313,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2981525915324084267}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnBlock:
     m_PersistentCalls:
       m_Calls:
@@ -369,7 +357,7 @@ MonoBehaviour:
   <Acceleration>k__BackingField: 10
   <TurnSpeed>k__BackingField: 15
   <OnlyTurnWithInput>k__BackingField: 1
-  <StoppingDistance>k__BackingField: 2
+  <StoppingDistance>k__BackingField: 1
   <LookInMoveDirection>k__BackingField: 1
   <ControlRotation>k__BackingField: 1
   <Fix3DSpriteRotation>k__BackingField: 0
@@ -444,7 +432,7 @@ MonoBehaviour:
   EnemyWalkSpeedMultiplier: 1
   PatrolPoint: {x: 0, y: 0, z: 0}
   MaxChaseDistance: 10
-  ChaseStoppingDistance: 2
+  ChaseStoppingDistance: 1
 --- !u!1001 &205064324025955348
 PrefabInstance:
   m_ObjectHideFlags: 0

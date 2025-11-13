@@ -10,54 +10,54 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b40750af0edf09043819b533bba1d0ac, type: 3}
-  m_Name: Unarmed
+  m_Name: EnemyUnarmed
   m_EditorClassIdentifier: 
   <Damage>k__BackingField: 5
-  <AttackRate>k__BackingField: 2.5
+  <AttackRate>k__BackingField: 0.5
   <Duration>k__BackingField: 1
   <CritChance>k__BackingField: 5
   <Range>k__BackingField: 1
   <EffectiveRange>k__BackingField: 1
   <WeaponIndex>k__BackingField: 0
-  <DamageType>k__BackingField: 0
+  <DamageType>k__BackingField: 1
   <AttackAnimName>k__BackingField: Unarmed
   <PerfectBlockTime>k__BackingField: 1
   <HitMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
-  <KnockbackForce>k__BackingField: 100
+  <KnockbackForce>k__BackingField: 10
   <ComboData>k__BackingField:
-  - <AttackHashName>k__BackingField: Attack1
+  - <AttackHashName>k__BackingField: 
     <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
-  - <AttackHashName>k__BackingField: Attack2
+  - <AttackHashName>k__BackingField: 
     <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
-  - <AttackHashName>k__BackingField: Attack3
+  - <AttackHashName>k__BackingField: 
     <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
-  - <AttackHashName>k__BackingField: Attack4
+  - <AttackHashName>k__BackingField: 
     <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
-  - <AttackHashName>k__BackingField: Attack5
+  - <AttackHashName>k__BackingField: 
     <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
     <Range>k__BackingField: 1.5
     <KnockbackMultiplier>k__BackingField: 1
     <KnockbackDirection>k__BackingField: {x: 0, y: 0, z: -1}
-  - <AttackHashName>k__BackingField: Attack6
+  - <AttackHashName>k__BackingField: 
     <Damage>k__BackingField: 5
     <Angle>k__BackingField: 120
     <Range>k__BackingField: 1.5

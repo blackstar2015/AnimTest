@@ -507,13 +507,21 @@ public class StateMachine : MonoBehaviour
         yield return new WaitForEndOfFrame();
     
         CustomController instigatorController = damageInfo.Instigator.GetComponent<CustomController>();
+        GameObject weaponMesh = Weapons[CurrentWeaponIndex].WeaponMesh;
         WeaponMeleeData data = Weapons[CurrentWeaponIndex].Data as WeaponMeleeData;
         if (data != null)
         {
-            Vector3 knockbackDirection = (data.ComboData[CurrentActionIndex].KnockbackDirection).normalized;
+            Vector3 knockbackDirection;
+            if (weaponMesh != null)
+            {
+                knockbackDirection = weaponMesh.GetComponent<Rigidbody>().GetPointVelocity(weaponMesh.transform.position);
+            }
+            else knockbackDirection = (data.ComboData[CurrentActionIndex].KnockbackDirection).normalized;
+
+            Debug.DrawRay(transform.position, knockbackDirection * damageInfo.KnockBackForce, Color.orange, 5f);
+            
             rb.AddForce(damageInfo.KnockBackForce * (knockbackDirection + damageInfo.Instigator.transform.forward), ForceMode.Impulse);
             AnimatorClipInfo[] currentClipInfo = Animator.GetCurrentAnimatorClipInfo(0);
-           
         }
         else rb.AddForce(damageInfo.KnockBackForce * -damageInfo.Victim.transform.forward, ForceMode.Impulse);
         yield return new WaitForSeconds(Animator.GetCurrentAnimatorStateInfo(0).length / 2);
