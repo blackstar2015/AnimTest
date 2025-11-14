@@ -37,7 +37,8 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs","Camera")] public CinemachineCamera TargetLockCam;
     [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs","Camera")] public CinemachineCamera FreeLookCam;
     [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Camera")] public CinemachineTargetGroup TargetGroup;
-    
+    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Weapons")] public GameObject BulletPrefab;
+
     public override void Awake()
     {
         base.Awake();

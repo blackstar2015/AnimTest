@@ -76,6 +76,12 @@ public class CustomPlayerController : CustomController
             stateMachine.LastDashTime = Time.time;
         }
     }
+
+    public virtual void OnShoot()
+    {
+        Instantiate(stateMachine.BulletPrefab, stateMachine.transform.position + Vector3.forward + Vector3.up, Quaternion.identity);
+    }
+
     public virtual void OnAttack(InputValue value)
     {
         AttackAction?.Invoke(value.isPressed);
