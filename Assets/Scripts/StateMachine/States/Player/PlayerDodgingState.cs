@@ -7,7 +7,7 @@ public class PlayerDodgingState : PlayerBaseState
 {
     private int _dodgeHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].DodgeHash);
     private int _lockedDodgeHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].LockedDodgeHash);
-   
+    private int _airDodgeHash => Animator.StringToHash(stateMachine.Weapons[stateMachine.CurrentWeaponIndex].AirborneDashHash);
     private Vector3 _dashDirection {  get; set; }
     private Vector3 _moveInput { get; set; }
 
@@ -57,17 +57,38 @@ public class PlayerDodgingState : PlayerBaseState
         else if (!stateMachine.IsDashing && stateMachine.IsTargeting) stateMachine.StartCoroutine(stateMachine.SwitchToMovementWithDelay(true, .1f));
 
         PerformDash();
+        //if (stateMachine.IsGrounded)
+        //{
+        //}
+        //else PerformAirDash();
     }
 
     private void PerformDash()
     {
         if(!stateMachine.IsDashing) return;
-        if(!stateMachine.IsTargeting) stateMachine.StartCoroutine(DashCoroutine());
+        if (!stateMachine.IsTargeting) stateMachine.StartCoroutine(DashCoroutine());
         else stateMachine.StartCoroutine(TargetLockDashCoroutine());
+        
+    }
+
+    private void PerformAirDash()
+    {
+        stateMachine.StartCoroutine(AirDashCoroutine());
+    }
+
+    private IEnumerator AirDashCoroutine()
+    {
+        stateMachine.IsDashing = true;
+        stateMachine.rb.linearVelocity = Vector3.zero;
+        yield return new WaitForEndOfFrame();
+        stateMachine.rb.AddForce(stateMachine.transform.forward *  stateMachine.DashDistance,ForceMode.Acceleration);
+        yield return new WaitForSeconds(1);
+        stateMachine.IsDashing = false;
     }
 
     private IEnumerator TargetLockDashCoroutine()
     {
+        if (!stateMachine.IsGrounded) yield return null;
         float direction = _moveInput.x >= 0 ? 1f : -1f;
         stateMachine.IsDashing = true;
         stateMachine.Animator.CrossFade(_lockedDodgeHash, stateMachine.CrossFadeDuration);
@@ -106,11 +127,11 @@ public class PlayerDodgingState : PlayerBaseState
             }
         }
         stateMachine.IsDashing = false;
-
     }
 
     private IEnumerator DashCoroutine()
     {
+        //if (!stateMachine.IsGrounded) yield return null;
         stateMachine.IsDashing = true;
         Vector3 right = Camera.main.transform.right;
         Vector3 dashForward = Vector3.Cross(-stateMachine.GroundNormal, right).normalized;
@@ -118,16 +139,23 @@ public class PlayerDodgingState : PlayerBaseState
         Vector3 endPos = stateMachine.transform.position + _dashDirection * stateMachine.DashDistance;
         Debug.DrawLine(startPos, endPos, Color.red, 10f);
         float elapsedTime = 0f;
+        float originalGravity = stateMachine.LandingGravity;
 
-
+        if (!stateMachine.IsGrounded)
+        {
+            stateMachine.LandingGravity = 0;
+            stateMachine.DashDuration = .1f;
+        }
         while (elapsedTime < stateMachine.DashDuration)
         {
-            stateMachine.Animator.CrossFade(_dodgeHash, stateMachine.CrossFadeDuration);
-            float t = elapsedTime / stateMachine.DashDuration;
+            if (stateMachine.IsGrounded) stateMachine.Animator.CrossFade(_dodgeHash, stateMachine.CrossFadeDuration);
+
+            float t = elapsedTime / (stateMachine.DashDuration);
             stateMachine.transform.position = Vector3.Lerp(startPos, endPos, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        stateMachine.LandingGravity = originalGravity;
         stateMachine.IsDashing = false;
     }
 }
