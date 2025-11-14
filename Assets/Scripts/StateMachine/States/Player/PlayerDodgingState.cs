@@ -131,7 +131,7 @@ public class PlayerDodgingState : PlayerBaseState
 
     private IEnumerator DashCoroutine()
     {
-        if (!stateMachine.IsGrounded) yield return null;
+        //if (!stateMachine.IsGrounded) yield return null;
         stateMachine.IsDashing = true;
         Vector3 right = Camera.main.transform.right;
         Vector3 dashForward = Vector3.Cross(-stateMachine.GroundNormal, right).normalized;
