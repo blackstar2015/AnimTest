@@ -26,7 +26,6 @@ public class Deformer : MonoBehaviour
         
         if(other.TryGetComponent(out Terrain terrain))
         {
-            Debug.Log("asd");
             Explosion(rb.transform.position);
         }
         Destroy(gameObject);

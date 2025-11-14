@@ -35,7 +35,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         _terrainData.SetHeights(0, 0, heights);
         GameObject terrainObject = Terrain.CreateTerrainGameObject(_terrainData);
         _terrain = terrainObject.GetComponent<Terrain>();
-        _terrain.transform.position = Vector3.zero;
+        _terrain.transform.position = Vector3.zero + new Vector3(offset.x,offset.y,0);
         _terrainData.terrainLayers = AssignTerrainLayers();
         PaintTerrainTextures();
         _terrainDeformer.SetTerrain(_terrain, _terrainData);
@@ -64,18 +64,21 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         grass.normalMapTexture = Resources.Load<Texture2D>("Textures/Grass_A_Normal");
         grass.maskMapTexture = Resources.Load<Texture2D>("Textures/Grass_A_MaskMap");
         grass.tileSize = new Vector2(12, 12);
+        grass.normalScale = 3;
 
         TerrainLayer rock = new TerrainLayer();
         rock.diffuseTexture = Resources.Load<Texture2D>("Textures/Rock_BaseColor");
         rock.normalMapTexture = Resources.Load<Texture2D>("Textures/Rock_Normal");
         rock.maskMapTexture= Resources.Load<Texture2D>("Textures/Rock_MaskMap");
         rock.tileSize = new Vector2(8, 8);
+        rock.normalScale = 2;
 
         TerrainLayer sand = new TerrainLayer();
         sand.diffuseTexture = Resources.Load<Texture2D>("Textures/Sand_BaseColor");
         sand.normalMapTexture = Resources.Load<Texture2D>("Textures/Sand_Normal");
         sand.maskMapTexture = Resources.Load<Texture2D>("Textures/Sand_MaskMap");
         sand.tileSize = new Vector2(10, 10);
+        sand.normalScale = 2;
 
         return new TerrainLayer[] { grass, rock, sand };
     }
@@ -102,13 +105,13 @@ public class ProceduralTerrainGenerator : MonoBehaviour
 
                 // Example: Grass = layer 0, Rock = layer 1, Sand = layer 2
                 // Sand at low elevations
-                float sandStrength = Mathf.Clamp01((0.2f - height) * 5f);
-                sandStrength *= (0.4f + noise * 0.6f); // breakup with noise
+                float sandStrength = Mathf.Clamp01((.4f - height) * 5f);
+                sandStrength *= (0.5f + noise * 0.5f); // breakup with noise
                 weights[2] = sandStrength;
 
                 // Rock on steep slopes
                 float rockStrength = Mathf.Clamp01(slope * 2f);
-                rockStrength *= (0.4f + noise * 0.6f);
+                rockStrength *= (0.5f + noise * 0.5f);
                 weights[1] = rockStrength;
 
                 // Grass everywhere else
@@ -125,7 +128,6 @@ public class ProceduralTerrainGenerator : MonoBehaviour
                     splatmap[y, x, i] = weights[i];
             }
         }
-
         _terrainData.SetAlphamaps(0, 0, splatmap);
     }
 
