@@ -606,6 +606,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 685008403000281846, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
+      propertyPath: <Data>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: c6e5a705e0a59f747b427a99eb1fd5e4, type: 2}
     - target: {fileID: 4678409019931915664, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: FreeLookCam
       value: 

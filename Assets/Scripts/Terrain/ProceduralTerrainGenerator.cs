@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using UnityEngine;
 
@@ -15,22 +16,34 @@ public class ProceduralTerrainGenerator : MonoBehaviour
     public float persistence = 0.4f; //how strong each added layer appears
     public Vector2 offset;
 
-    private Terrain terrain;
-    private TerrainData terrainData;
-
+    private Terrain _terrain;
+    private TerrainData _terrainData;
+    private TerrainDeformer _terrainDeformer;
     private void Awake()
     {
+        _terrainDeformer = GetComponent<TerrainDeformer>();
         GenerateTerrain();
     }
 
     private void GenerateTerrain()
     {
-        terrainData = new TerrainData();
-        terrainData.heightmapResolution = heightmapResolution;
-        terrainData.size = new Vector3(terrainSize, terrainHeight, terrainSize);
+        _terrainData = new TerrainData();
+        _terrainData.size = new Vector3(terrainSize, terrainHeight, terrainSize);
+        _terrainData.heightmapResolution = heightmapResolution;
+        _terrainData.alphamapResolution = 512;
+        float[,] heights = GenerateHeightMap();
+        _terrainData.SetHeights(0, 0, heights);
+        GameObject terrainObject = Terrain.CreateTerrainGameObject(_terrainData);
+        _terrain = terrainObject.GetComponent<Terrain>();
+        _terrain.transform.position = Vector3.zero;
+        _terrainData.terrainLayers = AssignTerrainLayers();
+        PaintTerrainTextures();
+        _terrainDeformer.SetTerrain(_terrain, _terrainData);
+    }
 
+    private float[,] GenerateHeightMap()
+    {
         float[,] heights = new float[heightmapResolution, heightmapResolution];
-
         for (int z = 0; z < heightmapResolution; z++)
         {
             for (int x = 0; x < heightmapResolution; x++)
@@ -41,39 +54,36 @@ public class ProceduralTerrainGenerator : MonoBehaviour
                 heights[z, x] = GenerateFBM(nx, nz);
             }
         }
-
-        terrainData.SetHeights(0, 0, heights);
-        GameObject terrainObject = Terrain.CreateTerrainGameObject(terrainData);
-        terrain = terrainObject.GetComponent<Terrain>();
-        terrain.transform.position = Vector3.zero;
-        AssignTerrainLayers();
-        PaintTerrainTextures();
+        return heights;
     }
 
-    private void AssignTerrainLayers()
+    private TerrainLayer[] AssignTerrainLayers()
     {
         TerrainLayer grass = new TerrainLayer();
         grass.diffuseTexture = Resources.Load<Texture2D>("Textures/Grass_A_BaseColor");
         grass.normalMapTexture = Resources.Load<Texture2D>("Textures/Grass_A_Normal");
         grass.maskMapTexture = Resources.Load<Texture2D>("Textures/Grass_A_MaskMap");
+        grass.tileSize = new Vector2(12, 12);
 
         TerrainLayer rock = new TerrainLayer();
         rock.diffuseTexture = Resources.Load<Texture2D>("Textures/Rock_BaseColor");
         rock.normalMapTexture = Resources.Load<Texture2D>("Textures/Rock_Normal");
         rock.maskMapTexture= Resources.Load<Texture2D>("Textures/Rock_MaskMap");
+        rock.tileSize = new Vector2(8, 8);
 
         TerrainLayer sand = new TerrainLayer();
         sand.diffuseTexture = Resources.Load<Texture2D>("Textures/Sand_BaseColor");
         sand.normalMapTexture = Resources.Load<Texture2D>("Textures/Sand_Normal");
         sand.maskMapTexture = Resources.Load<Texture2D>("Textures/Sand_MaskMap");
+        sand.tileSize = new Vector2(10, 10);
 
-        terrainData.terrainLayers = new TerrainLayer[] { grass, rock, sand };
+        return new TerrainLayer[] { grass, rock, sand };
     }
 
     private void PaintTerrainTextures()
     {
-        int alphaRes = terrainData.alphamapResolution;
-        int layers = terrainData.alphamapLayers;
+        int alphaRes = _terrainData.alphamapResolution;
+        int layers = _terrainData.alphamapLayers;
 
         float[,,] splatmap = new float[alphaRes, alphaRes, layers];
 
@@ -84,15 +94,27 @@ public class ProceduralTerrainGenerator : MonoBehaviour
                 float normX = x / (float)alphaRes;
                 float normY = y / (float)alphaRes;
 
-                float height = terrainData.GetInterpolatedHeight(normX, normY) / terrainData.size.y;
-                float slope = terrainData.GetSteepness(normX, normY) / 90f;
+                float height = _terrainData.GetInterpolatedHeight(normX, normY) / _terrainData.size.y;
+                float slope = _terrainData.GetSteepness(normX, normY) / 90f;
+                float noise = Mathf.PerlinNoise(normX * 8f, normY * 8f);
 
                 float[] weights = new float[layers];
 
                 // Example: Grass = layer 0, Rock = layer 1, Sand = layer 2
-                weights[0] = Mathf.Clamp01(1f - slope);   // grass on flat areas
-                weights[1] = slope;                       // rock on steep slopes
-                weights[2] = Mathf.Clamp01(height * 2f);  // sand at low heights
+                // Sand at low elevations
+                float sandStrength = Mathf.Clamp01((0.2f - height) * 5f);
+                sandStrength *= (0.4f + noise * 0.6f); // breakup with noise
+                weights[2] = sandStrength;
+
+                // Rock on steep slopes
+                float rockStrength = Mathf.Clamp01(slope * 2f);
+                rockStrength *= (0.4f + noise * 0.6f);
+                weights[1] = rockStrength;
+
+                // Grass everywhere else
+                float grassStrength = Mathf.Clamp01(1f - slope) * (1f - sandStrength);
+                grassStrength *= (0.5f + noise * 0.5f);
+                weights[0] = grassStrength;
 
                 // Normalize
                 float total = weights[0] + weights[1] + weights[2];
@@ -104,7 +126,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
             }
         }
 
-        terrainData.SetAlphamaps(0, 0, splatmap);
+        _terrainData.SetAlphamaps(0, 0, splatmap);
     }
 
     private float GenerateFBM(float x, float y) //FBM = Fractal Brownian Motion: stack multiple layers of noise on top of each other.
@@ -127,5 +149,5 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         return total * 0.5f;
     }
 
-    public TerrainData GetTerrainData() => terrainData;
+    public TerrainData GetTerrainData() => _terrainData;
 }

@@ -79,7 +79,7 @@ public class CustomPlayerController : CustomController
 
     public virtual void OnShoot()
     {
-        Instantiate(stateMachine.BulletPrefab, stateMachine.transform.position + Vector3.forward + Vector3.up, Quaternion.identity);
+        Instantiate(stateMachine.BulletPrefab, stateMachine.transform.position + Vector3.up, Quaternion.identity);
     }
 
     public virtual void OnAttack(InputValue value)

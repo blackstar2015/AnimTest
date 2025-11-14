@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1924889359640400996}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 205.52533, y: 50, z: 88.8}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deformer: {fileID: 0}
-  craterRadius: 10
-  craterDepth: 2
+  craterRadius: {x: 2, y: 8}
+  craterDepth: {x: 2, y: 4}
   craterFalloff:
     serializedVersion: 2
     m_Curve:
@@ -165,10 +165,10 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.81993574
-      value: 0.50699514
-      inSlope: -0.027980566
-      outSlope: -0.027980566
+      time: 0.9324358
+      value: 0.9879488
+      inSlope: -0.0482049
+      outSlope: -0.0482049
       tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
