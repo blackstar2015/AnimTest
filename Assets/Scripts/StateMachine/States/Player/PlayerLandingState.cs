@@ -27,7 +27,7 @@ public class PlayerLandingState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
-        stateMachine.rb.AddForce(-stateMachine.transform.up * stateMachine.LandingGravity);
+        stateMachine.rb.AddForce(-stateMachine.transform.up * stateMachine.LandingGravity, ForceMode.Acceleration);
         if (stateMachine.IsDashing) stateMachine.SwitchState(new PlayerDodgingState(this.stateMachine, stateMachine.transform.forward, false));
         if (stateMachine.IsGrounded)
         {
