@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
+using Color = UnityEngine.Color;
 
 public class ProceduralTerrainGenerator : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
     private Terrain _terrain;
     private TerrainData _terrainData;
     private TerrainDeformer _terrainDeformer;
+
     private void Awake()
     {
         _terrainDeformer = GetComponent<TerrainDeformer>();
@@ -40,6 +43,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         PaintTerrainTextures();
         _terrainDeformer.SetTerrain(_terrain, _terrainData);
     }
+    
 
     private float[,] GenerateHeightMap()
     {
@@ -56,7 +60,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         }
         return heights;
     }
-
+   
     private TerrainLayer[] AssignTerrainLayers()
     {
         TerrainLayer grass = new TerrainLayer();
