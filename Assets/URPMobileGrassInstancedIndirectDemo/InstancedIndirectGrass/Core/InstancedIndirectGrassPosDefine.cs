@@ -8,7 +8,7 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
     [Range(1000000, 40000000)]
     public int instanceCount = 1000000;
     public float drawDistance = 125;
-
+    [SerializeField]private float _offset = -100f;
     private int cacheCount = -1;
 
     private Terrain _terrain;
@@ -61,22 +61,7 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
             Vector3 pos = Vector3.zero;
             pos.x = UnityEngine.Random.Range(-1f, 1f) * transform.lossyScale.x;
             pos.z = UnityEngine.Random.Range(-1f, 1f) * transform.lossyScale.z;
-            int alphaRes = _terrainData.alphamapResolution;
-            //for (int y = 0; y < alphaRes; y++)
-            //{
-            //    for (int x = 0; x < alphaRes; x++)
-            //    {
-            //        float normX = x / (float)alphaRes;
-            //        float normY = y / (float)alphaRes;
-
-            //        float height = _terrainData.GetInterpolatedHeight(normX, normY) / _terrainData.size.y;
-            //        float slope = _terrainData.GetSteepness(normX, normY) / 90f;
-            //        float noise = Mathf.PerlinNoise(normX * 8f, normY * 8f);
-
-            //        //transform to posWS in C#
-            //        pos.y = height;
-            //    }
-            //}
+            pos.y = _terrainData.GetHeight((int)pos.x,(int)pos.z) + _offset;
             pos += transform.position;
             positions.Add(new Vector3(pos.x, pos.y, pos.z));
         }
@@ -84,5 +69,4 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
         InstancedIndirectGrassRenderer.instance.allGrassPos = positions;
         cacheCount = positions.Count;
     }
-
 }
