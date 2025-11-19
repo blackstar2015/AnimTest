@@ -18,7 +18,7 @@ using UnityEngine.Splines;
 public class StateMachine : MonoBehaviour
 {
     protected State _currentState {  get; set; }
-    public string CurrentState => _currentState.ToString();
+    public string CurrentState => _currentState?.ToString();
     #region Components
     [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Components")] protected CustomController Controller { get; set; }
     [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Components")] public Animator Animator { get; set; }

@@ -17,7 +17,11 @@ Shader "Custom/Grass"
 
     SubShader
     {
-        Tags { "Queue"="AlphaTest" "RenderType"="Opaque" }
+        Tags { 
+            "Queue"="AlphaTest" 
+            "RenderType"="Opaque"
+            "RenderPipeline"="UniversalPipeline"
+        }
 
         Pass
         {
@@ -31,17 +35,29 @@ Shader "Custom/Grass"
             #pragma target 4.5
             #pragma multi_compile_instancing
             #pragma instancing_options procedural:Setup
+
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-            StructuredBuffer<float3> instancePositions: register(t0);
-            StructuredBuffer<float4> instanceRotations : register(t1);
-            StructuredBuffer<float> instanceScales : register(t2);
+            // -------------------------------
+            // INSTANCE BUFFERS (MUST MATCH C#)
+            // -------------------------------
+            StructuredBuffer<float3> instancePositions : register(t0);
+            StructuredBuffer<float3> instanceRotations : register(t1);
+            StructuredBuffer<float3> instanceScales    : register(t2);
 
             int _VertexCountPerInstance;
 
-            TEXTURE2D(_BaseMap);          SAMPLER(sampler_BaseMap);
-            TEXTURE2D(_NormalMap);        SAMPLER(sampler_NormalMap);
-            TEXTURE2D(_MaskMap);          SAMPLER(sampler_MaskMap);
+            // -------------------------------
+            // TEXTURES
+            // -------------------------------
+            TEXTURE2D(_BaseMap);
+            SAMPLER(sampler_BaseMap);
+
+            TEXTURE2D(_NormalMap);
+            SAMPLER(sampler_NormalMap);
+
+            TEXTURE2D(_MaskMap);
+            SAMPLER(sampler_MaskMap);
 
             float _NormalScale;
             float _Smoothness;
@@ -70,36 +86,48 @@ Shader "Custom/Grass"
             {
                 float s = sin(angle);
                 float c = cos(angle);
-                return float3(pos.x * c - pos.z * s, pos.y, pos.x * s + pos.z * c);
+                return float3(
+                    pos.x * c - pos.z * s,
+                    pos.y,
+                    pos.x * s + pos.z * c
+                );
             }
 
             Varyings vert(Attributes IN)
             {
                 Varyings OUT;
 
+                // ---------------------------
+                // FIND INSTANCE ID
+                // ---------------------------
                 uint instanceID = IN.vertexID / _VertexCountPerInstance;
 
-                float3 worldPos = instancePositions[instanceID];
-                float3 worldRot = instanceRotations[instanceID];
-                float scale     = instanceScales[instanceID];
+                float3 instancePos = instancePositions[instanceID];
+                float3 instanceRot = instanceRotations[instanceID];
+                float instanceScale = instanceScales[instanceID].x;
 
-                float t = _Time.y * _WindSpeed;
-                float sway = sin(t + worldPos.x * 0.1 + worldPos.z * 0.1) * _WindStrength;
+                // ---------------------------
+                // WIND
+                // ---------------------------
+                float t = _Time.y  * _WindSpeed;
+                float sway = sin(t + instancePos.x * 0.1 + instancePos.z * 0.1)  * _WindStrength;
 
                 float3 pos = IN.positionOS;
                 pos.xz += sway;
 
-                pos = RotateY(pos, radians(worldRot.y));
-                pos *= scale;
-
-                pos += worldPos;
+                // ---------------------------
+                // TRANSFORM BY INSTANCE
+                // ---------------------------
+                pos = RotateY(pos, radians(instanceRot.y));
+                pos *= instanceScale;
+                pos += instancePos;
 
                 OUT.positionHCS = TransformWorldToHClip(pos);
                 OUT.uv = IN.uv;
 
-                float3 normal = IN.normalOS;
-                normal = RotateY(normal, radians(worldRot.y));
-                OUT.normalWS = TransformObjectToWorldNormal(normal);
+                // normals
+                float3 nrm = RotateY(IN.normalOS, radians(instanceRot.y));
+                OUT.normalWS = TransformObjectToWorldNormal(nrm);
 
                 return OUT;
             }
@@ -107,7 +135,6 @@ Shader "Custom/Grass"
             half4 frag(Varyings IN) : SV_Target
             {
                 half4 baseCol = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, IN.uv);
-
                 if (baseCol.a < _Cutoff)
                     discard;
 

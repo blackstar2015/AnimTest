@@ -21,10 +21,11 @@ public class ProceduralTerrainGenerator : MonoBehaviour
     private Terrain _terrain;
     private TerrainData _terrainData;
     private TerrainDeformer _terrainDeformer;
-
+    private InstancedIndirectGrassPosDefine _grassPosDefine;
     private void Awake()
     {
         _terrainDeformer = GetComponent<TerrainDeformer>();
+        _grassPosDefine = GetComponent<InstancedIndirectGrassPosDefine>();
         GenerateTerrain();
     }
 
@@ -42,6 +43,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         _terrainData.terrainLayers = AssignTerrainLayers();
         PaintTerrainTextures();
         _terrainDeformer.SetTerrain(_terrain, _terrainData);
+        _grassPosDefine.SetTerrain(_terrain, _terrainData);
     }
     
 
