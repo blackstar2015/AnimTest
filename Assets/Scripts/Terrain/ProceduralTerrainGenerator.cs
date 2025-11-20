@@ -20,12 +20,12 @@ public class ProceduralTerrainGenerator : MonoBehaviour
 
     private Terrain _terrain;
     private TerrainData _terrainData;
-    private TerrainDeformer _terrainDeformer;
-    private InstancedIndirectGrassPosDefine _grassPosDefine;
+    [SerializeField] private TerrainDeformer _terrainDeformer;
+    [SerializeField] private InstancedIndirectGrassPosDefine _grassPosDefine;
     private void Awake()
     {
-        _terrainDeformer = GetComponent<TerrainDeformer>();
-        _grassPosDefine = GetComponent<InstancedIndirectGrassPosDefine>();
+        if(_terrainDeformer == null) _terrainDeformer = GetComponent<TerrainDeformer>();
+        if(_grassPosDefine == null) _grassPosDefine = FindFirstObjectByType<InstancedIndirectGrassPosDefine>();
         GenerateTerrain();
     }
 
@@ -39,7 +39,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         _terrainData.SetHeights(0, 0, heights);
         GameObject terrainObject = Terrain.CreateTerrainGameObject(_terrainData);
         _terrain = terrainObject.GetComponent<Terrain>();
-        _terrain.transform.position = Vector3.zero + new Vector3(offset.x,offset.y,0);
+        //_terrain.transform.position = Vector3.zero + new Vector3(offset.x,offset.y,0);
         _terrainData.terrainLayers = AssignTerrainLayers();
         PaintTerrainTextures();
         _terrainDeformer.SetTerrain(_terrain, _terrainData);

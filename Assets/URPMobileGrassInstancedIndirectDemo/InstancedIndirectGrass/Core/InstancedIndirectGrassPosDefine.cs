@@ -56,14 +56,46 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
         //can define any posWS in this section, random is just an example
         //////////////////////////////////////////////////////////////////////////
         List<Vector3> positions = new List<Vector3>(instanceCount);
-        for (int i = 0; i < instanceCount; i++)
-        {            
-            Vector3 pos = Vector3.zero;
-            pos.x = UnityEngine.Random.Range(-1f, 1f) * transform.lossyScale.x;
-            pos.z = UnityEngine.Random.Range(-1f, 1f) * transform.lossyScale.z;
-            pos.y = _terrainData.GetHeight((int)pos.x,(int)pos.z) + _offset;
-            pos += transform.position;
-            positions.Add(new Vector3(pos.x, pos.y, pos.z));
+       
+        //for (int i = 0; i < instanceCount; i++)
+        //{
+        //    Vector3 pos = Vector3.zero;
+        //    pos.x = UnityEngine.Random.Range(-1f, 1f) * transform.lossyScale.x;
+        //    pos.z = UnityEngine.Random.Range(-1f, 1f) * transform.lossyScale.z;
+
+        //    pos.y = _terrainData.GetHeight((int)pos.x, (int)pos.z) + _offset;
+        //    pos += transform.position;
+        //    positions.Add(new Vector3(pos.x, pos.y, pos.z));
+        //}
+        int mapW = _terrainData.alphamapWidth;
+        int mapH = _terrainData.alphamapHeight;
+
+        float[,,] alphamaps = _terrainData.GetAlphamaps(0, 0, mapW, mapH);
+
+        int targetLayer = 0; // the splat layer you want grass from
+        float threshold = 0.5f;
+
+        for (int y = 0; y < mapH; y++)
+        {
+            for (int x = 0; x < mapW; x++)
+            {
+                float weight = alphamaps[y, x, targetLayer];
+
+                if (weight < threshold)
+                    continue;
+
+                // convert splatmap pixel to normalized coordinates
+                float normX = (float)x / (mapW - 1);
+                float normZ = (float)y / (mapH - 1);
+
+                // convert normalized → world
+                float worldX = _terrain.transform.position.x + normX * _terrainData.size.x;
+                float worldZ = _terrain.transform.position.z + normZ * _terrainData.size.z;
+
+                float height = _terrainData.GetInterpolatedHeight(normX, normZ);
+
+                positions.Add(new Vector3(worldX, height, worldZ));
+            }
         }
         //send all posWS to renderer
         InstancedIndirectGrassRenderer.instance.allGrassPos = positions;

@@ -201,10 +201,11 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
 
     void UpdateAllInstanceTransformBufferIfNeeded()
     {
+        Terrain terrain = FindFirstObjectByType<Terrain>();
         //always update
         instanceMaterial.SetVector("_PivotPosWS", transform.position);
         instanceMaterial.SetVector("_BoundSize", new Vector2(transform.localScale.x, transform.localScale.z));
-
+        instanceMaterial.SetVector("_TerrainOffset", terrain.transform.position);
         //early exit if no need to update buffer
         if (instanceCountCache == allGrassPos.Count &&
             argsBuffer != null &&
