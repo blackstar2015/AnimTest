@@ -23,6 +23,7 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
     [HideInInspector]   
     public static InstancedIndirectGrassRenderer instance;// global ref to this script
 
+
     private int cellCountX = -1;
     private int cellCountZ = -1;
     private int dispatchCount = -1;
@@ -43,12 +44,23 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
     private List<int> visibleCellIDList = new List<int>();
     private Plane[] cameraFrustumPlanes = new Plane[6];
 
-    bool shouldBatchDispatch = true;
+    [SerializeField] bool shouldBatchDispatch = true;
+    private Terrain _terrain;
+    private TerrainData _terrainData;
+    private float _terrainHeight;
+
     //=====================================================
 
     private void OnEnable()
     {
         instance = this; // assign global ref using this script
+    }
+
+    public void SetTerrain(Terrain terrain, TerrainData terrainData, float terrainHeight)
+    {
+        _terrain = terrain;
+        _terrainData = terrainData;
+        _terrainHeight = terrainHeight;
     }
 
     void LateUpdate()
@@ -95,44 +107,67 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
         // then loop though only visible cells, each visible cell dispatch GPU culling job once
         // at the end compute shader will fill all visible instance into visibleInstancesOnlyPosWSIDBuffer
         //=====================================================================================================
+        
+        // ---------- BEFORE dispatch loop: build VP matrix in the convention compute expects ----------
         Matrix4x4 v = cam.worldToCameraMatrix;
         Matrix4x4 p = cam.projectionMatrix;
-        Matrix4x4 vp = p * v;
+
+        // The repo's compute shader comment said "OpenGL standard projection matrix".
+        // GL.GetGPUProjectionMatrix lets us request the GPU projection matrix in the desired convention.
+        // Try 'false' first (OpenGL-like). If near-camera culling is inverted, try 'true' instead.
+        Matrix4x4 gpuProj = GL.GetGPUProjectionMatrix(p, false);
+        Matrix4x4 vp = gpuProj * v;
 
         visibleInstancesOnlyPosWSIDBuffer.SetCounterValue(0);
 
-        //set once only
+        // bind common compute shader params (already in your code)
         cullingComputeShader.SetMatrix("_VPMatrix", vp);
         cullingComputeShader.SetFloat("_MaxDrawDistance", drawDistance);
 
-        //dispatch per visible cell
+        // ---------- dispatch per visible cell ----------
         dispatchCount = 0;
+        const int THREADS_PER_GROUP = 64;
+
         for (int i = 0; i < visibleCellIDList.Count; i++)
         {
             int targetCellFlattenID = visibleCellIDList[i];
+
+            // compute memory offset for this cell (same as your code)
             int memoryOffset = 0;
             for (int j = 0; j < targetCellFlattenID; j++)
-            {
                 memoryOffset += cellPosWSsList[j].Count;
-            }
-            cullingComputeShader.SetInt("_StartOffset", memoryOffset); //culling read data started at offseted pos, will start from cell's total offset in memory
+
+            cullingComputeShader.SetInt("_StartOffset", memoryOffset);
+
             int jobLength = cellPosWSsList[targetCellFlattenID].Count;
 
-            //============================================================================================
-            //batch n dispatchs into 1 dispatch, if memory is continuous in allInstancesPosWSBuffer
-            if(shouldBatchDispatch)
+            // batch neighboring cells into one dispatch (your existing batching)
+            if (shouldBatchDispatch)
             {
-                while ((i < visibleCellIDList.Count - 1) && //test this first to avoid out of bound access to visibleCellIDList
-                        (visibleCellIDList[i + 1] == visibleCellIDList[i] + 1))
+                while ((i < visibleCellIDList.Count - 1) && (visibleCellIDList[i + 1] == visibleCellIDList[i] + 1))
                 {
-                    //if memory is continuous, append them together into the same dispatch call
                     jobLength += cellPosWSsList[visibleCellIDList[i + 1]].Count;
                     i++;
                 }
             }
-            //============================================================================================
 
-            cullingComputeShader.Dispatch(0, Mathf.CeilToInt(jobLength / 64f), 1, 1); //disaptch.X division number must match numthreads.x in compute shader (e.g. 64)
+            // --- SAFETY: skip empty dispatches ---
+            if (jobLength <= 0)
+            {
+                // nothing to dispatch for this batch
+                continue;
+            }
+
+            int groups = Mathf.CeilToInt(jobLength / (float)THREADS_PER_GROUP);
+            // ensure >= 1 to satisfy Compute.Dispatch
+            groups = Mathf.Max(1, groups);
+
+            // Optional debug — remove or comment out later
+#if UNITY_EDITOR
+            Debug.Log($"Dispatch cell batch startOffset={memoryOffset} jobLength={jobLength} groups={groups}");
+#endif
+
+            cullingComputeShader.Dispatch(0, groups, 1, 1);
             dispatchCount++;
         }
 
@@ -143,21 +178,26 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
         ComputeBuffer.CopyCount(visibleInstancesOnlyPosWSIDBuffer, argsBuffer, 4);
 
         // Render 1 big drawcall using DrawMeshInstancedIndirect    
+        Vector3 size = _terrainData.size;
+        Vector3 center = _terrain.transform.position + size * 0.5f;
+        center.y += _terrainHeight*2;
         Bounds renderBound = new Bounds();
-        renderBound.SetMinMax(new Vector3(minX, 0, minZ), new Vector3(maxX, 0, maxZ));//if camera frustum is not overlapping this bound, DrawMeshInstancedIndirect will not even render
+        renderBound.center = center;
+        renderBound.size = new Vector3(size.x, size.y + 20000f, size.z);
+        renderBound.size *= 1.5f;
         Graphics.DrawMeshInstancedIndirect(GetGrassMeshCache(), 0, instanceMaterial, renderBound, argsBuffer);
     }
 
-    private void OnGUI()
-    {
-        GUI.contentColor = Color.black;
-        GUI.Label(new Rect(200, 0, 400, 60), 
-            $"After CPU cell frustum culling,\n" +
-            $"-Visible cell count = {visibleCellIDList.Count}/{cellCountX * cellCountZ}\n" +
-            $"-Real compute dispatch count = {dispatchCount} (saved by batching = {visibleCellIDList.Count - dispatchCount})");
+    //private void OnGUI()
+    //{
+    //    GUI.contentColor = Color.black;
+    //    GUI.Label(new Rect(200, 0, 400, 60), 
+    //        $"After CPU cell frustum culling,\n" +
+    //        $"-Visible cell count = {visibleCellIDList.Count}/{cellCountX * cellCountZ}\n" +
+    //        $"-Real compute dispatch count = {dispatchCount} (saved by batching = {visibleCellIDList.Count - dispatchCount})");
 
-        shouldBatchDispatch = GUI.Toggle(new Rect(400, 400, 200, 100), shouldBatchDispatch, "shouldBatchDispatch");
-    }
+    //    shouldBatchDispatch = GUI.Toggle(new Rect(300, 250, 200, 200), shouldBatchDispatch, "shouldBatchDispatch");
+    //}
 
     void OnDisable()
     {
@@ -201,11 +241,10 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
 
     void UpdateAllInstanceTransformBufferIfNeeded()
     {
-        Terrain terrain = FindFirstObjectByType<Terrain>();
         //always update
         instanceMaterial.SetVector("_PivotPosWS", transform.position);
         instanceMaterial.SetVector("_BoundSize", new Vector2(transform.localScale.x, transform.localScale.z));
-        instanceMaterial.SetVector("_TerrainOffset", terrain.transform.position);
+
         //early exit if no need to update buffer
         if (instanceCountCache == allGrassPos.Count &&
             argsBuffer != null &&
@@ -215,9 +254,6 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
                 return;
             }
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-
         Debug.Log("UpdateAllInstanceTransformBuffer (Slow)");
 
         ///////////////////////////
@@ -225,11 +261,12 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
         ///////////////////////////
         if (allInstancesPosWSBuffer != null)
             allInstancesPosWSBuffer.Release();
-        allInstancesPosWSBuffer = new ComputeBuffer(allGrassPos.Count, sizeof(float)*3); //float3 posWS only, per grass
+        int bufferSize = Mathf.CeilToInt(MathF.Max(1f, allGrassPos.Count));
+        allInstancesPosWSBuffer = new ComputeBuffer(bufferSize, sizeof(float)*3); //float3 posWS only, per grass
 
         if (visibleInstancesOnlyPosWSIDBuffer != null)
             visibleInstancesOnlyPosWSIDBuffer.Release();
-        visibleInstancesOnlyPosWSIDBuffer = new ComputeBuffer(allGrassPos.Count, sizeof(uint), ComputeBufferType.Append); //uint only, per visible grass
+        visibleInstancesOnlyPosWSIDBuffer = new ComputeBuffer(bufferSize, sizeof(uint), ComputeBufferType.Append); //uint only, per visible grass
 
         //find all instances's posWS XZ bound min max
         minX = float.MaxValue;
