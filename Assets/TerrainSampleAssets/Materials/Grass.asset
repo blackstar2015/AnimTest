@@ -203,7 +203,7 @@ Material:
     - _FadeBias: 0.01
     - _ForceForwardEmissive: 0
     - _Glossiness: 0
-    - _GrassHeight: 1
+    - _GrassHeight: 0.5
     - _GrassWidth: 0.01
     - _MaterialID: 5
     - _MaterialTypeMask: 32
@@ -277,7 +277,7 @@ Material:
     - Terrain_Origin: {r: 0, g: 0, b: 0, a: 0}
     - Terrain_Scale: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0, g: 0.990566, b: 0, a: 1}
-    - _BoundSize: {r: 2.5, g: 2.5, b: 0, a: 0}
+    - _BoundSize: {r: 7.905694, g: 7.905694, b: 0, a: 0}
     - _Color: {r: 0, g: 0, b: 0, a: 0}
     - _DiffusionProfileAsset: {r: -0.00000002060262, g: 7.3194675e-27, b: 69972056, a: -3.7115523e+9}
     - _Diffusion_Profile_Asset: {r: -0.00000002060262, g: 7.3194675e-27, b: 69972056, a: -3.7115523e+9}
