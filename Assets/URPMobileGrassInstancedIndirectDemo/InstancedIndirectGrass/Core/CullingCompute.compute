@@ -1,57 +1,29 @@
 ﻿#pragma kernel CSMain
 
-//Matrix4x4 v = Camera.main.worldToCameraMatrix;
-//Matrix4x4 p = Camera.main.projectionMatrix; //unity C# use opengl standard projection matrix
-//cullingComputeShader.SetMatrix("_VPMatrix", p * v); //set from C#
+// Camera matrices
 float4x4 _VPMatrix;
 float _MaxDrawDistance;
 uint _StartOffset;
 
-// input positions
-StructuredBuffer<float3> _AllInstancesPosWSBuffer; //will not change until instance count change
+// Input: all instance positions
+StructuredBuffer<float3> _AllInstancesPosWSBuffer;
 
-// append buffer used by original pipeline (still used for copycount -> args)
-AppendStructuredBuffer<uint> _VisibleInstancesOnlyPosWSIDBuffer; //will set counter to 0 per frame, then fill in by this compute shader
-
-// NEW: small RW counter to limit number of appends
-RWStructuredBuffer<int> _VisibleCount; // size = 1, reset to 0 from C# each frame
-int _MaxInstances; // max number of instances to append
+// Output: visible instance IDs
+AppendStructuredBuffer<uint> _VisibleInstancesOnlyPosWSIDBuffer;
 
 [numthreads(64, 1, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
     uint idx = id.x + _StartOffset;
 
-    // safety: ensure we don't read out of bounds (in case of batching mismatch)
-    // The host must ensure dispatch only covers valid IDs, but defense is good.
-    // If idx is out-of-range, bail out.
-    // Note: we cannot read array length here, so rely on C# to dispatch correct range.
+    // transform world position -> clip space
+    float4 posCS = mul(_VPMatrix, float4(_AllInstancesPosWSBuffer[idx], 1.0));
 
-    // transform posWS -> posCS
-    float4 absPosCS = abs(mul(_VPMatrix, float4(_AllInstancesPosWSBuffer[idx], 1.0)));
-
-    // frustum + distance test (same as before)
-    if (!(absPosCS.z <= absPosCS.w && absPosCS.y <= absPosCS.w * 1.5 && absPosCS.x <= absPosCS.w * 1.1 && absPosCS.w <= _MaxDrawDistance))
+    // simple frustum/distance culling
+    if (posCS.z > 0 && posCS.z <= _MaxDrawDistance &&
+        abs(posCS.x) <= posCS.w * 1.1 &&
+        abs(posCS.y) <= posCS.w * 1.5)
     {
-        return;
-    }
-
-    // At this point this instance is visible by frustum/distance tests.
-    // We now attempt to reserve a slot using an interlocked counter.
-    int previous;
-    InterlockedAdd(_VisibleCount[0], 1, previous); // previous := original value before increment
-
-    if (previous < _MaxInstances)
-    {
-        // we won a slot — safe to append
         _VisibleInstancesOnlyPosWSIDBuffer.Append(idx);
-    }
-    else
-    {
-        // we exceeded the cap — undo increment
-        // subtract 1 to restore counter. 'tmp' receives previous value but we don't use it.
-        int tmp;
-        InterlockedAdd(_VisibleCount[0], -1, tmp);
-        // no append
     }
 }

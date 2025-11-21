@@ -14,7 +14,7 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
     [SerializeField] private float _jitter;
     [SerializeField] private float _density;
     [SerializeField] private float _noiseThreshold;
-
+    [SerializeField] private float frequency = 2.0f;
     private int _cacheCount = -1;
     private Terrain _terrain;
     private TerrainData _terrainData;
@@ -68,48 +68,45 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
         int targetLayer = 0; // the splat layer you want grass from
         float threshold = 0.5f;
 
-        for (int i = 0; i < _density; i++)
+
+        for (int y = 0; y < mapH; y++)
         {
-            for (int y = 0; y < mapH; y++)
+            for (int x = 0; x < mapW; x++)
             {
-                for (int x = 0; x < mapW; x++)
+                float weight = alphamaps[y, x, targetLayer];
+                if (weight < threshold)
+                    continue;
+
+                // normalized coordinates
+                float normX = (float)x / (mapW - 1);
+                float normZ = (float)y / (mapH - 1);
+
+                float worldX = _terrain.transform.position.x + normX * _terrainData.size.x;
+                float worldZ = _terrain.transform.position.z + normZ * _terrainData.size.z;
+
+                // generate jittered positions
+                int attempts = Mathf.CeilToInt(_density); // number of random points per pixel
+                for (int j = 0; j < attempts; j++)
                 {
-                    float weight = alphamaps[y, x, targetLayer];
+                    float rx = (Random.value - 0.5f) * _jitter;
+                    float rz = (Random.value - 0.5f) * _jitter;
 
-                    if (weight < threshold)
-                        continue;
+                    float jitterX = Mathf.Clamp(worldX + rx, _terrain.transform.position.x, _terrain.transform.position.x + _terrainData.size.x);
+                    float jitterZ = Mathf.Clamp(worldZ + rz, _terrain.transform.position.z, _terrain.transform.position.z + _terrainData.size.z);
 
-                    // convert splatmap pixel to normalized coordinates
-                    float normX = (float)x / (mapW - 1);
-                    float normZ = (float)y / (mapH - 1);
-
-                    float height = _terrainData.GetInterpolatedHeight(normX, normZ);
-
-                    // convert normalized → world
-                    float worldX = _terrain.transform.position.x + normX * _terrainData.size.x;
-                    float worldZ = _terrain.transform.position.z + normZ * _terrainData.size.z;
-
-
-                    float rx = Random.value - 0.5f;
-                    float rz = Random.value - 0.5f;
-
-                    float jitterX = worldX + rx * _jitter;
-                    float jitterZ = worldZ + rz * _jitter;
-
-                    // get correct height for new position
                     float normJitX = (jitterX - _terrain.transform.position.x) / _terrainData.size.x;
                     float normJitZ = (jitterZ - _terrain.transform.position.z) / _terrainData.size.z;
-
                     float heightJ = _terrainData.GetInterpolatedHeight(normJitX, normJitZ);
 
-                    float noise = Mathf.PerlinNoise(normJitX * 0.1f, normJitZ * 0.1f);
-                    if(noise > _noiseThreshold)
+                    float noise = Mathf.PerlinNoise(normJitX * frequency, normJitZ * frequency);
+                    if (noise > _noiseThreshold || Random.value < 0.05f)
                     {
                         positions.Add(new Vector3(jitterX, heightJ, jitterZ));
                     }
                 }
             }
         }
+
         //send all posWS to renderer
         InstancedIndirectGrassRenderer.instance.allGrassPos = positions;
         _cacheCount = positions.Count;
