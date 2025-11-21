@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d6ee35f46cc6a449199c3d64518325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instanceCount: 1000000
-  drawDistance: 75
+  instanceCount: 10000
+  drawDistance: 125
 --- !u!114 &4075049564881358142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed67b81fb4b64d498a58bbb1c32d63d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawDistance: 75
-  instanceMaterial: {fileID: 2100000, guid: 0cf15945abe04ad4589592fd3bfcd17b, type: 2}
+  drawDistance: 125
+  instanceMaterial: {fileID: 2100000, guid: fc123ab8f2eb56945b5849155624e2c0, type: 2}
   cullingComputeShader: {fileID: 7200000, guid: 4ff257ce2a1c37546a9b544e669e976b, type: 3}
   shouldBatchDispatch: 1

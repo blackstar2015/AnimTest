@@ -5,8 +5,8 @@ using UnityEngine;
 [ExecuteAlways]
 public class InstancedIndirectGrassPosDefine : MonoBehaviour
 {
-    [Range(1000000, 40000000)]
-    public int instanceCount = 1000000;
+    [Range(10000, 40000)]
+    public int instanceCount = 10000;
     public float drawDistance = 125;
     private int cacheCount = -1;
 

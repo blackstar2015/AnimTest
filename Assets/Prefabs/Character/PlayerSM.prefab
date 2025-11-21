@@ -55,7 +55,7 @@ MonoBehaviour:
   m_LegacyPriority: 0
   Target:
     TrackingTarget: {fileID: 7987039994458159796}
-    LookAtTarget: {fileID: 6577984921502266960}
+    LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
@@ -109,61 +109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookAtOffset: {x: 0, y: 1.14, z: 4.25}
---- !u!1 &1600860235423061483
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6577984921502266960}
-  - component: {fileID: 1527271036971246698}
-  m_Layer: 6
-  m_Name: Target Group
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6577984921502266960
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1600860235423061483}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 526376308263405964}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1527271036971246698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1600860235423061483}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5eb80d8e62d9d145bb50fb783c0f731, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PositionMode: 1
-  RotationMode: 1
-  UpdateMethod: 0
-  Targets:
-  - Object: {fileID: 7987039994458159796}
-    Weight: 0.9
-    Radius: 1
-  - Object: {fileID: 0}
-    Weight: 0.1
-    Radius: 1
-  m_LegacyTargets: []
 --- !u!1 &5218257413023732940
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +142,6 @@ Transform:
   - {fileID: 1985623946607035742}
   - {fileID: 5682914713618042527}
   - {fileID: 2035211830638913377}
-  - {fileID: 6577984921502266960}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5760539682218880239
@@ -229,8 +173,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5760539682218880239}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.26060796, y: 0.2482275, z: -0.06952979, w: 0.9303936}
-  m_LocalPosition: {x: -0.6610756, y: 1.9567466, z: -1.1507177}
+  m_LocalRotation: {x: 0.27089614, y: 0.13640246, z: -0.038809687, w: 0.9521048}
+  m_LocalPosition: {x: -0.36999512, y: 1.9659424, z: -1.264801}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -313,7 +257,7 @@ MonoBehaviour:
     SplineCurvature: 0.5
   RecenteringTarget: 2
   HorizontalAxis:
-    Value: 29.876919
+    Value: 16.305237
     Center: 0
     Range: {x: -180, y: 180}
     Wrap: 1
@@ -323,7 +267,7 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 40.438267
+    Value: 41.03692
     Center: 17.5
     Range: {x: -10, y: 45}
     Wrap: 0
@@ -614,10 +558,6 @@ PrefabInstance:
       propertyPath: FreeLookCam
       value: 
       objectReference: {fileID: 5212102315302228801}
-    - target: {fileID: 4678409019931915664, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
-      propertyPath: TargetGroup
-      value: 
-      objectReference: {fileID: 1527271036971246698}
     - target: {fileID: 4678409019931915664, guid: 49f2055d53eeb4e5a92af590a44bddee, type: 3}
       propertyPath: TargetLockCam
       value: 

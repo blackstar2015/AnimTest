@@ -56,6 +56,7 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
         instance = this; // assign global ref using this script
     }
 
+    //assign terrain data from ProceduralTerrainGenerator
     public void SetTerrain(Terrain terrain, TerrainData terrainData, float terrainHeight)
     {
         _terrain = terrain;
@@ -95,7 +96,7 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
             centerPosWS.z = Mathf.Lerp(minZ, maxZ, centerPosWS.z / cellCountZ);
             Vector3 sizeWS = new Vector3(Mathf.Abs(maxX - minX) / cellCountX,0,Mathf.Abs(maxX - minX) / cellCountX);
             Bounds cellBound = new Bounds(centerPosWS, sizeWS);
-
+            cellBound.size *= 1000f;
             if (GeometryUtility.TestPlanesAABB(cameraFrustumPlanes, cellBound))
             {
                 visibleCellIDList.Add(i);
@@ -164,7 +165,7 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
 
             // Optional debug — remove or comment out later
 #if UNITY_EDITOR
-            Debug.Log($"Dispatch cell batch startOffset={memoryOffset} jobLength={jobLength} groups={groups}");
+            //Debug.Log($"Dispatch cell batch startOffset={memoryOffset} jobLength={jobLength} groups={groups}");
 #endif
 
             cullingComputeShader.Dispatch(0, groups, 1, 1);
@@ -176,28 +177,18 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
         //====================================================================================
         // GPU per instance culling finished, copy visible count to argsBuffer, to setup DrawMeshInstancedIndirect's draw amount 
         ComputeBuffer.CopyCount(visibleInstancesOnlyPosWSIDBuffer, argsBuffer, 4);
-
-        // Render 1 big drawcall using DrawMeshInstancedIndirect    
-        Vector3 size = _terrainData.size;
-        Vector3 center = _terrain.transform.position + size * 0.5f;
-        center.y += _terrainHeight*2;
+        if (_terrain == null || _terrainData == null) return;
+        // Render 1 big drawcall using DrawMeshInstancedIndirect
+        Terrain terrain = Terrain.activeTerrain;
+        TerrainData terrainData = terrain.terrainData;
+        Vector3 size = terrainData.size;
+        Vector3 center = terrain.transform.position + size * 0.5f;
+        
         Bounds renderBound = new Bounds();
         renderBound.center = center;
-        renderBound.size = new Vector3(size.x, size.y + 20000f, size.z);
-        renderBound.size *= 1.5f;
+        renderBound.size = new Vector3(size.x + 100f, size.y + _terrainHeight, size.z + 100f) * 1000f;
         Graphics.DrawMeshInstancedIndirect(GetGrassMeshCache(), 0, instanceMaterial, renderBound, argsBuffer);
     }
-
-    //private void OnGUI()
-    //{
-    //    GUI.contentColor = Color.black;
-    //    GUI.Label(new Rect(200, 0, 400, 60), 
-    //        $"After CPU cell frustum culling,\n" +
-    //        $"-Visible cell count = {visibleCellIDList.Count}/{cellCountX * cellCountZ}\n" +
-    //        $"-Real compute dispatch count = {dispatchCount} (saved by batching = {visibleCellIDList.Count - dispatchCount})");
-
-    //    shouldBatchDispatch = GUI.Toggle(new Rect(300, 250, 200, 200), shouldBatchDispatch, "shouldBatchDispatch");
-    //}
 
     void OnDisable()
     {
