@@ -1,15 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering;
+using Random = UnityEngine.Random;
 
 [ExecuteAlways]
 public class InstancedIndirectGrassPosDefine : MonoBehaviour
 {
-    [Range(10000, 40000)]
-    public int instanceCount = 10000;
-    public float drawDistance = 125;
-    private int cacheCount = -1;
+    [Range(1, 4000)]
+    [SerializeField] private int _instanceCount => InstancedIndirectGrassRenderer.instance.InstanceCount;
+    [SerializeField] private float _drawDistance => InstancedIndirectGrassRenderer.instance.drawDistance;
+    [SerializeField] private float _jitter;
+    [SerializeField] private float _density;
+    [SerializeField] private float _noiseThreshold;
 
+    private int _cacheCount = -1;
     private Terrain _terrain;
     private TerrainData _terrainData;
 
@@ -19,7 +25,7 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
     }
     private void Update()
     {
-        UpdatePosIfNeeded();
+        //UpdatePosIfNeeded();
     }
 
     public void SetTerrain(Terrain terrain, TerrainData terrainData)
@@ -39,7 +45,7 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
     //}
     private void UpdatePosIfNeeded()
     {
-        if (instanceCount == cacheCount || _terrainData == null)
+        if (_instanceCount == _cacheCount || _terrainData == null)
             return;
 
         Debug.Log("UpdatePos (Slow)");
@@ -48,11 +54,11 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
         UnityEngine.Random.InitState(123);
 
         //auto keep density the same
-        float scale = Mathf.Sqrt((instanceCount / 4)) / 2f;
+        float scale = Mathf.Sqrt((_instanceCount / 4)) / 2f;
         transform.localScale = new Vector3(scale, transform.localScale.y, scale);
 
         //define any posWS in this section
-        List<Vector3> positions = new List<Vector3>(instanceCount);
+        List<Vector3> positions = new List<Vector3>(_instanceCount);
        
         int mapW = _terrainData.alphamapWidth;
         int mapH = _terrainData.alphamapHeight;
@@ -62,30 +68,50 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
         int targetLayer = 0; // the splat layer you want grass from
         float threshold = 0.5f;
 
-        for (int y = 0; y < mapH; y++)
+        for (int i = 0; i < _density; i++)
         {
-            for (int x = 0; x < mapW; x++)
+            for (int y = 0; y < mapH; y++)
             {
-                float weight = alphamaps[y, x, targetLayer];
+                for (int x = 0; x < mapW; x++)
+                {
+                    float weight = alphamaps[y, x, targetLayer];
 
-                if (weight < threshold)
-                    continue;
+                    if (weight < threshold)
+                        continue;
 
-                // convert splatmap pixel to normalized coordinates
-                float normX = (float)x / (mapW - 1);
-                float normZ = (float)y / (mapH - 1);
+                    // convert splatmap pixel to normalized coordinates
+                    float normX = (float)x / (mapW - 1);
+                    float normZ = (float)y / (mapH - 1);
 
-                // convert normalized → world
-                float worldX = _terrain.transform.position.x + normX * _terrainData.size.x;
-                float worldZ = _terrain.transform.position.z + normZ * _terrainData.size.z;
+                    float height = _terrainData.GetInterpolatedHeight(normX, normZ);
 
-                float height = _terrainData.GetInterpolatedHeight(normX, normZ);
+                    // convert normalized → world
+                    float worldX = _terrain.transform.position.x + normX * _terrainData.size.x;
+                    float worldZ = _terrain.transform.position.z + normZ * _terrainData.size.z;
 
-                positions.Add(new Vector3(worldX, height, worldZ));
+
+                    float rx = Random.value - 0.5f;
+                    float rz = Random.value - 0.5f;
+
+                    float jitterX = worldX + rx * _jitter;
+                    float jitterZ = worldZ + rz * _jitter;
+
+                    // get correct height for new position
+                    float normJitX = (jitterX - _terrain.transform.position.x) / _terrainData.size.x;
+                    float normJitZ = (jitterZ - _terrain.transform.position.z) / _terrainData.size.z;
+
+                    float heightJ = _terrainData.GetInterpolatedHeight(normJitX, normJitZ);
+
+                    float noise = Mathf.PerlinNoise(normJitX * 0.1f, normJitZ * 0.1f);
+                    if(noise > _noiseThreshold)
+                    {
+                        positions.Add(new Vector3(jitterX, heightJ, jitterZ));
+                    }
+                }
             }
         }
         //send all posWS to renderer
         InstancedIndirectGrassRenderer.instance.allGrassPos = positions;
-        cacheCount = positions.Count;
+        _cacheCount = positions.Count;
     }
 }
