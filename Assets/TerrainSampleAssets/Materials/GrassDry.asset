@@ -31,7 +31,7 @@ Material:
   - _ALPHATEST_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap:
     MotionVector: User
@@ -203,7 +203,7 @@ Material:
     - _FlipbookMode: 0
     - _ForceForwardEmissive: 0
     - _GrassHeight: 1
-    - _GrassWidth: 1
+    - _GrassWidth: 0.1
     - _LightingEnabled: 0
     - _MaterialID: 5
     - _MaterialTypeMask: 32
@@ -250,8 +250,8 @@ Material:
     - _TransparentZWrite: 0
     - _UseShadowThreshold: 0
     - _VertexCountPerInstance: 172
-    - _WindAFrequency: 4
-    - _WindAIntensity: 1.77
+    - _WindAFrequency: 2
+    - _WindAIntensity: 0.8
     - _WindBFrequency: 7.7
     - _WindBIntensity: 0.25
     - _WindCFrequency: 11.7
@@ -273,7 +273,7 @@ Material:
     - SplatR: {r: 0, g: 0, b: 0, a: 0}
     - Terrain_Origin: {r: 0, g: 0, b: 0, a: 0}
     - Terrain_Scale: {r: 0, g: 0, b: 0, a: 0}
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.91665447, g: 1, b: 0, a: 1}
     - _BoundSize: {r: 1, g: 1, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
@@ -282,11 +282,12 @@ Material:
     - _Diffusion_Profile_Asset: {r: -0.00000002060262, g: 7.3194675e-27, b: 69972056, a: -3.7115523e+9}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _GroundColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _GroundColor: {r: 0.4901961, g: 0.454902, b: 0.3529412, a: 1}
     - _PivotPosWS: {r: 0, g: 0, b: 0, a: 0}
     - _SSSColor: {r: 0.9513406, g: 1, b: 0.3066038, a: 0}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _Subsurface_Scattering_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _TerrainOffset: {r: 0, g: 0, b: 0, a: 0}
     - _Thickness_Remap: {r: 0, g: 1, b: 0, a: 0}
     - _WindATiling: {r: 0.1, g: 0.1, b: 0, a: 1}
     - _WindAWrap: {r: 0.5, g: 0.5, b: 0, a: 1}

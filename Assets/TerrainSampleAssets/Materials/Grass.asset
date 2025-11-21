@@ -23,7 +23,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Grass
-  m_Shader: {fileID: 4800000, guid: 0c8c08550ad6018468673fe6063c463c, type: 3}
+  m_Shader: {fileID: 4800000, guid: fd090f3b1d7b5df4f9c363d609cfa330, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -76,6 +76,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - Texture2D_E1B0D043:
         m_Texture: {fileID: 2800000, guid: 9bf68c6e5059e7549b60e91ca11987a6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseColorTexture:
+        m_Texture: {fileID: 2800000, guid: edec5ef3226950841ac8090d6ac18095, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -199,6 +203,8 @@ Material:
     - _FadeBias: 0.01
     - _ForceForwardEmissive: 0
     - _Glossiness: 0
+    - _GrassHeight: 1
+    - _GrassWidth: 0.01
     - _MaterialID: 5
     - _MaterialTypeMask: 32
     - _Metallic: 0
@@ -207,6 +213,7 @@ Material:
     - _PerPixelSorting: 0
     - _QueueControl: 1
     - _QueueOffset: 0
+    - _RandomNormal: 1
     - _RayTracing: 0
     - _ReceiveShadows: 1
     - _ReceivesSSR: 0
@@ -246,6 +253,12 @@ Material:
     - _UseRoughnessMap: 0
     - _UseShadowThreshold: 0
     - _VertexCountPerInstance: 4
+    - _WindAFrequency: 0.5
+    - _WindAIntensity: 0.4
+    - _WindBFrequency: 0.5
+    - _WindBIntensity: 0.25
+    - _WindCFrequency: 1
+    - _WindCIntensity: 0.125
     - _WindSpeed: 0.26
     - _WindStrength: 0.2
     - _WorkflowMode: 1
@@ -263,18 +276,27 @@ Material:
     - SplatR: {r: 0, g: 0, b: 0, a: 0}
     - Terrain_Origin: {r: 0, g: 0, b: 0, a: 0}
     - Terrain_Scale: {r: 0, g: 0, b: 0, a: 0}
-    - _BaseColor: {r: 0.29999998, g: 0.5, b: 0.29999998, a: 1}
+    - _BaseColor: {r: 0, g: 0.990566, b: 0, a: 1}
+    - _BoundSize: {r: 1, g: 1, b: 0, a: 0}
     - _Color: {r: 0, g: 0, b: 0, a: 0}
     - _DiffusionProfileAsset: {r: -0.00000002060262, g: 7.3194675e-27, b: 69972056, a: -3.7115523e+9}
     - _Diffusion_Profile_Asset: {r: -0.00000002060262, g: 7.3194675e-27, b: 69972056, a: -3.7115523e+9}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _Emissive: {r: 0, g: 0, b: 0, a: 0}
+    - _GroundColor: {r: 0.07327337, g: 0.4339623, b: 0, a: 1}
+    - _PivotPosWS: {r: 0, g: 0, b: 0, a: 0}
     - _SSSColor: {r: 0.6295641, g: 0.9622642, b: 0.28595585, a: 0}
     - _Subsurface_Scattering_Color: {r: 1, g: 1, b: 1, a: 0}
     - _Thickness_Remap: {r: 0, g: 1, b: 0, a: 0}
     - _TipColor: {r: 0.6, g: 0.8, b: 0.6, a: 1}
     - _UvOffset: {r: 0, g: 0, b: 0, a: 0}
     - _UvTiling: {r: 1, g: 1, b: 0, a: 0}
+    - _WindATiling: {r: 0.1, g: 0.1, b: 0, a: 1}
+    - _WindAWrap: {r: 0.5, g: 0.5, b: 0, a: 1}
+    - _WindBTiling: {r: 0.37, g: 3, b: 0, a: 1}
+    - _WindBWrap: {r: 0.5, g: 0.5, b: 0, a: 1}
+    - _WindCTiling: {r: 0.77, g: 3, b: 0, a: 1}
+    - _WindCWrap: {r: 0.5, g: 0.5, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
