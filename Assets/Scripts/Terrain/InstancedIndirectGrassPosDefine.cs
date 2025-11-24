@@ -23,10 +23,6 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
     {        
         UpdatePosIfNeeded();
     }
-    private void Update()
-    {
-        //UpdatePosIfNeeded();
-    }
 
     public void SetTerrain(Terrain terrain, TerrainData terrainData)
     {
@@ -34,15 +30,6 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
         _terrainData = terrainData;
     }
 
-    //private void OnGUI()
-    //{
-    //    GUI.Label(new Rect(300, 50, 200, 30), "Instance Count: " + instanceCount / 1000000 + "Million");
-    //    instanceCount = Mathf.Max(1, (int)(GUI.HorizontalSlider(new Rect(300, 100, 200, 30), instanceCount / 1000000f, 1, 10)) * 1000000);
-
-    //    GUI.Label(new Rect(300, 150, 200, 30), "Draw Distance: " + drawDistance);
-    //    drawDistance = Mathf.Max(1, (int)(GUI.HorizontalSlider(new Rect(300, 200, 200, 30), drawDistance / 25f, 1, 8)) * 25);
-    //    InstancedIndirectGrassRenderer.instance.drawDistance = drawDistance;
-    //}
     private void UpdatePosIfNeeded()
     {
         if (_instanceCount == _cacheCount || _terrainData == null)
