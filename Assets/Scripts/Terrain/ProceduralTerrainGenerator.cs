@@ -42,6 +42,7 @@ public class ProceduralTerrainGenerator : MonoBehaviour
         _terrainData.SetHeights(0, 0, heights);
         GameObject terrainObject = Terrain.CreateTerrainGameObject(_terrainData);
         _terrain = terrainObject.GetComponent<Terrain>();
+        _terrain.drawInstanced = true;
         _terrainData.terrainLayers = AssignTerrainLayers();
         PaintTerrainTextures();
         _terrainDeformer.SetTerrain(_terrain, _terrainData);
