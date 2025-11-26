@@ -260,4 +260,44 @@ public class InstancedIndirectGrassRenderer : MonoBehaviour
         cullingComputeShader.SetBuffer(0, "_VisibleInstancesOnlyPosWSIDBuffer", visibleInstancesOnlyPosWSIDBuffer);
         cullingComputeShader.SetBuffer(0, "_VisibleCount", visibleCountBuffer);
     }
+
+    public void SetCombinedGrassBuffer(List<MultiGrassSingleDrawSpawner.GrassInstanceData> instances)
+    {
+        if (allInstancesPosWSBuffer != null)
+            allInstancesPosWSBuffer.Release();
+
+        // Convert to GPU struct
+        GrassInstanceGPU[] gpuData = new GrassInstanceGPU[instances.Count];
+        for (int i = 0; i < instances.Count; i++)
+        {
+            gpuData[i].pos = instances[i].pos;
+            gpuData[i].type = instances[i].type;
+        }
+
+        // Upload buffer
+        allInstancesPosWSBuffer = new ComputeBuffer(gpuData.Length, sizeof(float) * 3 + sizeof(uint));
+        allInstancesPosWSBuffer.SetData(gpuData);
+
+        // Bind to material
+        instanceMaterial.SetBuffer("_AllInstancesTransformBuffer", allInstancesPosWSBuffer);
+
+        // Setup argsBuffer for DrawMeshInstancedIndirect
+        Mesh mesh = GetGrassMeshCache();
+        uint[] args = new uint[5];
+        args[0] = (uint)mesh.GetIndexCount(0);
+        args[1] = (uint)gpuData.Length; // number of instances
+        args[2] = (uint)mesh.GetIndexStart(0);
+        args[3] = (uint)mesh.GetBaseVertex(0);
+        args[4] = 0;
+
+        if (argsBuffer == null)
+            argsBuffer = new ComputeBuffer(1, 5 * sizeof(uint), ComputeBufferType.IndirectArguments);
+
+        argsBuffer.SetData(args);
+    }
+    public struct GrassInstanceGPU
+    {
+        public Vector3 pos;
+        public uint type;
+    }
 }

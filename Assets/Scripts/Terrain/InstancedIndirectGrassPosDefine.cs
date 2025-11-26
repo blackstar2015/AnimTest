@@ -53,7 +53,7 @@ public class InstancedIndirectGrassPosDefine : MonoBehaviour
         float[,,] alphamaps = _terrainData.GetAlphamaps(0, 0, mapW, mapH);
 
         int targetLayer = 0; // the splat layer you want grass from
-        float threshold = 0.5f;
+        float threshold = 0.6f;
 
 
         for (int y = 0; y < mapH; y++)

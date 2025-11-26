@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6394463353080556871}
   - component: {fileID: 2816906397115064615}
   - component: {fileID: 4075049564881358142}
+  - component: {fileID: 7092526079861908161}
   m_Layer: 0
   m_Name: GrassGenerator
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   _jitter: 1.3
   _density: 16
   _noiseThreshold: 0.5
+  frequency: 2
 --- !u!114 &4075049564881358142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,8 +62,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed67b81fb4b64d498a58bbb1c32d63d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawDistance: 125
-  InstanceCount: 1000
+  drawDistance: 30
+  InstanceCount: 69
   instanceMaterial: {fileID: 2100000, guid: fc123ab8f2eb56945b5849155624e2c0, type: 2}
   cullingComputeShader: {fileID: 7200000, guid: 4ff257ce2a1c37546a9b544e669e976b, type: 3}
   shouldBatchDispatch: 1
+--- !u!114 &7092526079861908161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5833517714809589764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c94eb7122553105468a9959897d16d4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 4075049564881358142}
+  _jitter: 1.3
+  _density: 16
+  _noiseThreshold: 0.5

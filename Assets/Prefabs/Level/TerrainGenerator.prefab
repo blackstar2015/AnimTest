@@ -46,13 +46,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heightmapResolution: 513
-  terrainSize: 31
-  terrainHeight: 30
-  baseScale: 10
-  octaves: 1
-  lacunarity: 1.5
-  persistence: 0.4
-  offset: {x: 0, y: 0}
+  terrainSize: 10
+  terrainHeight: 60
+  mountainDensity: 0.9
+  plainsDensity: 8
+  baseScale: 2.5
+  octaves: 8
+  lacunarity: 2
+  persistence: 0.5
+  offset: {x: 10, y: 20}
   _terrainDeformer: {fileID: 171818278273521123}
   _grassPosDefine: {fileID: 0}
   _grassRenderer: {fileID: 0}
