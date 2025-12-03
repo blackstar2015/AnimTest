@@ -1,0 +1,29 @@
+﻿#pragma kernel CSMain
+
+// Camera matrices
+float4x4 _VPMatrix;
+float _MaxDrawDistance;
+uint _StartOffset;
+
+// Input: all instance positions
+StructuredBuffer<float3> _AllInstancesPosWSBuffer;
+
+// Output: visible instance IDs
+AppendStructuredBuffer<uint> _VisibleInstancesOnlyPosWSIDBuffer;
+
+[numthreads(64, 1, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    uint idx = id.x + _StartOffset;
+
+    // transform world position -> clip space
+    float4 posCS = mul(_VPMatrix, float4(_AllInstancesPosWSBuffer[idx], 1.0));
+
+    // simple frustum/distance culling
+    if (posCS.z > 0 && posCS.z <= _MaxDrawDistance &&
+        abs(posCS.x) <= posCS.w * 1.1 &&
+        abs(posCS.y) <= posCS.w * 1.5)
+    {
+        _VisibleInstancesOnlyPosWSIDBuffer.Append(idx);
+    }
+}

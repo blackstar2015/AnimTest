@@ -37,13 +37,14 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs","Camera")] public CinemachineCamera TargetLockCam;
     [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs","Camera")] public CinemachineCamera FreeLookCam;
     [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Camera")] public CinemachineTargetGroup TargetGroup;
-    
+    [field: SerializeField, FoldoutGroup("General"), TabGroup("General/Tabs", "Weapons")] public GameObject BulletPrefab;
+
     public override void Awake()
     {
         base.Awake();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        TargetGroup.Targets.Capacity = 2;
+        //TargetGroup.Targets.Capacity = 2;
 
         // assign frictionless physic material
 #if UNITY_6000_0_OR_NEWER

@@ -8786,14 +8786,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76808aaddafcd3f4b9b7b142020a0901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Controller>k__BackingField: {fileID: 0}
-  <Animator>k__BackingField: {fileID: 0}
-  <Health>k__BackingField: {fileID: 0}
-  <Targetable>k__BackingField: {fileID: 0}
-  <Vision>k__BackingField: {fileID: 0}
-  <rb>k__BackingField: {fileID: 0}
-  <Collider>k__BackingField: {fileID: 0}
-  <NavAgent>k__BackingField: {fileID: 0}
+  <Controller>k__BackingField: {fileID: 6581559129690418106}
+  <Animator>k__BackingField: {fileID: 1136170695963944206}
+  <Health>k__BackingField: {fileID: 1852370499137710416}
+  <Targetable>k__BackingField: {fileID: 3820665430413042316}
+  <Vision>k__BackingField: {fileID: 7449408220723410523}
+  <rb>k__BackingField: {fileID: 5178362545553101113}
+  <Collider>k__BackingField: {fileID: 7350198013757010323}
+  <NavAgent>k__BackingField: {fileID: 2944733319569485793}
   <Weapons>k__BackingField:
   - {fileID: 685008403000281846}
   - {fileID: 5522024923081904833}
@@ -8857,6 +8857,7 @@ MonoBehaviour:
   <SplineContainer>k__BackingField: {fileID: 0}
   <SplineGravitation>k__BackingField: 20
   <CurrentTarget>k__BackingField: {fileID: 0}
+  <PreviousTarget>k__BackingField: {fileID: 0}
   IsTargeting: 0
   Team: 0
   <IsTargetable>k__BackingField: 1
@@ -8890,6 +8891,7 @@ MonoBehaviour:
   TargetLockCam: {fileID: 0}
   FreeLookCam: {fileID: 0}
   TargetGroup: {fileID: 0}
+  BulletPrefab: {fileID: 1924889359640400996, guid: f03ac0a37fef1fc4086ffd249ec464f3, type: 3}
 --- !u!1 &6620052710620931291
 GameObject:
   m_ObjectHideFlags: 0

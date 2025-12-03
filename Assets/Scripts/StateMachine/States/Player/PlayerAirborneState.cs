@@ -43,7 +43,7 @@ public class PlayerAirborneState : PlayerBaseState
     {
         if (stateMachine.JumpCounter < stateMachine.MaxJumps)
         {
-            float jumpVelocity = Mathf.Sqrt(2f * -stateMachine.Gravity * stateMachine.JumpHeight);         
+            float jumpVelocity = Mathf.Sqrt(2f * -stateMachine.Gravity * stateMachine.JumpHeight * Time.deltaTime);         
             stateMachine.Velocity = new Vector3(stateMachine.Velocity.x, jumpVelocity, stateMachine.Velocity.z);
             stateMachine.JumpCounter++;
             stateMachine.SwitchState(new PlayerAirborneState(this.stateMachine, true));
